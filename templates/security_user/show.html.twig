@@ -1,0 +1,154 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SecurityUser{% endblock %}
+
+{% block body %}
+    <h1>SecurityUser</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Username</th>
+                <td>{{ security_user.username }}</td>
+            </tr>
+            <tr>
+                <th>UsernameCanonical</th>
+                <td>{{ security_user.usernameCanonical }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ security_user.email }}</td>
+            </tr>
+            <tr>
+                <th>EmailCanonical</th>
+                <td>{{ security_user.emailCanonical }}</td>
+            </tr>
+            <tr>
+                <th>Enabled</th>
+                <td>{{ security_user.enabled ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Salt</th>
+                <td>{{ security_user.salt }}</td>
+            </tr>
+            <tr>
+                <th>Password</th>
+                <td>{{ security_user.password }}</td>
+            </tr>
+            <tr>
+                <th>LastLogin</th>
+                <td>{{ security_user.lastLogin ? security_user.lastLogin|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>ConfirmationToken</th>
+                <td>{{ security_user.confirmationToken }}</td>
+            </tr>
+            <tr>
+                <th>PasswordRequestedAt</th>
+                <td>{{ security_user.passwordRequestedAt ? security_user.passwordRequestedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Roles</th>
+                <td>{{ security_user.roles ? security_user.roles|join(', ') : '' }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ security_user.createdAt ? security_user.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedAt</th>
+                <td>{{ security_user.updatedAt ? security_user.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>DateOfBirth</th>
+                <td>{{ security_user.dateOfBirth ? security_user.dateOfBirth|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Firstname</th>
+                <td>{{ security_user.firstname }}</td>
+            </tr>
+            <tr>
+                <th>Lastname</th>
+                <td>{{ security_user.lastname }}</td>
+            </tr>
+            <tr>
+                <th>Website</th>
+                <td>{{ security_user.website }}</td>
+            </tr>
+            <tr>
+                <th>Biography</th>
+                <td>{{ security_user.biography }}</td>
+            </tr>
+            <tr>
+                <th>Gender</th>
+                <td>{{ security_user.gender }}</td>
+            </tr>
+            <tr>
+                <th>Locale</th>
+                <td>{{ security_user.locale }}</td>
+            </tr>
+            <tr>
+                <th>Timezone</th>
+                <td>{{ security_user.timezone }}</td>
+            </tr>
+            <tr>
+                <th>Phone</th>
+                <td>{{ security_user.phone }}</td>
+            </tr>
+            <tr>
+                <th>FacebookUid</th>
+                <td>{{ security_user.facebookUid }}</td>
+            </tr>
+            <tr>
+                <th>FacebookName</th>
+                <td>{{ security_user.facebookName }}</td>
+            </tr>
+            <tr>
+                <th>FacebookData</th>
+                <td>{{ security_user.facebookData ? security_user.facebookData|json_encode : '' }}</td>
+            </tr>
+            <tr>
+                <th>TwitterUid</th>
+                <td>{{ security_user.twitterUid }}</td>
+            </tr>
+            <tr>
+                <th>TwitterName</th>
+                <td>{{ security_user.twitterName }}</td>
+            </tr>
+            <tr>
+                <th>TwitterData</th>
+                <td>{{ security_user.twitterData ? security_user.twitterData|json_encode : '' }}</td>
+            </tr>
+            <tr>
+                <th>GplusUid</th>
+                <td>{{ security_user.gplusUid }}</td>
+            </tr>
+            <tr>
+                <th>GplusName</th>
+                <td>{{ security_user.gplusName }}</td>
+            </tr>
+            <tr>
+                <th>GplusData</th>
+                <td>{{ security_user.gplusData ? security_user.gplusData|json_encode : '' }}</td>
+            </tr>
+            <tr>
+                <th>Token</th>
+                <td>{{ security_user.token }}</td>
+            </tr>
+            <tr>
+                <th>TwoStepVerificationCode</th>
+                <td>{{ security_user.twoStepVerificationCode }}</td>
+            </tr>
+            <tr>
+                <th>Id</th>
+                <td>{{ security_user.id }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('security_user_index') }}">back to list</a>
+
+    <a href="{{ path('security_user_edit', {'id': security_user.id}) }}">edit</a>
+
+    {{ include('security_user/_delete_form.html.twig') }}
+{% endblock %}

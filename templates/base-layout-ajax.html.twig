@@ -1,0 +1,27 @@
+{% block body_content %}
+    <div class="col-12">
+        <div class="card" style="padding: 5px 20px 5px 20px; margin-bottom: 10px;">
+            <h1> {% block body_header %} BODY_HEADER {% endblock %}</h1>
+        </div>
+    </div>
+    <div class="col-12">
+        <div class="card" style="padding: 5px 20px 5px 20px; margin-bottom: 10px;">
+            <div id="body_actions" class="row">
+                {% block body_actions %}
+                    <div id="body_pagination" class="col-md-7 col-xs-12">
+                        {% block body_pagination %} BODY_PAGINATION {% endblock %}
+                    </div>
+                    <div id="body_buttons" class="col-md-5 text-right">
+                        {% block body_buttons %} BODY_BUTTONS {% endblock %}
+                    </div>
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+    <div id="body_block" class="col-12">
+        {% block body %} BODY {% endblock %}
+    </div>
+    <footer class="col-12">
+        {% block footer %} FOOTER {% endblock %}
+    </footer>
+{% endblock %}

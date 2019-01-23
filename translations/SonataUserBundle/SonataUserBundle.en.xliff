@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+    <file source-language="en" datatype="plaintext" original="SonataUserBundle.en.xliff">
+        <body>
+            <trans-unit id="breadcrumb.link_security_user_list">
+                <source>breadcrumb.link_security_user_list</source>
+                <target>Security Users</target>
+            </trans-unit>
+            <trans-unit id="breadcrumb.link_security_group_list">
+                <source>breadcrumb.link_security_group_list</source>
+                <target>Security Groups</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

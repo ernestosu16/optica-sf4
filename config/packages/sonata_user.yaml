@@ -1,0 +1,12 @@
+sonata_user:
+  class:
+    user: App\Entity\SecurityUser
+    group: App\Entity\SecurityGroup
+  table:
+    user_group: security_user_user_group
+
+parameters:
+  sonata.user.admin.user.entity: 'App\Entity\SecurityUser'
+  sonata.user.admin.group.entity: 'App\Entity\SecurityGroup'
+  #sonata.user.admin.user.class: 'App\Admin\SecurityUserAdmin'
+  #sonata.user.admin.group.class: 'App\Admin\SecurityGroupAdmin'

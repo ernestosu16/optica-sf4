@@ -1,0 +1,96 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Listado de usuarios{% endblock %}
+
+{% block body_header %} Listado de usuarios {% endblock %}
+
+{% block body_pagination %}
+    <div class="pagerfanta">
+        {{ pagerfanta(my_pager, 'twitter_bootstrap4') }}
+    </div>
+{% endblock %}
+
+{% block body_buttons %}
+    {% include '_include/filter_form.html.twig' %}
+    <a class="btn btn-info" href="{{ path('security_user_new') }}"><i class="fas fa-plus"></i> Adicionar </a>
+{% endblock %}
+
+{% block body %}
+
+    <table class="table table-bordered table-striped table-condensed">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Usuario
+                <a class="float-right order-link" data-order-by="e.username" data-order-type="ASC"
+                   href="{{ path('security_user_index', {'order_by':'e.username', 'order_type':'ASC'}) }}">
+                    <i class="fas fa-caret-up"></i></a>
+                <a class="float-right order-link" data-order-by="e.username" data-order-type="DESC"
+                   href="{{ path('security_user_index', {'order_by':'e.username', 'order_type':'DESC'}) }}"><i
+                            class="fas fa-caret-down"></i></a>
+            </th>
+            <th>Email
+                <a class="float-right order-link" data-order-by="e.email" data-order-type="ASC"
+                   href="{{ path('security_user_index', {'order_by':'e.email', 'order_type':'ASC'}) }}"> <i
+                            class="fas fa-caret-up"></i></a>
+                <a class="float-right order-link" data-order-by="e.email" data-order-type="DESC"
+                   href="{{ path('security_user_index', {'order_by':'e.email', 'order_type':'DESC'}) }}"><i
+                            class="fas fa-caret-down"></i></a>
+            </th>
+            <th>Name
+                <a class="float-right order-link" data-order-by="e.firstname" data-order-type="ASC"
+                   href="{{ path('security_user_index', {'order_by':'e.firstname', 'order_type':'ASC'}) }}"> <i
+                            class="fas fa-caret-up"></i></a>
+                <a class="float-right order-link" data-order-by="e.firstname" data-order-type="DESC"
+                   href="{{ path('security_user_index', {'order_by':'e.firstname', 'order_type':'DESC'}) }}"><i
+                            class="fas fa-caret-down"></i></a>
+            </th>
+            <th>Fecha de Nacimiento
+                <a class="float-right order-link" data-order-by="e.dateOfBirth" data-order-type="ASC"
+                   href="{{ path('security_user_index', {'order_by':'e.dateOfBirth', 'order_type':'ASC'}) }}"> <i
+                            class="fas fa-caret-up"></i></a>
+                <a class="float-right order-link" data-order-by="e.dateOfBirth" data-order-type="DESC"
+                   href="{{ path('security_user_index', {'order_by':'e.dateOfBirth', 'order_type':'DESC'}) }}"><i
+                            class="fas fa-caret-down"></i></a>
+            </th>
+            <th>Grupos
+                <a class="float-right order-link" data-order-by="g.group" data-order-type="ASC"
+                   href="{{ path('security_user_index', {'order_by':'g.group', 'order_type':'ASC'}) }}"> <i
+                            class="fas fa-caret-up"></i></a>
+                <a class="float-right order-link" data-order-by="g.group" data-order-type="DESC"
+                   href="{{ path('security_user_index', {'order_by':'g.group', 'order_type':'DESC'}) }}"><i
+                            class="fas fa-caret-down"></i></a>
+            </th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in  my_pager.currentPageResults %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ item.username }}</td>
+                <td>{{ item.email }}</td>
+                <td>{{ item.firstname }} {{ item.lastname }}</td>
+                <td>{{ item.dateOfBirth ? item.dateOfBirth|date('Y-m-d') : '' }}</td>
+                <td>{{ item.groups | join(',') }}</td>
+                <td>
+                    <a href="{{ path('security_user_show', {'id': item.id}) }}"><i class="fas fa-eye"></i></a>
+                    <a href="{{ path('security_user_edit', {'id': item.id}) }}"><i class="fas fa-pencil-alt"></i></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="{{ asset('js/filter_form.js') }}"></script>
+
+    <script src="{{ asset('js/security_user_list.js') }}"></script>
+{% endblock %}
