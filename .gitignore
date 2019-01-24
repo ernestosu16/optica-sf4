@@ -34,7 +34,6 @@
 /var/cache/*
 /var/logs/*
 /var/sessions/*
-!var/cache/.gitkeep
 !var/logs/.gitkeep
 !var/sessions/.gitkeep
 
@@ -69,4 +68,4 @@
 
 # Embedded web-server pid file
 /.web-server-pid
-
+/.env
