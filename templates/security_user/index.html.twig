@@ -21,6 +21,7 @@
         <thead>
         <tr>
             <th>#</th>
+            <th></th>
             <th>Usuario
                 <a class="float-right order-link" data-order-by="e.username" data-order-type="ASC"
                    href="{{ path('security_user_index', {'order_by':'e.username', 'order_type':'ASC'}) }}">
@@ -68,6 +69,10 @@
         {% for item in  my_pager.currentPageResults %}
             <tr>
                 <td>{{ loop.index }}</td>
+                <td>
+                    <img src="{{ item.image.size != 0 ? vich_uploader_asset(item, 'imageFile'): asset('img/user.png') }}"
+                         width="45px" height="45px"/>
+                </td>
                 <td>{{ item.username }}</td>
                 <td>{{ item.email }}</td>
                 <td>{{ item.firstname }} {{ item.lastname }}</td>
