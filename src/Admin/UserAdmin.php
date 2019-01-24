@@ -13,6 +13,7 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormTypeInterface;
 
 
@@ -138,9 +139,15 @@ class UserAdmin extends AbstractAdmin
             ->tab('User')
             ->with('General')
             ->add('username')
-            ->add('plainPassword', PasswordType::class, [
-                'required' => (!$this->getSubject() || null === $this->getSubject()->getId())
-            ])
+            ->add('plainPassword', RepeatedType::class, array(
+                    'type' => PasswordType::class,
+                    'options' => array('translation_domain' => 'FOSUserBundle'),
+                    'first_options' => array('label' => 'form.password'),
+                    'second_options' => array('label' => 'form.password_confirmation'),
+                    'invalid_message' => 'fos_user.password.mismatch',
+                    'required'    => false,
+                )
+            )
             ->add('enabled', null, ['required' => false])
             ->end()
             ->with('Profile')

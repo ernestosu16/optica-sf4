@@ -1,8 +1,15 @@
 sonata_admin:
-    title: 'Sonata Admin'
+    title: 'SGESOP'
+    title_logo: "./img/logo.png"
     dashboard:
-        blocks:
-            - { type: sonata.admin.block.admin_list, position: left }
+        groups:
+            sonata.admin.group.administration:
+                label:           sonata_administration
+                label_catalogue: SonataAdminBundle
+                icon: '<i class="glyphicon glyphicon-user"></i>'
+                items:
+                    - sonata.user.admin.user
+                    - sonata.user.admin.group
 
 sonata_block:
     blocks:
