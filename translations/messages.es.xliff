@@ -26,6 +26,14 @@
                 <source>office.children</source>
                 <target>Oficina Hija</target>
             </trans-unit>
+            <trans-unit id="Security Office List">
+                <source>Security Office List</source>
+                <target>Lista de oficinas</target>
+            </trans-unit>
+            <trans-unit id="Security Office Create">
+                <source>Security Office Create</source>
+                <target>Crear</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

@@ -69,15 +69,17 @@ class UserAdmin extends AbstractAdmin
     {
         $listMapper
             ->addIdentifier('username')
+            ->add('firstname')
+            ->add('lastname')
             ->add('groups')
             ->add('office')
             ->add('enabled', null, ['editable' => true])
             ->add('createdAt');
 
-        if ($this->isGranted('ROLE_ALLOWED_TO_SWITCH')) {
-            $listMapper
-                ->add('impersonating', 'string', ['template' => '@SonataUser/Admin/Field/impersonating.html.twig']);
-        }
+//        if ($this->isGranted('ROLE_ALLOWED_TO_SWITCH')) {
+//            $listMapper
+//                ->add('impersonating', 'string', ['template' => '@SonataUser/Admin/Field/impersonating.html.twig']);
+//        }
     }
 
     /**

@@ -614,8 +614,8 @@
                 <source>office</source>
                 <target>Oficina</target>
             </trans-unit>
-            <trans-unit id="list.label_office ">
-                <source>list.label_office </source>
+            <trans-unit id="list.label_office">
+                <source>list.label_office</source>
                 <target>Oficina</target>
             </trans-unit>
 
