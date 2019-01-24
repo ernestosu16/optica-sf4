@@ -25,6 +25,12 @@ class SecurityUser extends BaseUser
      */
     protected $id;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="SecurityOffice")
+     * @ORM\JoinColumn(name="office_id", referencedColumnName="id")
+     */
+    protected $office;
+
     public function getId(): ?string
     {
         return $this->id;
@@ -54,6 +60,26 @@ class SecurityUser extends BaseUser
         $this->image = new EmbeddedFile();
         $this->enabled = true;
     }
+
+    /**
+     * @return SecurityOffice
+     */
+    public function getOffice(): ?SecurityOffice
+    {
+        return $this->office;
+    }
+
+    /**
+     * @param SecurityOffice $office
+     * @return SecurityUser
+     */
+    public function setOffice(SecurityOffice $office): SecurityUser
+    {
+        $this->office = $office;
+
+        return $this;
+    }
+
 
     /**
      * If manually uploading a file (i.e. not using Symfony Form) ensure an instance

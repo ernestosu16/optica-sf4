@@ -1,0 +1,6 @@
+services:
+    sonata.user.admin.office:
+        class: App\Admin\OfficeAdmin
+        arguments: [~, App\Entity\SecurityOffice, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: offices }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Admin;
 
 
+use App\Entity\SecurityOffice;
 use App\Entity\SecurityUser;
 use FOS\UserBundle\Model\UserManagerInterface;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
@@ -12,6 +13,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\AdminBundle\Show\ShowMapper;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormTypeInterface;
@@ -68,6 +70,7 @@ class UserAdmin extends AbstractAdmin
         $listMapper
             ->addIdentifier('username')
             ->add('groups')
+            ->add('office')
             ->add('enabled', null, ['editable' => true])
             ->add('createdAt');
 
@@ -153,6 +156,12 @@ class UserAdmin extends AbstractAdmin
             ->with('Profile')
             ->add('firstname', null, ['required' => true])
             ->add('lastname', null, ['required' => true])
+            ->add('office', EntityType::class, [
+                'class' => SecurityOffice::class,
+                'placeholder' => '',
+                'label' => 'office',
+                'required' => true
+            ])
             ->end()
             ->end()
             ->tab('Security')

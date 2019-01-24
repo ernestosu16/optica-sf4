@@ -10,6 +10,7 @@ sonata_admin:
                 items:
                     - sonata.user.admin.user
                     - sonata.user.admin.group
+                    - sonata.user.admin.office
 
 sonata_block:
     blocks:
