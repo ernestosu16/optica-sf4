@@ -1,6 +1,8 @@
 .idea
 !var/cache/.gitkeep
 !var/log/.gitkeep
+public/uploads/media/
+public/uploads/images/
 ###> symfony/framework-bundle ###
 .env
 /public/bundles/

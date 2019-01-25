@@ -13,6 +13,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\AdminBundle\Show\ShowMapper;
+use Sonata\MediaBundle\Form\Type\MediaType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -156,6 +157,10 @@ class UserAdmin extends AbstractAdmin
             ->add('enabled', null, ['required' => false])
             ->end()
             ->with('Profile')
+            ->add('media', MediaType::class, array(
+                'provider' => 'sonata.media.provider.image',
+                'context' => 'users'
+            ))
             ->add('firstname', null, ['required' => true])
             ->add('lastname', null, ['required' => true])
             ->add('office', EntityType::class, [

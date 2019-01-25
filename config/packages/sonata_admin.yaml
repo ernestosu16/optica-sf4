@@ -1,6 +1,8 @@
 sonata_admin:
     title: 'SGESOP'
     title_logo: "./img/logo.png"
+    security:
+        handler: sonata.admin.security.handler.role
     dashboard:
         groups:
             sonata.admin.group.administration:
@@ -11,6 +13,13 @@ sonata_admin:
                     - sonata.user.admin.user
                     - sonata.user.admin.group
                     - sonata.user.admin.office
+            sonata.admin.group.content:
+                label:           sonata_media
+                label_catalogue: SonataMediaBundle
+                icon:            '<i class="fa fa-image"></i>'
+                items:
+                    - sonata.media.admin.media
+                    - sonata.media.admin.gallery
 
 sonata_block:
     blocks:

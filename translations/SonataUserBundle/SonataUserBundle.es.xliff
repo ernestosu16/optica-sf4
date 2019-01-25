@@ -618,6 +618,10 @@
                 <source>list.label_office</source>
                 <target>Oficina</target>
             </trans-unit>
+            <trans-unit id="form.label_media">
+                <source>form.label_media</source>
+                <target>Image</target>
+            </trans-unit>
 
         </body>
     </file>

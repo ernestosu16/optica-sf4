@@ -1,14 +1,23 @@
 sonata_media:
+    class:
+        media: App\Application\Sonata\MediaBundle\Entity\Media
+        gallery: App\Application\Sonata\MediaBundle\Entity\Gallery
+        gallery_has_media: App\Application\Sonata\MediaBundle\Entity\GalleryHasMedia
+        category: App\Application\Sonata\ClassificationBundle\Entity\Category
     default_context: default
     db_driver: doctrine_orm # or doctrine_mongodb, doctrine_phpcr it is mandatory to choose one here
     contexts:
         default:
             providers:
-                - sonata.media.provider.dailymotion
-                - sonata.media.provider.youtube
                 - sonata.media.provider.image
                 - sonata.media.provider.file
-                - sonata.media.provider.vimeo
+
+            formats:
+                small: { width: 100 , quality: 70}
+                big:   { width: 500 , quality: 70}
+        users:
+            providers:
+                - sonata.media.provider.image
 
             formats:
                 small: { width: 100 , quality: 70}
@@ -16,10 +25,10 @@ sonata_media:
 
     cdn:
         server:
-            path: /upload/media
+            path: /uploads/media
 
     filesystem:
         local:
             # Directory for uploads should be writable
-            directory: "%kernel.project_dir%/public/upload/media"
-            create: false
+            directory: "%kernel.project_dir%/public/uploads/media"
+            create: true
