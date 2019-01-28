@@ -121,8 +121,14 @@ class UserAdmin extends AbstractAdmin
         // define group zoning
         $formMapper
             ->tab('User')
-            ->with('Profile', ['class' => 'col-md-6'])->end()
-            ->with('General', ['class' => 'col-md-6'])->end()
+            ->with('label.image',['class' => 'col-md-4'])
+            ->add('media', MediaType::class, array(
+                'provider' => 'sonata.media.provider.image',
+                'context' => 'users'
+            ))
+            ->end()
+            ->with('Profile', ['class' => 'col-md-4'])->end()
+            ->with('General', ['class' => 'col-md-4'])->end()
             ->end()
             ->tab('Security')
             ->with('Groups', ['class' => 'col-md-12'])->end()
@@ -157,10 +163,6 @@ class UserAdmin extends AbstractAdmin
             ->add('enabled', null, ['required' => false])
             ->end()
             ->with('Profile')
-            ->add('media', MediaType::class, array(
-                'provider' => 'sonata.media.provider.image',
-                'context' => 'users'
-            ))
             ->add('firstname', null, ['required' => true])
             ->add('lastname', null, ['required' => true])
             ->add('office', EntityType::class, [

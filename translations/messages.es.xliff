@@ -34,6 +34,30 @@
                 <source>Security Office Create</source>
                 <target>Crear</target>
             </trans-unit>
+            <trans-unit id="label.image">
+                <source>label.image</source>
+                <target>Imagen</target>
+            </trans-unit>
+            <trans-unit id="Media">
+                <source>Media</source>
+                <target>Media</target>
+            </trans-unit>
+            <trans-unit id="default">
+                <source>default</source>
+                <target>Por Defecto</target>
+            </trans-unit>
+            <trans-unit id="users">
+                <source>users</source>
+                <target>Usuarios</target>
+            </trans-unit>
+            <trans-unit id="office">
+                <source>office</source>
+                <target>Oficina</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.provider.image">
+                <source>sonata.media.provider.image</source>
+                <target>Imagen</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

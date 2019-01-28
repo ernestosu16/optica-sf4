@@ -6,6 +6,7 @@ use App\Entity\SecurityOffice;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\MediaBundle\Form\Type\MediaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class OfficeAdmin extends AbstractAdmin
@@ -16,13 +17,21 @@ class OfficeAdmin extends AbstractAdmin
         $entity = $formMapper->getAdmin()->getSubject();
 
         $formMapper
+            ->with('label.image',['class' => 'col-md-4'])
+            ->add('media', MediaType::class, array(
+                'provider' => 'sonata.media.provider.image',
+                'context' => 'office'
+            ))
+            ->end()
+            ->with('General',['class' => 'col-md-8'])
             ->add('name', TextType::class, [
                 'label' => 'office.name',
             ])
             ->add('description', TextType::class, [
                 'label' => 'office.description',
                 'required' => false,
-            ]);
+            ])
+            ->end();
     }
 
     /**

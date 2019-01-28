@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Sonata\MediaBundle\Model\MediaInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\SecurityOfficeRepository")
@@ -16,6 +17,12 @@ class SecurityOffice
      * @ORM\Column(type="integer")
      */
     protected $id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Application\Sonata\MediaBundle\Entity\Media", cascade={"persist"})
+     * @ORM\JoinColumn(referencedColumnName="id", onDelete="SET NULL")
+     */
+    protected $media;
 
     /**
      * @var string
@@ -66,6 +73,22 @@ class SecurityOffice
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    /**
+     * @param MediaInterface $media
+     */
+    public function setMedia(MediaInterface $media)
+    {
+        $this->media = $media;
+    }
+
+    /**
+     * @return MediaInterface
+     */
+    public function getMedia()
+    {
+        return $this->media;
     }
 
     /**
