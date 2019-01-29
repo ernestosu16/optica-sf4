@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="es" datatype="plaintext" original="">
+        <body>
+            <trans-unit id="nomenclador">
+                <source>nomenclador</source>
+                <target>Nomenclador</target>
+            </trans-unit>
+            <trans-unit id="nomenclador.accesorio">
+                <source>nomenclador.accesorio</source>
+                <target>Accesorio</target>
+            </trans-unit>
+            <trans-unit id="nomenclador.add">
+                <source>nomenclador.add</source>
+                <target>ADD</target>
+            </trans-unit>
+            <trans-unit id="nomenclador.agudeza_visual">
+                <source>nomenclador.agudeza_visual</source>
+                <target>Agudeza Visual</target>
+            </trans-unit>
+            <trans-unit id="nomenclador.armadura">
+                <source>nomenclador.armadura</source>
+                <target>Armadura</target>
+            </trans-unit>
+            <trans-unit id="nomenclador.cristal">
+                <source>nomenclador.cristal</source>
+                <target>Cristal</target>
+            </trans-unit>
+            <trans-unit id="nomenclador.cristal_semiterminado">
+                <source>nomenclador.cristal_semiterminado</source>
+                <target>Cristal Semi-Terminado</target>
+            </trans-unit>
+            <trans-unit id="nomenclador.cristal_semiterminado_tipo">
+                <source>nomenclador.cristal_semiterminado_tipo</source>
+                <target>Cristal Tipo Semi-Terminado</target>
+            </trans-unit>
+            <trans-unit id="nomenclador.dp">
+                <source>nomenclador.dp</source>
+                <target>DP</target>
+            </trans-unit>
+            <trans-unit id="nomenclador.eje">
+                <source>nomenclador.eje</source>
+                <target>EJE</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
