@@ -20,6 +20,20 @@ sonata_admin:
                 items:
                     - sonata.media.admin.media
                     - sonata.media.admin.gallery
+            sonata.admin.nomenclador:
+                label:           nomenclador
+                label_catalogue: NomencladorBundle
+                icon:            '<i class="fa fa-gears"></i>'
+                items:
+                    - sonata.admin.nomenclador.accesorio
+                    - sonata.admin.nomenclador.add
+                    - sonata.admin.nomenclador.agudeza_visual
+                    - sonata.admin.nomenclador.armadura
+                    - sonata.admin.nomenclador.cristal
+                    - sonata.admin.nomenclador.cristal_semiterminado
+                    - sonata.admin.nomenclador.cristal_semiterminado_tipo
+                    - sonata.admin.nomenclador.dp
+                    - sonata.admin.nomenclador.eje
 
 sonata_block:
     blocks:
