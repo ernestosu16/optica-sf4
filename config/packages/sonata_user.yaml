@@ -5,6 +5,16 @@ sonata_user:
   table:
     user_group: security_user_user_group
 
+  admin: # Admin Classes
+    user:
+      class:          App\Admin\UserAdmin
+      controller:     SonataAdminBundle:CRUD
+      translation:    SonataUserBundle
+    group:
+      class:          App\Admin\GroupAdmin
+      controller:     SonataAdminBundle:CRUD
+      translation:    SonataUserBundle
+
 parameters:
   sonata.user.admin.user.entity: 'App\Entity\SecurityUser'
   sonata.user.admin.group.entity: 'App\Entity\SecurityGroup'

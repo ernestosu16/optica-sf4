@@ -1,4 +1,7 @@
 {
+    "behat/transliterator": {
+        "version": "v1.2.0"
+    },
     "cocur/slugify": {
         "version": "v3.1"
     },
@@ -131,11 +134,38 @@
     "guzzlehttp/psr7": {
         "version": "1.5.2"
     },
+    "imagine/imagine": {
+        "version": "v0.7.1"
+    },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
     },
+    "jms/metadata": {
+        "version": "1.7.0"
+    },
+    "jms/parser-lib": {
+        "version": "1.0.0"
+    },
+    "jms/serializer": {
+        "version": "1.13.0"
+    },
+    "jms/serializer-bundle": {
+        "version": "2.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "2.0",
+            "ref": "fe60ce509ef04a3f40da96e3979bc8d9b13b2372"
+        }
+    },
+    "knplabs/gaufrette": {
+        "version": "v0.8.0"
+    },
     "knplabs/knp-components": {
         "version": "v1.3.10"
+    },
+    "knplabs/knp-gaufrette-bundle": {
+        "version": "v0.5.3"
     },
     "knplabs/knp-menu": {
         "version": "2.3.0"
@@ -146,8 +176,23 @@
     "knplabs/knp-paginator-bundle": {
         "version": "v2.8.0"
     },
+    "kriswallsmith/buzz": {
+        "version": "v0.16.1"
+    },
+    "league/flysystem": {
+        "version": "1.0.49"
+    },
     "lexik/form-filter-bundle": {
         "version": "v5.0.7"
+    },
+    "liip/imagine-bundle": {
+        "version": "1.8",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "1.8",
+            "ref": "523b4b0cfb88dc8637cb56e427e6be7718bdce32"
+        }
     },
     "monolog/monolog": {
         "version": "1.24.0"
@@ -167,8 +212,20 @@
     "ocramius/proxy-manager": {
         "version": "2.1.1"
     },
+    "oneup/flysystem-bundle": {
+        "version": "3.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "3.0",
+            "ref": "0eb87bba411c227da027fe5f7c1dc7954b02f242"
+        }
+    },
     "pagerfanta/pagerfanta": {
         "version": "v2.0.1"
+    },
+    "phpcollection/phpcollection": {
+        "version": "0.5.0"
     },
     "phpdocumentor/reflection-common": {
         "version": "1.0.1"
@@ -178,6 +235,9 @@
     },
     "phpdocumentor/type-resolver": {
         "version": "0.4.0"
+    },
+    "phpoption/phpoption": {
+        "version": "1.5.0"
     },
     "psr/cache": {
         "version": "1.0.1"
@@ -250,6 +310,15 @@
     },
     "sonata-project/google-authenticator": {
         "version": "2.2.0"
+    },
+    "sonata-project/media-bundle": {
+        "version": "3.13",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "3.13",
+            "ref": "e25412e53b20827db07abb6f2aa0b8e4d26c284c"
+        }
     },
     "sonata-project/user-bundle": {
         "version": "4.2.3"
@@ -544,6 +613,15 @@
     },
     "twig/twig": {
         "version": "v2.6.0"
+    },
+    "vich/uploader-bundle": {
+        "version": "1.5",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "1.5",
+            "ref": "c4f5755b37fb65b9c6a3cbdae91205c15a137ed4"
+        }
     },
     "webmozart/assert": {
         "version": "1.4.0"

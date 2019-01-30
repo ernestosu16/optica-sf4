@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+    <file source-language="en" datatype="plaintext" original="messages.en.xliff">
+        <body>
+            <trans-unit id="message_close">
+                <source>message_close</source>
+                <target>Cerrar mensaje</target>
+            </trans-unit>
+            <trans-unit id="offices">
+                <source>offices</source>
+                <target>Oficinas</target>
+            </trans-unit>
+            <trans-unit id="office.name">
+                <source>office.name</source>
+                <target>Nombre</target>
+            </trans-unit>
+            <trans-unit id="office.description">
+                <source>office.description</source>
+                <target>Descripción</target>
+            </trans-unit>
+            <trans-unit id="office.parent">
+                <source>office.parent</source>
+                <target>Oficina Principal</target>
+            </trans-unit>
+            <trans-unit id="office.children">
+                <source>office.children</source>
+                <target>Oficina Hija</target>
+            </trans-unit>
+            <trans-unit id="Security Office List">
+                <source>Security Office List</source>
+                <target>Lista de oficinas</target>
+            </trans-unit>
+            <trans-unit id="Security Office Create">
+                <source>Security Office Create</source>
+                <target>Crear</target>
+            </trans-unit>
+            <trans-unit id="label.image">
+                <source>label.image</source>
+                <target>Imagen</target>
+            </trans-unit>
+            <trans-unit id="Media">
+                <source>Media</source>
+                <target>Media</target>
+            </trans-unit>
+            <trans-unit id="default">
+                <source>default</source>
+                <target>Por Defecto</target>
+            </trans-unit>
+            <trans-unit id="users">
+                <source>users</source>
+                <target>Usuarios</target>
+            </trans-unit>
+            <trans-unit id="office">
+                <source>office</source>
+                <target>Oficina</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.provider.image">
+                <source>sonata.media.provider.image</source>
+                <target>Imagen</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

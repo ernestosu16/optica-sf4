@@ -1,3 +1,6 @@
+imports:
+    - { resource: '../src/Resources/config/config.yml' }
+
 # This file is the entry point to configure your own services.
 # Files in the packages/ subdirectory configure your dependencies.
 
@@ -5,6 +8,8 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: 'en'
+    uploads_directory: '%kernel.project_dir%/public/uploads/'
+    sonata.media.admin.media.class: 'App\Admin\MediaAdmin'
 
 services:
     # default configuration for services in *this* file
@@ -19,7 +24,7 @@ services:
     # this creates a service per class whose id is the fully-qualified class name
     App\:
         resource: '../src/*'
-        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php,Application}'
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
@@ -29,6 +34,18 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    #-------------------------------------------------------------------------------------------------------------------
+
+#    App\Service\FileUploader:
+#        arguments:
+#            $targetDirectory: '%uploads_directory%'
+#
+#    App\EventListener\SecurityUserImageUploadListener:
+#        tags:
+#        - { name: doctrine.event_listener, event: prePersist }
+#        - { name: doctrine.event_listener, event: preUpdate }
+#        - { name: doctrine.event_listener, event: postLoad }
 
     #-------------------------------------------------------------------------------------------------------------------
 
