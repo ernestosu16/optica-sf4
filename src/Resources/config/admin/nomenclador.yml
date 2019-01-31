@@ -1,0 +1,72 @@
+services:
+    sonata.admin.nomenclador.accesorio:
+        class: App\Admin\NomencladorAccesorioAdmin
+        arguments: [~, App\Entity\Nomenclador\NomencladorAccesorio, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: nomenclador.accesorios }
+        calls:
+            - [ setTranslationDomain, ["NomencladorBundle"] ]
+
+    sonata.admin.nomenclador.add:
+        class: App\Admin\NomencladorAddAdmin
+        arguments: [~, App\Entity\Nomenclador\NomencladorAdd, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: nomenclador.add }
+        calls:
+            - [ setTranslationDomain, ["NomencladorBundle"] ]
+
+    sonata.admin.nomenclador.agudeza_visual:
+        class: App\Admin\NomencladorAgudezaVisualAdmin
+        arguments: [~, App\Entity\Nomenclador\NomencladorAgudezaVisual, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: nomenclador.agudeza_visual }
+        calls:
+            - [ setTranslationDomain, ["NomencladorBundle"] ]
+
+    sonata.admin.nomenclador.armadura:
+        class: App\Admin\NomencladorArmaduraAdmin
+        arguments: [~, App\Entity\Nomenclador\NomencladorArmadura, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: nomenclador.armaduras }
+        calls:
+            - [ setTranslationDomain, ["NomencladorBundle"] ]
+
+    sonata.admin.nomenclador.cristal:
+        class: App\Admin\NomencladorCristalAdmin
+        arguments: [~, App\Entity\Nomenclador\NomencladorCristal, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: nomenclador.cristales }
+        calls:
+            - [ setTranslationDomain, ["NomencladorBundle"] ]
+
+    sonata.admin.nomenclador.cristal_semiterminado:
+        class: App\Admin\NomencladorCristalSemiterminadoAdmin
+        arguments: [~, App\Entity\Nomenclador\NomencladorCristalSemiterminado, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: nomenclador.cristal_semiterminado }
+        calls:
+            - [ setTranslationDomain, ["NomencladorBundle"] ]
+
+    sonata.admin.nomenclador.cristal_semiterminado_tipo:
+        class: App\Admin\NomencladorCristalSemiterminadoTipoAdmin
+        arguments: [~, App\Entity\Nomenclador\NomencladorCristalSemiterminadoTipo, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: nomenclador.cristal_semiterminado_tipo }
+        calls:
+            - [ setTranslationDomain, ["NomencladorBundle"] ]
+
+    sonata.admin.nomenclador.dp:
+        class: App\Admin\NomencladorDpAdmin
+        arguments: [~, App\Entity\Nomenclador\NomencladorDp, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: nomenclador.dp }
+        calls:
+            - [ setTranslationDomain, ["NomencladorBundle"] ]
+
+    sonata.admin.nomenclador.eje:
+        class: App\Admin\NomencladorEjeAdmin
+        arguments: [~, App\Entity\Nomenclador\NomencladorEje, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: nomenclador.eje }
+        calls:
+            - [ setTranslationDomain, ["NomencladorBundle"] ]

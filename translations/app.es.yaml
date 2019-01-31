@@ -1,4 +1,9 @@
 App Clasificador List: 'Lista de Clasificadores'
+sonata:
+    admin:
+        nomenclador: 'Nomenclador'
+        producto_optica: 'Producto de Óptica'
+        producto_taller: 'Producto de Taller'
 app:
     trabajadores: 'Trabajadores'
     trabajador: 'Trabajador'
