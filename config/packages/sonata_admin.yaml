@@ -13,6 +13,9 @@ sonata_admin:
                     - sonata.user.admin.user
                     - sonata.user.admin.group
                     - sonata.user.admin.office
+                    - sonata.admin.app.clasificador
+                    - sonata.admin.app.producto
+                    - sonata.admin.app.trabajador
             sonata.admin.group.content:
                 label:           sonata_media
                 label_catalogue: SonataMediaBundle

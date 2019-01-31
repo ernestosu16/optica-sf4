@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Application\Sonata\MediaBundle\Entity\Media;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Sonata\MediaBundle\Model\MediaInterface;
@@ -77,10 +78,13 @@ class SecurityOffice
 
     /**
      * @param MediaInterface $media
+     * @return SecurityOffice
      */
-    public function setMedia(MediaInterface $media)
+    public function setMedia(MediaInterface $media): SecurityOffice
     {
         $this->media = $media;
+
+        return $this;
     }
 
     /**
