@@ -1,0 +1,6 @@
+services:
+    App\Controller\BackupsController:
+        public: true
+        arguments:
+            $twig: '@twig'
+            $container: '@service_container'

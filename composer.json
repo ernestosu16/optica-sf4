@@ -5,6 +5,7 @@
     "license": "proprietary",
     "require": {
         "php": "^7.2.3",
+        "ext-mysqli": "*",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "doctrine/doctrine-fixtures-bundle": "^3.1",
