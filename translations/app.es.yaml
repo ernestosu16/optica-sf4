@@ -1,9 +1,11 @@
 App Clasificador List: 'Lista de Clasificadores'
+App Paciente List: 'Lista de paciente'
+
 sonata:
     admin:
-        nomenclador: 'Nomenclador'
-        producto_optica: 'Producto de Óptica'
-        producto_taller: 'Producto de Taller'
+        nomenclador: 'Nomencladores'
+        producto_optica: 'Productos de la Óptica'
+        producto_taller: 'Productos del Taller'
 app:
     trabajadores: 'Trabajadores'
     trabajador: 'Trabajador'
@@ -20,3 +22,8 @@ app:
     precio: 'Precio'
     observaciones: 'Observaciones'
     descriminator: 'Descriminator'
+    nombre: 'Nombre'
+    telefono_contacto: 'Teléfono'
+    correo_contacto: 'Correo Electrónico'
+    historia_clinica: 'Historia Clínica'
+    pacientes: 'Pacientes'

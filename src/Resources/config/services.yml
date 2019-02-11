@@ -9,3 +9,5 @@ services:
         class: App\EventListener\MenuBuilderListener
         tags:
             - { name: kernel.event_listener, event: sonata.admin.event.configure.menu.sidebar, method: addMenuItems }
+        arguments:
+          ['@service_container']

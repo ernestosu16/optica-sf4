@@ -12,11 +12,11 @@
             </trans-unit>
             <trans-unit id="nomenclador.add">
                 <source>nomenclador.add</source>
-                <target>Add</target>
+                <target>Adds</target>
             </trans-unit>
             <trans-unit id="nomenclador.agudeza_visual">
                 <source>nomenclador.agudeza_visual</source>
-                <target>Agudeza Visual</target>
+                <target>Agudezas Visuales</target>
             </trans-unit>
             <trans-unit id="nomenclador.armaduras">
                 <source>nomenclador.armaduras</source>
@@ -32,15 +32,15 @@
             </trans-unit>
             <trans-unit id="nomenclador.cristal_semiterminado_tipo">
                 <source>nomenclador.cristal_semiterminado_tipo</source>
-                <target>Cristal Tipo Semi-Terminado</target>
+                <target>Tipos de Cristales S.t.</target>
             </trans-unit>
             <trans-unit id="nomenclador.dp">
                 <source>nomenclador.dp</source>
-                <target>DP</target>
+                <target>Dps</target>
             </trans-unit>
             <trans-unit id="nomenclador.eje">
                 <source>nomenclador.eje</source>
-                <target>EJE</target>
+                <target>Ejes</target>
             </trans-unit>
         </body>
     </file>
