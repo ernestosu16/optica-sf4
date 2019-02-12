@@ -39,4 +39,45 @@ class AppArmadura
      * @ORM\Column(name="altura", type="integer")
      */
     private $altura;
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getAro(): ?int
+    {
+        return $this->aro;
+    }
+
+    public function setAro(int $aro): self
+    {
+        $this->aro = $aro;
+
+        return $this;
+    }
+
+    public function getPuente(): ?int
+    {
+        return $this->puente;
+    }
+
+    public function setPuente(int $puente): self
+    {
+        $this->puente = $puente;
+
+        return $this;
+    }
+
+    public function getAltura(): ?int
+    {
+        return $this->altura;
+    }
+
+    public function setAltura(int $altura): self
+    {
+        $this->altura = $altura;
+
+        return $this;
+    }
 }

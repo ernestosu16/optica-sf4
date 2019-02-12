@@ -36,4 +36,64 @@ class AppRecetaComponente extends _BaseEntity_
      */
     protected $eje;
 
+    public function getTinteId(): ?int
+    {
+        return $this->tinte_id;
+    }
+
+    public function setTinteId(int $tinte_id): self
+    {
+        $this->tinte_id = $tinte_id;
+
+        return $this;
+    }
+
+    public function getEje(): ?float
+    {
+        return $this->eje;
+    }
+
+    public function setEje(float $eje): self
+    {
+        $this->eje = $eje;
+
+        return $this;
+    }
+
+    public function getReceta(): ?AppReceta
+    {
+        return $this->receta;
+    }
+
+    public function setReceta(?AppReceta $receta): self
+    {
+        $this->receta = $receta;
+
+        return $this;
+    }
+
+    public function getArmadura(): ?AppArmadura
+    {
+        return $this->armadura;
+    }
+
+    public function setArmadura(?AppArmadura $armadura): self
+    {
+        $this->armadura = $armadura;
+
+        return $this;
+    }
+
+    public function getCristal(): ?AppCristal
+    {
+        return $this->cristal;
+    }
+
+    public function setCristal(?AppCristal $cristal): self
+    {
+        $this->cristal = $cristal;
+
+        return $this;
+    }
+
 }
