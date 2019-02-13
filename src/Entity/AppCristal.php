@@ -11,6 +11,12 @@ use Doctrine\ORM\Mapping as ORM;
 class AppCristal
 {
     /**
+     * @var
+     * @ORM\ManyToOne(targetEntity="App\Entity\AppProducto", inversedBy="cristales")
+     */
+    protected $producto;
+
+    /**
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
@@ -77,6 +83,18 @@ class AppCristal
     public function setCilindro(float $cilindro): self
     {
         $this->cilindro = $cilindro;
+
+        return $this;
+    }
+
+    public function getProducto(): ?AppProducto
+    {
+        return $this->producto;
+    }
+
+    public function setProducto(?AppProducto $producto): self
+    {
+        $this->producto = $producto;
 
         return $this;
     }

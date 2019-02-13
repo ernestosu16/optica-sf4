@@ -3,11 +3,10 @@
  * Created by PhpStorm.
  * User: ernestosr
  * Date: 12/02/2019
- * Time: 05:24 PM
+ * Time: 11:05 PM
  */
 
 namespace App\Admin;
-
 
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -15,7 +14,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 
-class AppCristalAdmin extends AbstractAdmin
+class AppAccesorioAdmin extends AbstractAdmin
 {
     /**
      * @param DatagridMapper $datagridMapper
@@ -23,9 +22,8 @@ class AppCristalAdmin extends AbstractAdmin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-            ->add('grosor')
-            ->add('esfera')
-            ->add('cilindro');
+            ->add('producto')
+            ->add('nombre');
     }
 
     /**
@@ -36,9 +34,7 @@ class AppCristalAdmin extends AbstractAdmin
 
         $listMapper
             ->add('producto')
-            ->add('grosor')
-            ->add('esfera')
-            ->add('cilindro')
+            ->add('nombre')
             ->add('_action', null, array(
                 'label' => 'Acciones',
                 'row_align' => 'right',
@@ -56,9 +52,7 @@ class AppCristalAdmin extends AbstractAdmin
         $formMapper
             ->with('Datos Primarios', array('class' => 'col-md-4'))
             ->add('producto')
-            ->add('grosor')
-            ->add('esfera')
-            ->add('cilindro')
+            ->add('nombre')
             ->end();
     }
 
@@ -69,8 +63,6 @@ class AppCristalAdmin extends AbstractAdmin
     {
         $showMapper
             ->add('producto')
-            ->add('grosor')
-            ->add('esfera')
-            ->add('cilindro');
+            ->add('nombre');
     }
 }

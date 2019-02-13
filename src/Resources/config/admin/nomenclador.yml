@@ -1,5 +1,4 @@
 services:
-
     sonata.admin.nomenclador.armadura:
         class: App\Admin\AppArmaduraAdmin
         arguments: [~, App\Entity\AppArmadura, ~]
@@ -7,10 +6,24 @@ services:
             - { name: sonata.admin, manager_type: orm, label: nomenclador.armaduras }
         calls:
             - [ setTranslationDomain, ["NomencladorBundle"] ]
+    sonata.admin.nomenclador.accesorio:
+        class: App\Admin\AppAccesorioAdmin
+        arguments: [~, App\Entity\AppAccesorio, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: nomenclador.accesorios }
+        calls:
+            - [ setTranslationDomain, ["NomencladorBundle"] ]
     sonata.admin.nomenclador.cristal:
         class: App\Admin\AppCristalAdmin
         arguments: [~, App\Entity\AppCristal, ~]
         tags:
             - { name: sonata.admin, manager_type: orm, label: nomenclador.cristales }
+        calls:
+            - [ setTranslationDomain, ["NomencladorBundle"] ]
+    sonata.admin.nomenclador.tinte_cristal:
+        class: App\Admin\AppTinteCristalAdmin
+        arguments: [~, App\Entity\AppTinteCristal, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: nomenclador.tinte_cristales }
         calls:
             - [ setTranslationDomain, ["NomencladorBundle"] ]

@@ -40,6 +40,13 @@ class AppClasificadorAdmin extends AbstractAdmin
             ])
             ->add('descripcion', TextType::class, [
                 'label' => 'app.descripcion',
-            ]);
+            ])
+            ->add('_action', null, array(
+                'label' => 'Acciones',
+                'row_align' => 'right',
+                'header_style' => 'width: 190px',
+                'actions' => array(
+                    'edit' => array(),
+                    'delete' => array())));;
     }
 }

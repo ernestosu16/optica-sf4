@@ -26,9 +26,9 @@ class AppRecetaComponente extends _BaseEntity_
     protected $cristal;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity="App\Entity\AppTinteCristal", inversedBy="receta_componentes")
      */
-    protected $tinte_id;
+    protected $tinte_cristal;
 
     /**
      * @var string
@@ -92,6 +92,18 @@ class AppRecetaComponente extends _BaseEntity_
     public function setCristal(?AppCristal $cristal): self
     {
         $this->cristal = $cristal;
+
+        return $this;
+    }
+
+    public function getTinteCristal(): ?AppTinteCristal
+    {
+        return $this->tinte_cristal;
+    }
+
+    public function setTinteCristal(?AppTinteCristal $tinte_cristal): self
+    {
+        $this->tinte_cristal = $tinte_cristal;
 
         return $this;
     }

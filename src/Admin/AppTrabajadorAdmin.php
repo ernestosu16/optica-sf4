@@ -57,7 +57,14 @@ class AppTrabajadorAdmin extends AbstractAdmin
             ])
             ->add('cargo', EntityType::class, [
                 'label' => 'app.cargo',
-            ]);
+            ])
+            ->add('_action', null, array(
+                'label' => 'Acciones',
+                'row_align' => 'right',
+                'header_style' => 'width: 190px',
+                'actions' => array(
+                    'edit' => array(),
+                    'delete' => array())));;
     }
 
 }

@@ -27,9 +27,9 @@ class AppOrdenServicio extends _BaseEntity_
 
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity="App\Entity\AppTinteCristal", inversedBy="orden_servicios")
      */
-    protected $tinte_id;
+    protected $tinte_cristal;
 
 
     /**
@@ -344,6 +344,18 @@ class AppOrdenServicio extends _BaseEntity_
     public function setTrabajador(?AppTrabajador $trabajador): self
     {
         $this->trabajador = $trabajador;
+
+        return $this;
+    }
+
+    public function getTinteCristal(): ?AppTinteCristal
+    {
+        return $this->tinte_cristal;
+    }
+
+    public function setTinteCristal(?AppTinteCristal $tinte_cristal): self
+    {
+        $this->tinte_cristal = $tinte_cristal;
 
         return $this;
     }

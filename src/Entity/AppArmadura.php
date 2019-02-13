@@ -20,6 +20,12 @@ class AppArmadura
     private $id;
 
     /**
+     * @var
+     * @ORM\ManyToOne(targetEntity="App\Entity\AppProducto", inversedBy="armaduras")
+     */
+    protected $producto;
+
+    /**
      * @var int
      *
      * @ORM\Column(name="aro", type="integer")
@@ -77,6 +83,18 @@ class AppArmadura
     public function setAltura(int $altura): self
     {
         $this->altura = $altura;
+
+        return $this;
+    }
+
+    public function getProducto(): ?AppProducto
+    {
+        return $this->producto;
+    }
+
+    public function setProducto(?AppProducto $producto): self
+    {
+        $this->producto = $producto;
 
         return $this;
     }

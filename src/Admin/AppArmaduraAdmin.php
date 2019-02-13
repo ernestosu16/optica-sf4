@@ -17,6 +17,7 @@ class AppArmaduraAdmin extends AbstractAdmin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
+            ->add('producto')
             ->add('aro')
             ->add('puente')
             ->add('altura');
@@ -29,6 +30,7 @@ class AppArmaduraAdmin extends AbstractAdmin
     {
 
         $listMapper
+            ->add('producto')
             ->add('aro')
             ->add('puente')
             ->add('altura')
@@ -48,6 +50,7 @@ class AppArmaduraAdmin extends AbstractAdmin
     {
         $formMapper
             ->with('Datos Primarios', array('class' => 'col-md-4'))
+            ->add('producto')
             ->add('aro')
             ->add('puente')
             ->add('altura')
@@ -60,6 +63,7 @@ class AppArmaduraAdmin extends AbstractAdmin
     protected function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
+            ->add('producto')
             ->add('codigo')
             ->add('modelo')
             ->add('aro');

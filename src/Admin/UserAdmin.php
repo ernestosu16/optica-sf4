@@ -75,7 +75,14 @@ class UserAdmin extends AbstractAdmin
             ->add('groups')
             ->add('office')
             ->add('enabled', null, ['editable' => true])
-            ->add('createdAt');
+            ->add('createdAt')
+            ->add('_action', null, array(
+                'label' => 'Acciones',
+                'row_align' => 'right',
+                'header_style' => 'width: 190px',
+                'actions' => array(
+                    'edit' => array(),
+                    'delete' => array())));;
 
 //        if ($this->isGranted('ROLE_ALLOWED_TO_SWITCH')) {
 //            $listMapper

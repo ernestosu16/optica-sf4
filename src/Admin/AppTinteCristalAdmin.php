@@ -15,7 +15,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 
-class AppCristalAdmin extends AbstractAdmin
+class AppTinteCristalAdmin extends AbstractAdmin
 {
     /**
      * @param DatagridMapper $datagridMapper
@@ -23,9 +23,8 @@ class AppCristalAdmin extends AbstractAdmin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-            ->add('grosor')
-            ->add('esfera')
-            ->add('cilindro');
+            ->add('producto')
+            ->add('nombre');
     }
 
     /**
@@ -36,9 +35,7 @@ class AppCristalAdmin extends AbstractAdmin
 
         $listMapper
             ->add('producto')
-            ->add('grosor')
-            ->add('esfera')
-            ->add('cilindro')
+            ->add('nombre')
             ->add('_action', null, array(
                 'label' => 'Acciones',
                 'row_align' => 'right',
@@ -56,9 +53,7 @@ class AppCristalAdmin extends AbstractAdmin
         $formMapper
             ->with('Datos Primarios', array('class' => 'col-md-4'))
             ->add('producto')
-            ->add('grosor')
-            ->add('esfera')
-            ->add('cilindro')
+            ->add('nombre')
             ->end();
     }
 
@@ -69,8 +64,6 @@ class AppCristalAdmin extends AbstractAdmin
     {
         $showMapper
             ->add('producto')
-            ->add('grosor')
-            ->add('esfera')
-            ->add('cilindro');
+            ->add('nombre');
     }
 }

@@ -26,6 +26,10 @@
                 <source>nomenclador.cristales</source>
                 <target>Cristales</target>
             </trans-unit>
+            <trans-unit id="nomenclador.tinte_cristales">
+                <source>nomenclador.tinte_cristales</source>
+                <target>Tinte de Cristales</target>
+            </trans-unit>
             <trans-unit id="nomenclador.cristal_semiterminado">
                 <source>nomenclador.cristal_semiterminado</source>
                 <target>Cristal Semi-Terminado</target>
