@@ -11,6 +11,11 @@ use Doctrine\ORM\Mapping as ORM;
 class AppInformeRecepcion extends _BaseEntity_
 {
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\AppMovimientoAlmacen")
+     */
+    protected $movimiento;
+
+    /**
      * @var string
      * @ORM\Column(type="string", length=150)
      */
@@ -24,6 +29,18 @@ class AppInformeRecepcion extends _BaseEntity_
     public function setNumero(string $numero): self
     {
         $this->numero = $numero;
+
+        return $this;
+    }
+
+    public function getMovimiento(): ?AppMovimientoAlmacen
+    {
+        return $this->movimiento;
+    }
+
+    public function setMovimiento(?AppMovimientoAlmacen $movimiento): self
+    {
+        $this->movimiento = $movimiento;
 
         return $this;
     }
