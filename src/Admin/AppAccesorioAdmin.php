@@ -8,6 +8,7 @@
 
 namespace App\Admin;
 
+use App\Form\ProductoType;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -17,16 +18,6 @@ use Sonata\AdminBundle\Show\ShowMapper;
 class AppAccesorioAdmin extends AbstractAdmin
 {
     /**
-     * @param DatagridMapper $datagridMapper
-     */
-    protected function configureDatagridFilters(DatagridMapper $datagridMapper)
-    {
-        $datagridMapper
-            ->add('producto')
-            ->add('nombre');
-    }
-
-    /**
      * @param ListMapper $listMapper
      */
     protected function configureListFields(ListMapper $listMapper)
@@ -34,7 +25,6 @@ class AppAccesorioAdmin extends AbstractAdmin
 
         $listMapper
             ->add('producto')
-            ->add('nombre')
             ->add('_action', null, array(
                 'label' => 'Acciones',
                 'row_align' => 'right',
@@ -46,13 +36,15 @@ class AppAccesorioAdmin extends AbstractAdmin
 
     /**
      * @param FormMapper $formMapper
+     * @throws \Exception
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
+        $builder = $formMapper->getFormBuilder()->getFormFactory()->createBuilder(ProductoType::class);
+
         $formMapper
             ->with('Datos Primarios', array('class' => 'col-md-4'))
-            ->add('producto')
-            ->add('nombre')
+            ->add($builder)
             ->end();
     }
 
@@ -62,7 +54,6 @@ class AppAccesorioAdmin extends AbstractAdmin
     protected function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
-            ->add('producto')
-            ->add('nombre');
+            ->add('producto');
     }
 }

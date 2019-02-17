@@ -8,20 +8,11 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table()
  * @ORM\Entity()
  */
-class AppArmadura
+class AppArmadura extends _Entity_
 {
     /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
-
-    /**
      * @var
-     * @ORM\ManyToOne(targetEntity="App\Entity\AppProducto", inversedBy="armaduras")
+     * @ORM\OneToOne(targetEntity="App\Entity\AppProducto", inversedBy="armaduras")
      */
     protected $producto;
 
@@ -45,11 +36,6 @@ class AppArmadura
      * @ORM\Column(name="altura", type="integer")
      */
     private $altura;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     public function getAro(): ?int
     {

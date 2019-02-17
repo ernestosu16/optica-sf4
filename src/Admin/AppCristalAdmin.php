@@ -9,6 +9,7 @@
 namespace App\Admin;
 
 
+use App\Form\ProductoType;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -55,7 +56,9 @@ class AppCristalAdmin extends AbstractAdmin
     {
         $formMapper
             ->with('Datos Primarios', array('class' => 'col-md-4'))
-            ->add('producto')
+            ->add('producto', ProductoType::class)
+            ->end()
+            ->with('Datos del Cristal', array('class' => 'col-md-4'))
             ->add('grosor')
             ->add('esfera')
             ->add('cilindro')

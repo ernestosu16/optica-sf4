@@ -5,26 +5,17 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 
-abstract class _BaseEntity_
+abstract class _BaseEntity_ extends _Entity_
 {
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
-
-    /**
      * @var \DateTime
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected $created_at;
 
     /**
      * @var \DateTime
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected $update_at;
 
@@ -33,24 +24,6 @@ abstract class _BaseEntity_
      * @ORM\Column(type="datetime", nullable=true)
      */
     protected $delete_at;
-
-    /**
-     * _BaseEntity_ constructor.
-     * @throws \Exception
-     */
-    public function __construct()
-    {
-        $this->update_at = new \DateTime('now');
-    }
-
-
-    /**
-     * @return int
-     */
-    public function getId(): int
-    {
-        return $this->id;
-    }
 
     /**
      * @return \DateTime

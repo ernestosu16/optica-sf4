@@ -2,6 +2,7 @@
 
 namespace App\Admin;
 
+use App\Form\ProductoType;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -50,7 +51,9 @@ class AppArmaduraAdmin extends AbstractAdmin
     {
         $formMapper
             ->with('Datos Primarios', array('class' => 'col-md-4'))
-            ->add('producto')
+            ->add('producto', ProductoType::class)
+            ->end()
+            ->with('Datos armadura', array('class' => 'col-md-4'))
             ->add('aro')
             ->add('puente')
             ->add('altura')

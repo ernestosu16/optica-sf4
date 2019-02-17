@@ -14,32 +14,14 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\HasLifecycleCallbacks()
  */
-class AppAccesorio extends _BaseEntity_
+class AppAccesorio extends _Entity_
 {
     /**
      * @var
-     * @ORM\ManyToOne(targetEntity="App\Entity\AppProducto", inversedBy="accesorios")
+     * @ORM\OneToOne(targetEntity="App\Entity\AppProducto", inversedBy="accesorios", cascade={"persist","remove"})
      */
     protected $producto;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="nombre", type="string", length=255)
-     */
-    protected $nombre;
-
-    public function getNombre(): ?string
-    {
-        return $this->nombre;
-    }
-
-    public function setNombre(string $nombre): self
-    {
-        $this->nombre = $nombre;
-
-        return $this;
-    }
 
     public function getProducto(): ?AppProducto
     {

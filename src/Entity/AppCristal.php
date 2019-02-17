@@ -8,22 +8,13 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table()
  * @ORM\Entity()
  */
-class AppCristal
+class AppCristal extends _Entity_
 {
     /**
      * @var
-     * @ORM\ManyToOne(targetEntity="App\Entity\AppProducto", inversedBy="cristales")
+     * @ORM\OneToOne(targetEntity="App\Entity\AppProducto", inversedBy="cristales")
      */
     protected $producto;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
 
     /**
      * @var float
@@ -45,11 +36,6 @@ class AppCristal
      * @ORM\Column(name="cilindro", type="float")
      */
     private $cilindro;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     public function getGrosor(): ?float
     {

@@ -9,6 +9,7 @@
 namespace App\Admin;
 
 
+use App\Form\ProductoType;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -23,8 +24,7 @@ class AppTinteCristalAdmin extends AbstractAdmin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-            ->add('producto')
-            ->add('nombre');
+            ->add('producto');
     }
 
     /**
@@ -35,7 +35,6 @@ class AppTinteCristalAdmin extends AbstractAdmin
 
         $listMapper
             ->add('producto')
-            ->add('nombre')
             ->add('_action', null, array(
                 'label' => 'Acciones',
                 'row_align' => 'right',
@@ -52,8 +51,7 @@ class AppTinteCristalAdmin extends AbstractAdmin
     {
         $formMapper
             ->with('Datos Primarios', array('class' => 'col-md-4'))
-            ->add('producto')
-            ->add('nombre')
+            ->add('producto', ProductoType::class)
             ->end();
     }
 
@@ -63,7 +61,6 @@ class AppTinteCristalAdmin extends AbstractAdmin
     protected function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
-            ->add('producto')
-            ->add('nombre');
+            ->add('producto');
     }
 }

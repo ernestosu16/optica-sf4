@@ -16,11 +16,11 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\HasLifecycleCallbacks()
  */
-class AppTinteCristal extends _BaseEntity_
+class AppTinteCristal extends _Entity_
 {
     /**
      * @var
-     * @ORM\ManyToOne(targetEntity="App\Entity\AppProducto", inversedBy="tinte_cristales")
+     * @ORM\OneToOne(targetEntity="App\Entity\AppProducto", inversedBy="tinte_cristales")
      */
     protected $producto;
 
@@ -34,30 +34,10 @@ class AppTinteCristal extends _BaseEntity_
      */
     protected $orden_servicios;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="nombre", type="string", length=255)
-     */
-    protected $nombre;
-
     public function __construct()
     {
-        parent::__construct();
         $this->receta_componentes = new ArrayCollection();
         $this->orden_servicios = new ArrayCollection();
-    }
-
-    public function getNombre(): ?string
-    {
-        return $this->nombre;
-    }
-
-    public function setNombre(string $nombre): self
-    {
-        $this->nombre = $nombre;
-
-        return $this;
     }
 
     public function getProducto(): ?AppProducto

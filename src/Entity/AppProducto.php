@@ -32,7 +32,7 @@ class AppProducto extends _BaseEntity_
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $observaciones;
 
@@ -50,29 +50,29 @@ class AppProducto extends _BaseEntity_
     protected $imagen;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\AppArmadura", mappedBy="producto")
+     * @ORM\OneToOne(targetEntity="App\Entity\AppArmadura", mappedBy="producto")
      */
     protected $armaduras;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\AppAccesorio", mappedBy="producto")
+     * @ORM\OneToOne(targetEntity="App\Entity\AppAccesorio", mappedBy="producto", cascade={"persist","remove"}, orphanRemoval=true)
      */
     protected $accesorios;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\AppCristal", mappedBy="producto")
+     * @ORM\OneToOne(targetEntity="App\Entity\AppCristal", mappedBy="producto")
      */
     protected $cristales;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\AppTinteCristal", mappedBy="producto")
+     * @ORM\OneToOne(targetEntity="App\Entity\AppTinteCristal", mappedBy="producto")
      */
     protected $tinte_cristales;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $descriminator;
 
@@ -286,6 +286,58 @@ class AppProducto extends _BaseEntity_
             if ($armadura->getProducto() === $this) {
                 $armadura->setProducto(null);
             }
+        }
+
+        return $this;
+    }
+
+    public function setAccesorios(?AppAccesorio $accesorios): self
+    {
+        $this->accesorios = $accesorios;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newProducto = $accesorios === null ? null : $this;
+        if ($newProducto !== $accesorios->getProducto()) {
+            $accesorios->setProducto($newProducto);
+        }
+
+        return $this;
+    }
+
+    public function setArmaduras(?AppArmadura $armaduras): self
+    {
+        $this->armaduras = $armaduras;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newProducto = $armaduras === null ? null : $this;
+        if ($newProducto !== $armaduras->getProducto()) {
+            $armaduras->setProducto($newProducto);
+        }
+
+        return $this;
+    }
+
+    public function setCristales(?AppCristal $cristales): self
+    {
+        $this->cristales = $cristales;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newProducto = $cristales === null ? null : $this;
+        if ($newProducto !== $cristales->getProducto()) {
+            $cristales->setProducto($newProducto);
+        }
+
+        return $this;
+    }
+
+    public function setTinteCristales(?AppTinteCristal $tinte_cristales): self
+    {
+        $this->tinte_cristales = $tinte_cristales;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newProducto = $tinte_cristales === null ? null : $this;
+        if ($newProducto !== $tinte_cristales->getProducto()) {
+            $tinte_cristales->setProducto($newProducto);
         }
 
         return $this;
