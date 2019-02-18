@@ -46,6 +46,11 @@ sonata_admin:
 #                icon:  '<i class="fa fa-gears"></i>'
 #                items:
 #                    - sonata.admin.nomenclador.cristal_semiterminado
+            sonata.admin.almacen:
+                label_catalogue: app
+                icon:  '<i class="fa fa-gears"></i>'
+                items:
+                    - sonata.admin.app.movimiento_almacen
     options:
         html5_validate:  true     # enable or disable html5 form validation
         confirm_exit:    true     # enable or disable a confirmation before navigating away

@@ -16,7 +16,7 @@ class AppSubmayorProducto extends _BaseEntity_
     protected $producto;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\AppMovimientoAlmacen")
+     * @ORM\ManyToOne(targetEntity="App\Entity\AppMovimientoAlmacen", inversedBy="sub_mayor")
      */
     protected $movimiento;
 
