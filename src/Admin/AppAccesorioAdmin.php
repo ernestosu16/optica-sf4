@@ -43,7 +43,7 @@ class AppAccesorioAdmin extends AbstractAdmin
         $builder = $formMapper->getFormBuilder()->getFormFactory()->createBuilder(ProductoType::class);
 
         $formMapper
-            ->with('Datos Primarios', array('class' => 'col-md-4'))
+            ->with('Datos Primarios', array('class' => 'col-md-6'))
             ->add($builder)
             ->end();
     }

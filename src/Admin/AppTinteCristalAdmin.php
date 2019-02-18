@@ -50,7 +50,7 @@ class AppTinteCristalAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->with('Datos Primarios', array('class' => 'col-md-4'))
+            ->with('Datos Primarios', array('class' => 'col-md-6'))
             ->add('producto', ProductoType::class)
             ->end();
     }

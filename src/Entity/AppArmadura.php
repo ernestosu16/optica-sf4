@@ -12,7 +12,7 @@ class AppArmadura extends _Entity_
 {
     /**
      * @var
-     * @ORM\OneToOne(targetEntity="App\Entity\AppProducto", inversedBy="armaduras")
+     * @ORM\OneToOne(targetEntity="App\Entity\AppProducto", inversedBy="armaduras", cascade={"persist","remove"})
      */
     protected $producto;
 

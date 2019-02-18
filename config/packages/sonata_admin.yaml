@@ -36,7 +36,7 @@ sonata_admin:
                 label_catalogue: app
                 icon:  '<i class="fa fa-gears"></i>'
                 items:
-                    - sonata.admin.app.producto
+#                    - sonata.admin.app.producto
                     - sonata.admin.nomenclador.accesorio
                     - sonata.admin.nomenclador.armadura
                     - sonata.admin.nomenclador.cristal

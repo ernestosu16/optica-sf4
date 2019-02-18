@@ -6,6 +6,7 @@ services:
             - { name: sonata.admin, manager_type: orm, label: nomenclador.armaduras }
         calls:
             - [ setTranslationDomain, ["NomencladorBundle"] ]
+            - [ setTemplate, ['edit', '::Admin/producto/edit.html.twig']]
     sonata.admin.nomenclador.accesorio:
         class: App\Admin\AppAccesorioAdmin
         arguments: [~, App\Entity\AppAccesorio, ~]
@@ -13,6 +14,7 @@ services:
             - { name: sonata.admin, manager_type: orm, label: nomenclador.accesorios }
         calls:
             - [ setTranslationDomain, ["NomencladorBundle"] ]
+            - [ setTemplate, ['edit', '::Admin/producto/edit.html.twig']]
     sonata.admin.nomenclador.cristal:
         class: App\Admin\AppCristalAdmin
         arguments: [~, App\Entity\AppCristal, ~]
@@ -20,6 +22,7 @@ services:
             - { name: sonata.admin, manager_type: orm, label: nomenclador.cristales }
         calls:
             - [ setTranslationDomain, ["NomencladorBundle"] ]
+            - [ setTemplate, ['edit', '::Admin/producto/edit.html.twig']]
     sonata.admin.nomenclador.tinte_cristal:
         class: App\Admin\AppTinteCristalAdmin
         arguments: [~, App\Entity\AppTinteCristal, ~]
@@ -27,3 +30,4 @@ services:
             - { name: sonata.admin, manager_type: orm, label: nomenclador.tinte_cristales }
         calls:
             - [ setTranslationDomain, ["NomencladorBundle"] ]
+            - [ setTemplate, ['edit', '::Admin/producto/edit.html.twig']]

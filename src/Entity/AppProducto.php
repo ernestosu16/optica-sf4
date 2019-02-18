@@ -50,7 +50,7 @@ class AppProducto extends _BaseEntity_
     protected $imagen;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\AppArmadura", mappedBy="producto")
+     * @ORM\OneToOne(targetEntity="App\Entity\AppArmadura", mappedBy="producto", cascade={"persist","remove"}, orphanRemoval=true)
      */
     protected $armaduras;
 
@@ -60,7 +60,7 @@ class AppProducto extends _BaseEntity_
     protected $accesorios;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\AppCristal", mappedBy="producto")
+     * @ORM\OneToOne(targetEntity="App\Entity\AppCristal", mappedBy="producto", cascade={"persist","remove"}, orphanRemoval=true)
      */
     protected $cristales;
 
@@ -82,11 +82,6 @@ class AppProducto extends _BaseEntity_
      */
     public function __construct()
     {
-        parent::__construct();
-        $this->accesorios = new ArrayCollection();
-        $this->tinte_cristales = new ArrayCollection();
-        $this->cristales = new ArrayCollection();
-        $this->armaduras = new ArrayCollection();
     }
 
     public function __toString()

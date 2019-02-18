@@ -20,7 +20,7 @@ class AppTinteCristal extends _Entity_
 {
     /**
      * @var
-     * @ORM\OneToOne(targetEntity="App\Entity\AppProducto", inversedBy="tinte_cristales")
+     * @ORM\OneToOne(targetEntity="App\Entity\AppProducto", inversedBy="tinte_cristales", cascade={"persist","remove"})
      */
     protected $producto;
 

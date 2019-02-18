@@ -55,10 +55,10 @@ class AppCristalAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->with('Datos Primarios', array('class' => 'col-md-4'))
+            ->with('Datos Primarios', array('class' => 'col-md-6'))
             ->add('producto', ProductoType::class)
             ->end()
-            ->with('Datos del Cristal', array('class' => 'col-md-4'))
+            ->with('Datos del Cristal', array('class' => 'col-md-3'))
             ->add('grosor')
             ->add('esfera')
             ->add('cilindro')

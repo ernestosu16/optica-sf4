@@ -50,10 +50,10 @@ class AppArmaduraAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->with('Datos Primarios', array('class' => 'col-md-4'))
+            ->with('Datos Primarios', array('class' => 'col-md-6'))
             ->add('producto', ProductoType::class)
             ->end()
-            ->with('Datos armadura', array('class' => 'col-md-4'))
+            ->with('Datos armadura', array('class' => 'col-md-3'))
             ->add('aro')
             ->add('puente')
             ->add('altura')
