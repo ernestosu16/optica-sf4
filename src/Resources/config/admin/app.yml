@@ -1,0 +1,29 @@
+services:
+    sonata.admin.app.clasificador:
+        class: App\Admin\AppClasificadorAdmin
+        arguments: [~, App\Entity\AppClasificador, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: app.clasificadores }
+        calls:
+            - [setTranslationDomain,['app']]
+#    sonata.admin.app.producto:
+#        class: App\Admin\AppProductoAdmin
+#        arguments: [~, App\Entity\AppProducto, ~]
+#        tags:
+#            - { name: sonata.admin, manager_type: orm, label: app.productos }
+#        calls:
+#            - [setTranslationDomain,['app']]
+    sonata.admin.app.trabajador:
+        class: App\Admin\AppTrabajadorAdmin
+        arguments: [~, App\Entity\AppTrabajador, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: app.trabajadores }
+        calls:
+            - [setTranslationDomain,['app']]
+    sonata.admin.app.paciente:
+        class: App\Admin\AppPacienteAdmin
+        arguments: [~, App\Entity\AppPaciente, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: app.pacientes }
+        calls:
+            - [setTranslationDomain,['app']]

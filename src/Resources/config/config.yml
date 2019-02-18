@@ -1,5 +1,8 @@
 # related to app/config/sonata/sonata_admin.yml
 imports:
+    - { resource: 'controller.yml'}
     - { resource: 'parameters.yml'}
     - { resource: 'services.yml'}
     - { resource: 'security.yml'}
+    - { resource: 'admin/app.yml'}
+    - { resource: 'admin/nomenclador.yml'}

@@ -1,0 +1,40 @@
+{% extends '@SonataAdmin/CRUD/base_edit.html.twig' %}
+{% block sonata_tab_content %}
+    <div class="{{ admin.formgroups["Datos Primarios"].class|default('col-md-12') }}">
+        <div class="box box-success">
+            <div class="box-header">
+                <h4 class="box-title">
+                    {{ admin.trans(admin.formgroups["Datos Primarios"].name, {}, admin.formgroups["Datos Primarios"].translation_domain) }}
+                </h4>
+            </div>
+            <div class="box-body">
+                <div class="sonata-ba-collapsed-fields">
+                    <div class="col-md-7">
+                        {{ form_widget(form[admin.formgroups['Datos Primarios']['fields']['producto']].children.imagen) }}
+                    </div>
+                    <div class="col-md-5">
+                        {{ form_widget(form[admin.formgroups['Datos Primarios']['fields']['producto']]) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% for formgroup in admin.formgroups if formgroup.name != "Datos Primarios"  %}
+        <div class="{{ formgroup.class|default('col-md-12') }}">
+            <div class="box box-success">
+                <div class="box-header">
+                    <h4 class="box-title">
+                        {{ admin.trans(formgroup.name, {}, formgroup.translation_domain) }}
+                    </h4>
+                </div>
+                <div class="box-body">
+                    <div class="sonata-ba-collapsed-fields">
+                        {% for field in formgroup['fields'] %}
+                            {{ form_row(form[field]) }}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

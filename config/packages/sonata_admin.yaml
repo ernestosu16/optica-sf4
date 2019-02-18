@@ -13,15 +13,58 @@ sonata_admin:
                     - sonata.user.admin.user
                     - sonata.user.admin.group
                     - sonata.user.admin.office
-            sonata.admin.group.content:
-                label:           sonata_media
-                label_catalogue: SonataMediaBundle
-                icon:            '<i class="fa fa-image"></i>'
+                    - sonata.admin.app.clasificador
+                    - sonata.admin.app.trabajador
+                    - sonata.admin.app.paciente
+#            sonata.admin.group.content:
+#                label:           sonata_media
+#                label_catalogue: SonataMediaBundle
+#                icon:            '<i class="fa fa-image"></i>'
+#                items:
+#                    - sonata.media.admin.media
+#                    - sonata.media.admin.gallery
+#            sonata.admin.nomenclador:
+#                label_catalogue: app
+#                icon:  '<i class="fa fa-gears"></i>'
+#                items:
+#                    - sonata.admin.nomenclador.add
+#                    - sonata.admin.nomenclador.agudeza_visual
+#                    - sonata.admin.nomenclador.cristal_semiterminado_tipo
+#                    - sonata.admin.nomenclador.dp
+#                    - sonata.admin.nomenclador.eje
+            sonata.admin.producto_optica:
+                label_catalogue: app
+                icon:  '<i class="fa fa-gears"></i>'
                 items:
-                    - sonata.media.admin.media
-                    - sonata.media.admin.gallery
+#                    - sonata.admin.app.producto
+                    - sonata.admin.nomenclador.accesorio
+                    - sonata.admin.nomenclador.armadura
+                    - sonata.admin.nomenclador.cristal
+                    - sonata.admin.nomenclador.tinte_cristal
+#            sonata.admin.producto_taller:
+#                label_catalogue: app
+#                icon:  '<i class="fa fa-gears"></i>'
+#                items:
+#                    - sonata.admin.nomenclador.cristal_semiterminado
+    options:
+        html5_validate:  true     # enable or disable html5 form validation
+        confirm_exit:    true     # enable or disable a confirmation before navigating away
+        js_debug:        false    # enable or disable to show javascript debug messages
+        use_select2:     true     # enable or disable usage of the Select2 jQuery library
+        use_icheck:      true     # enable or disable usage of the iCheck library
+        use_bootlint:    false    # enable or disable usage of Bootlint
+        use_stickyforms: true     # enable or disable the floating buttons
+        form_type:       standard # can also be 'horizontal'
 
+    templates:
+        user_block: '::Admin/Core/user_block.html.twig'
+        edit:              '@SonataAdmin/CRUD/edit.html.twig'
+        tab_menu_template: '@SonataAdmin/Core/tab_menu_template.html.twig'
+    global_search:
+        empty_boxes: hide
 sonata_block:
     blocks:
         sonata.admin.block.admin_list:
+            contexts: [admin]
+        sonata.admin.block.search_result:
             contexts: [admin]

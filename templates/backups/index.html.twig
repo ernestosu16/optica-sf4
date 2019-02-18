@@ -1,0 +1,44 @@
+{% extends '@SonataAdmin/standard_layout.html.twig' %}
+
+{% block title %}Hello BackupsController!{% endblock %}
+
+{% block sonata_admin_content %}
+    <div class="box box-primary">
+        <div class="box-header">
+            <h4 class="box-title">
+                <i class="fa fa-database"></i>
+                Administración de la base de datos
+            </h4>
+        </div>
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- BEGIN SAMPLE FORM PORTLET-->
+                    <div class="portlet light bordered">
+                        <div class="portlet-body">
+                            {#<h4>Importando bases de datos al servidor actual</h4>#}
+                            {#<form id="formBackupImportar" action="{{ path('admin_backups_import') }}" method="post" class="form-inline"  enctype="multipart/form-data">#}
+                            {#<div class="form-group">#}
+                            {#<div id="upload_form" class="formelementrow"><label for="input_import_file">Buscar en su ordenador:</label><div style="display: none;" id="upload_form_status"></div><div style="display: none;" id="upload_form_status_info"></div><input type="file" id="input_import_file" name="import_file">(Máximo: 2,048KB)#}
+                            {#<input type="hidden" value="2097152" name="MAX_FILE_SIZE">#}
+                            {#</div>#}
+                            {#</div>#}
+                            {#<button class="btn btn-default" type="submit">Importar</button>#}
+                            {#</form>#}
+                            {#<hr>#}
+                            <label class="control-label">Exportar bases de datos del servidor actual</label>
+                            <form id="formBackupExportar" action="{{ path('admin_backups_export') }}" role="form"
+                                  class="form-inline">
+                                <div class="form-group">
+                                    <input class="btn btn-default" type="submit" onclick="" id="buttonGo"
+                                           value="Exportar">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- END SAMPLE FORM PORTLET-->
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

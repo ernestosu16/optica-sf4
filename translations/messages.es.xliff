@@ -58,6 +58,14 @@
                 <source>sonata.media.provider.image</source>
                 <target>Imagen</target>
             </trans-unit>
+            <trans-unit id="app.change_password">
+                <source>app.change_password</source>
+                <target>Cambiar Contraseña</target>
+            </trans-unit>
+            <trans-unit id="app.backup">
+                <source>app.backup</source>
+                <target>Base de Datos</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

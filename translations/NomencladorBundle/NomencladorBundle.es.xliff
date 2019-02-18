@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="es" datatype="plaintext" original="">
+        <body>
+            <trans-unit id="nomencladores">
+                <source>nomencladores</source>
+                <target>Nomencladores</target>
+            </trans-unit>
+            <trans-unit id="nomenclador.accesorios">
+                <source>nomenclador.accesorios</source>
+                <target>Accesorios</target>
+            </trans-unit>
+            <trans-unit id="nomenclador.add">
+                <source>nomenclador.add</source>
+                <target>Adds</target>
+            </trans-unit>
+            <trans-unit id="nomenclador.agudeza_visual">
+                <source>nomenclador.agudeza_visual</source>
+                <target>Agudezas Visuales</target>
+            </trans-unit>
+            <trans-unit id="nomenclador.armaduras">
+                <source>nomenclador.armaduras</source>
+                <target>Armaduras</target>
+            </trans-unit>
+            <trans-unit id="nomenclador.cristales">
+                <source>nomenclador.cristales</source>
+                <target>Cristales</target>
+            </trans-unit>
+            <trans-unit id="nomenclador.tinte_cristales">
+                <source>nomenclador.tinte_cristales</source>
+                <target>Tinte de Cristales</target>
+            </trans-unit>
+            <trans-unit id="nomenclador.cristal_semiterminado">
+                <source>nomenclador.cristal_semiterminado</source>
+                <target>Cristal Semi-Terminado</target>
+            </trans-unit>
+            <trans-unit id="nomenclador.cristal_semiterminado_tipo">
+                <source>nomenclador.cristal_semiterminado_tipo</source>
+                <target>Tipos de Cristales S.t.</target>
+            </trans-unit>
+            <trans-unit id="nomenclador.dp">
+                <source>nomenclador.dp</source>
+                <target>Dps</target>
+            </trans-unit>
+            <trans-unit id="nomenclador.eje">
+                <source>nomenclador.eje</source>
+                <target>Ejes</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

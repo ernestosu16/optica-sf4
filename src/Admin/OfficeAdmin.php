@@ -41,7 +41,14 @@ class OfficeAdmin extends AbstractAdmin
     {
         $listMapper
             ->addIdentifier('name', null, ['label' => 'office.name'])
-            ->addIdentifier('description', null, ['label' => 'office.description']);
+            ->add('description', null, ['label' => 'office.description'])
+            ->add('_action', null, array(
+                'label' => 'Acciones',
+                'row_align' => 'right',
+                'header_style' => 'width: 190px',
+                'actions' => array(
+                    'edit' => array(),
+                    'delete' => array())));;
     }
 
     /**
