@@ -13,10 +13,7 @@ class SubMayorProductoType extends AbstractType
     {
         $builder
             ->add('cantidad')
-            ->add('saldo_existente')
-            ->add('saldo_disponible')
-//            ->add('producto')
-//            ->add('movimiento')
+            ->add('producto')
         ;
     }
 

@@ -48,7 +48,7 @@ sonata_admin:
 #                    - sonata.admin.nomenclador.cristal_semiterminado
             sonata.admin.almacen:
                 label_catalogue: app
-                icon:  '<i class="fa fa-gears"></i>'
+                icon:  '<i class="fa fa-folder"></i>'
                 items:
                     - sonata.admin.app.movimiento_almacen
     options:

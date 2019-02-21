@@ -31,7 +31,7 @@ class AppMovimientoAlmacen extends _BaseEntity_
     protected $discriminator;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\AppSubmayorProducto", mappedBy="movimiento")
+     * @ORM\OneToMany(targetEntity="App\Entity\AppSubmayorProducto", mappedBy="movimiento", cascade={"all"}, orphanRemoval=true)
      */
     protected $sub_mayor;
 
@@ -106,4 +106,5 @@ class AppMovimientoAlmacen extends _BaseEntity_
 
         return $this;
     }
+
 }
