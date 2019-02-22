@@ -10,24 +10,21 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
 
 class AppSubMayorProductoAdmin extends _BaseAdmin_
 {
-protected function configureFormFields(FormMapper $formMapper)
-{
-    $formMapper
-        ->with('Producto', ['class' => 'col-md-4'])
-        ->add('producto.codigo',null,[
-            'label' => 'nomenclador.codigo',
-            'disabled' => true,
-        ])
-        ->add('producto.precio',null,[
-            'label' => 'nomenclador.precio',
-            'disabled' => true,
-        ])
-        ->add('cantidad', NumberType::class, [
-            'label' => 'nomenclador.cantidad',
-            'disabled' => true,
-        ])
-        ->end()
-    ;
-}
+    protected function configureFormFields(FormMapper $formMapper)
+    {
+        $object = $this->getSubject();
+
+        $formMapper
+            ->add('producto', EntityType::class, [
+                'class' => AppProducto::class,
+                'label' => 'nomenclador.producto',
+                'disabled' => !$object,
+            ])
+            ->add('cantidad', NumberType::class, [
+                'label' => 'nomenclador.cantidad',
+                'disabled' => !$object,
+            ])
+        ;
+    }
 
 }

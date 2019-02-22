@@ -66,6 +66,10 @@
                 <source>nomenclador.cantidad</source>
                 <target>Cantidad</target>
             </trans-unit>
+            <trans-unit id="nomenclador.producto">
+                <source>nomenclador.producto</source>
+                <target>Producto</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
