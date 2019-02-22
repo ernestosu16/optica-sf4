@@ -34,8 +34,7 @@ class AppMovimientoAlmacenAdmin extends _BaseAdmin_
                 'edit' => 'inline',
                 'inline' => 'table',
             ))
-            ->end()
-        ;
+            ->end();
     }
 
     /**
@@ -44,7 +43,7 @@ class AppMovimientoAlmacenAdmin extends _BaseAdmin_
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('numero')
+            ->addIdentifier('numero')
             ->add('state')
             ->add('discriminator')
             ->add('sub_mayor', null, array(
@@ -53,9 +52,8 @@ class AppMovimientoAlmacenAdmin extends _BaseAdmin_
             ->add('_action', null, array(
                 'label' => 'Acciones',
                 'row_align' => 'right',
-                'header_style' => 'width: 190px',
-                'actions' => array(
-                    'edit' => array(),
-                    'delete' => array())));
+                'header_style' => 'width: 160px',
+                'actions' => $this->actions ,
+            ));
     }
 }

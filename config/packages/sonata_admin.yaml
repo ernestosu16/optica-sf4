@@ -63,8 +63,8 @@ sonata_admin:
 
     templates:
         user_block: '::Admin/Core/user_block.html.twig'
-        edit:              '@SonataAdmin/CRUD/edit.html.twig'
-        tab_menu_template: '@SonataAdmin/Core/tab_menu_template.html.twig'
+        base_list_field:    "::Admin/CRUD/base_list_field.html.twig"
+
     global_search:
         empty_boxes: hide
 sonata_block:

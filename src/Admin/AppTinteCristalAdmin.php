@@ -16,7 +16,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 
-class AppTinteCristalAdmin extends AbstractAdmin
+class AppTinteCristalAdmin extends _BaseAdmin_
 {
     /**
      * @param DatagridMapper $datagridMapper
@@ -34,14 +34,25 @@ class AppTinteCristalAdmin extends AbstractAdmin
     {
 
         $listMapper
-            ->add('producto')
+            ->add('producto.imagen', 'media_thumbnail', array(
+                'label' => 'nomenclador.imagen',
+                'class' => 'img-polaroid',
+            ))
+            ->add('producto.codigo',null,[
+                'label' => 'nomenclador.codigo',
+            ])
+            ->add('producto.precio',null,[
+                'label' => 'nomenclador.precio',
+            ])
+            ->add('producto.descripcion',null,[
+                'label' => 'nomenclador.descripcion',
+            ])
             ->add('_action', null, array(
                 'label' => 'Acciones',
                 'row_align' => 'right',
-                'header_style' => 'width: 190px',
-                'actions' => array(
-                    'edit' => array(),
-                    'delete' => array())));
+                'header_style' => 'width: 160px',
+                'actions' => $this->actions ,
+            ));
     }
 
     /**
@@ -61,6 +72,19 @@ class AppTinteCristalAdmin extends AbstractAdmin
     protected function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
-            ->add('producto');
+            ->add('producto.imagen', 'media_thumbnail', array(
+                'label' => 'nomenclador.imagen',
+                'class' => 'img-polaroid',
+            ))
+            ->add('producto.codigo',null,[
+                'label' => 'nomenclador.codigo',
+            ])
+            ->add('producto.precio',null,[
+                'label' => 'nomenclador.precio',
+            ])
+            ->add('producto.descripcion',null,[
+                'label' => 'nomenclador.descripcion',
+            ])
+        ;
     }
 }

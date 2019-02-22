@@ -46,6 +46,26 @@
                 <source>nomenclador.eje</source>
                 <target>Ejes</target>
             </trans-unit>
+            <trans-unit id="nomenclador.imagen">
+                <source>nomenclador.imagen</source>
+                <target>Imagen</target>
+            </trans-unit>
+            <trans-unit id="nomenclador.codigo">
+                <source>nomenclador.codigo</source>
+                <target>Código</target>
+            </trans-unit>
+            <trans-unit id="nomenclador.descripcion">
+                <source>nomenclador.descripcion</source>
+                <target>Descripción</target>
+            </trans-unit>
+            <trans-unit id="nomenclador.precio">
+                <source>nomenclador.precio</source>
+                <target>Precio</target>
+            </trans-unit>
+            <trans-unit id="nomenclador.cantidad">
+                <source>nomenclador.cantidad</source>
+                <target>Cantidad</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
