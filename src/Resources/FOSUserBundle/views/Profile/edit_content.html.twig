@@ -1,8 +1,18 @@
 {% trans_default_domain 'FOSUserBundle' %}
-
-{{ form_start(form, { 'action': path('fos_user_profile_edit'), 'attr': { 'class': 'fos_user_profile_edit' } }) }}
-    {{ form_widget(form) }}
-    <div>
-        <input type="submit" value="{{ 'profile.edit.submit'|trans }}" />
+<div class="col-md-4">
+    <div class="box box-success">
+        <div class="box-header">
+            <h4 class="box-title">Perfil</h4>
+        </div>
+        <div class="box-body">
+            <div class="sonata-ba-collapsed-fields">
+                {{ form_start(form, { 'action': path('fos_user_profile_edit'), 'attr': { 'class': 'fos_user_profile_edit' } }) }}
+                {{ form_widget(form) }}
+                <div>
+                    <input type="submit" value="{{ 'profile.edit.submit'|trans }}" class="btn btn-success"/>
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
     </div>
-{{ form_end(form) }}
+</div>

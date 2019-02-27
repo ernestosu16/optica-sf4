@@ -1,23 +1,21 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: ernestosr
- * Date: 12/02/2019
- * Time: 05:24 PM
- */
 
 namespace App\Admin;
 
 
 use App\Form\ProductoType;
-use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\AdminBundle\Show\ShowMapper;
 
-class AppCristalAdmin extends AbstractAdmin
+class AppCristalAdmin extends _BaseAdmin_
 {
+    protected function configureRoutes(RouteCollection $collection)
+    {
+        parent::configureRoutes($collection);
+    }
     /**
      * @param DatagridMapper $datagridMapper
      */
@@ -36,17 +34,30 @@ class AppCristalAdmin extends AbstractAdmin
     {
 
         $listMapper
-            ->add('producto')
+            ->remove('batch')
+            ->add('producto.imagen', 'media_thumbnail', array(
+                'label' => 'nomenclador.imagen',
+                'class' => 'img-polaroid',
+                'header_style' => 'width: 80px',
+            ))
+            ->add('producto.codigo',null,[
+                'label' => 'nomenclador.codigo',
+            ])
+            ->add('producto.precio',null,[
+                'label' => 'nomenclador.precio',
+            ])
+            ->add('producto.descripcion',null,[
+                'label' => 'nomenclador.descripcion',
+            ])
             ->add('grosor')
             ->add('esfera')
             ->add('cilindro')
             ->add('_action', null, array(
                 'label' => 'Acciones',
                 'row_align' => 'right',
-                'header_style' => 'width: 190px',
-                'actions' => array(
-                    'edit' => array(),
-                    'delete' => array())));
+                'header_style' => 'width: 170px',
+                'actions' => $this->actions ,
+            ));
     }
 
     /**

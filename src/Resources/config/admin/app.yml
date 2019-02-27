@@ -6,13 +6,20 @@ services:
             - { name: sonata.admin, manager_type: orm, label: app.clasificadores }
         calls:
             - [setTranslationDomain,['app']]
-#    sonata.admin.app.producto:
-#        class: App\Admin\AppProductoAdmin
-#        arguments: [~, App\Entity\AppProducto, ~]
-#        tags:
-#            - { name: sonata.admin, manager_type: orm, label: app.productos }
-#        calls:
-#            - [setTranslationDomain,['app']]
+    sonata.admin.app.movimiento_almacen:
+        class: App\Admin\AppMovimientoAlmacenAdmin
+        arguments: [~, App\Entity\AppMovimientoAlmacen, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: app.movimiento_almacen }
+        calls:
+            - [setTranslationDomain,['app']]
+    sonata.admin.app.sub_mayor_producto:
+        class: App\Admin\AppSubMayorProductoAdmin
+        arguments: [~, App\Entity\AppSubmayorProducto, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: app.sub_mayor_producto }
+        calls:
+            - [setTranslationDomain,['NomencladorBundle']]
     sonata.admin.app.trabajador:
         class: App\Admin\AppTrabajadorAdmin
         arguments: [~, App\Entity\AppTrabajador, ~]

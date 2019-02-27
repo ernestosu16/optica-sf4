@@ -3,15 +3,20 @@
 namespace App\Admin;
 
 use App\Form\ProductoType;
-use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\AdminBundle\Show\ShowMapper;
 
 
-class AppArmaduraAdmin extends AbstractAdmin
+class AppArmaduraAdmin extends _BaseAdmin_
 {
+    protected function configureRoutes(RouteCollection $collection)
+    {
+        parent::configureRoutes($collection);
+    }
+
     /**
      * @param DatagridMapper $datagridMapper
      */
@@ -31,17 +36,30 @@ class AppArmaduraAdmin extends AbstractAdmin
     {
 
         $listMapper
-            ->add('producto')
+            ->remove('batch')
+            ->add('producto.imagen', 'media_thumbnail', array(
+                'label' => 'nomenclador.imagen',
+                'class' => 'img-polaroid',
+                'header_style' => 'width: 80px',
+            ))
+            ->add('producto.codigo', null, [
+                'label' => 'nomenclador.codigo',
+            ])
+            ->add('producto.precio', null, [
+                'label' => 'nomenclador.precio',
+            ])
+            ->add('producto.descripcion', null, [
+                'label' => 'nomenclador.descripcion',
+            ])
             ->add('aro')
             ->add('puente')
             ->add('altura')
             ->add('_action', null, array(
                 'label' => 'Acciones',
                 'row_align' => 'right',
-                'header_style' => 'width: 190px',
-                'actions' => array(
-                    'edit' => array(),
-                    'delete' => array())));
+                'header_style' => 'width: 170px',
+                'actions' => $this->actions,
+            ));
     }
 
     /**
@@ -66,9 +84,21 @@ class AppArmaduraAdmin extends AbstractAdmin
     protected function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
-            ->add('producto')
-            ->add('codigo')
-            ->add('modelo')
-            ->add('aro');
+            ->add('producto.imagen', 'media_thumbnail', array(
+                'label' => 'nomenclador.imagen',
+                'class' => 'img-polaroid',
+            ))
+            ->add('producto.codigo', null, [
+                'label' => 'nomenclador.codigo',
+            ])
+            ->add('producto.precio', null, [
+                'label' => 'nomenclador.precio',
+            ])
+            ->add('producto.descripcion', null, [
+                'label' => 'nomenclador.descripcion',
+            ])
+            ->add('aro')
+            ->add('puente')
+            ->add('altura');
     }
 }

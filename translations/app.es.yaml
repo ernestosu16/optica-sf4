@@ -6,6 +6,7 @@ sonata:
         nomenclador: 'Nomencladores'
         producto_optica: 'Productos de la Óptica'
         producto_taller: 'Productos del Taller'
+        almacen: 'Almacén'
 app:
     trabajadores: 'Trabajadores'
     trabajador: 'Trabajador'
@@ -27,3 +28,8 @@ app:
     correo_contacto: 'Correo Electrónico'
     historia_clinica: 'Historia Clínica'
     pacientes: 'Pacientes'
+    movimiento_almacen: 'Movimiento del Almacén'
+    sub_mayor_producto: 'Sub Mayor'
+    new_producto: 'Nuevo Producto'
+    cantidad: 'Cantidad'
+    producto: 'Producto'

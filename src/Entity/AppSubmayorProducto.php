@@ -16,7 +16,8 @@ class AppSubmayorProducto extends _BaseEntity_
     protected $producto;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\AppMovimientoAlmacen")
+     * @ORM\ManyToOne(targetEntity="App\Entity\AppMovimientoAlmacen", inversedBy="sub_mayor")
+     * @ORM\JoinColumn(name="movimiento_id", referencedColumnName="id")
      */
     protected $movimiento;
 
@@ -28,15 +29,20 @@ class AppSubmayorProducto extends _BaseEntity_
 
     /**
      * @var string
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", nullable=true)
      */
     protected $saldo_existente;
 
     /**
      * @var string
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", nullable=true)
      */
     protected $saldo_disponible;
+
+    public function __toString()
+    {
+        return $this->getProducto()->getCodigo() . ' (' . $this->getCantidad() . ')';
+    }
 
     public function getCantidad(): ?float
     {
