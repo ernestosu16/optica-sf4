@@ -6,11 +6,26 @@ namespace App\Admin;
 use App\Form\SubMayorProductoType;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\Form\Type\CollectionType;
 
 
 class AppMovimientoAlmacenAdmin extends _BaseAdmin_
 {
+    protected function configureRoutes(RouteCollection $collection)
+    {
+        parent::configureRoutes($collection);
+    }
+
+    public function createQuery($context = 'list')
+    {
+        $query = parent::createQuery($context);
+
+        $query->where("{$query->getRootAliases()[0]}.delete_at is NULL");
+
+        return $query;
+    }
+
     protected function configureFormFields(FormMapper $formMapper)
     {
         $object = $this->getSubject();
@@ -43,6 +58,7 @@ class AppMovimientoAlmacenAdmin extends _BaseAdmin_
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
+            ->remove('batch')
             ->addIdentifier('numero')
             ->add('state')
             ->add('discriminator')
@@ -52,7 +68,7 @@ class AppMovimientoAlmacenAdmin extends _BaseAdmin_
             ->add('_action', null, array(
                 'label' => 'Acciones',
                 'row_align' => 'right',
-                'header_style' => 'width: 160px',
+                'header_style' => 'width: 170px',
                 'actions' => $this->actions ,
             ));
     }

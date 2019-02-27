@@ -23,6 +23,7 @@ class AppSubMayorProductoAdmin extends _BaseAdmin_
             ->add('cantidad', NumberType::class, [
                 'label' => 'nomenclador.cantidad',
                 'disabled' => !$object,
+                'attr' => ['style'=>'width: 100px'],
             ])
         ;
     }

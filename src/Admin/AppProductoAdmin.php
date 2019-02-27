@@ -19,6 +19,15 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class AppProductoAdmin extends AbstractAdmin
 {
+    public function createQuery($context = 'list')
+    {
+        $query = parent::createQuery($context);
+
+        $query->where("{$query->getRootAliases()[0]}.delete_at is NULL");
+
+        return $query;
+    }
+
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper

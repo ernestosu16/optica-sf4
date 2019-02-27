@@ -15,7 +15,6 @@ sonata_admin:
                     - sonata.user.admin.office
                     - sonata.admin.app.clasificador
                     - sonata.admin.app.trabajador
-                    - sonata.admin.app.paciente
 #            sonata.admin.group.content:
 #                label:           sonata_media
 #                label_catalogue: SonataMediaBundle
@@ -23,15 +22,6 @@ sonata_admin:
 #                items:
 #                    - sonata.media.admin.media
 #                    - sonata.media.admin.gallery
-#            sonata.admin.nomenclador:
-#                label_catalogue: app
-#                icon:  '<i class="fa fa-gears"></i>'
-#                items:
-#                    - sonata.admin.nomenclador.add
-#                    - sonata.admin.nomenclador.agudeza_visual
-#                    - sonata.admin.nomenclador.cristal_semiterminado_tipo
-#                    - sonata.admin.nomenclador.dp
-#                    - sonata.admin.nomenclador.eje
             sonata.admin.producto_optica:
                 label_catalogue: app
                 icon:  '<i class="fa fa-gears"></i>'
@@ -51,6 +41,14 @@ sonata_admin:
                 icon:  '<i class="fa fa-folder"></i>'
                 items:
                     - sonata.admin.app.movimiento_almacen
+
+            servicios_ordenes:
+                label: Clientes & Servicios
+                label_catalogue: AppBundle
+                icon: '<i class="fa fa-list-alt"></i>'
+                roles: [ ROLE_USER ]
+                items:
+                    - sonata.admin.app.paciente
     options:
         html5_validate:  true     # enable or disable html5 form validation
         confirm_exit:    true     # enable or disable a confirmation before navigating away

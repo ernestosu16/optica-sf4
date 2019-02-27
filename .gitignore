@@ -69,5 +69,5 @@ public/uploads/images/
 **/Entity/*~
 
 # Embedded web-server pid file
-/.web-server-pid
-/.env
+.web-server-pid
+*.log

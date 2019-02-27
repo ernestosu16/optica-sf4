@@ -14,10 +14,15 @@ use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\AdminBundle\Show\ShowMapper;
 
 class AppTinteCristalAdmin extends _BaseAdmin_
 {
+    protected function configureRoutes(RouteCollection $collection)
+    {
+        parent::configureRoutes($collection);
+    }
     /**
      * @param DatagridMapper $datagridMapper
      */
@@ -34,9 +39,11 @@ class AppTinteCristalAdmin extends _BaseAdmin_
     {
 
         $listMapper
+            ->remove('batch')
             ->add('producto.imagen', 'media_thumbnail', array(
                 'label' => 'nomenclador.imagen',
                 'class' => 'img-polaroid',
+                'header_style' => 'width: 80px',
             ))
             ->add('producto.codigo',null,[
                 'label' => 'nomenclador.codigo',
@@ -50,7 +57,7 @@ class AppTinteCristalAdmin extends _BaseAdmin_
             ->add('_action', null, array(
                 'label' => 'Acciones',
                 'row_align' => 'right',
-                'header_style' => 'width: 160px',
+                'header_style' => 'width: 170px',
                 'actions' => $this->actions ,
             ));
     }

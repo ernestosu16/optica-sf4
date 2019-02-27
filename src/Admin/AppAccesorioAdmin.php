@@ -5,10 +5,16 @@ namespace App\Admin;
 use App\Form\ProductoType;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\AdminBundle\Show\ShowMapper;
 
 class AppAccesorioAdmin extends _BaseAdmin_
 {
+    protected function configureRoutes(RouteCollection $collection)
+    {
+        parent::configureRoutes($collection);
+    }
+
     /**
      * @param ListMapper $listMapper
      */
@@ -16,24 +22,26 @@ class AppAccesorioAdmin extends _BaseAdmin_
     {
 
         $listMapper
+            ->remove('batch')
             ->add('producto.imagen', 'media_thumbnail', array(
                 'label' => 'nomenclador.imagen',
                 'class' => 'img-polaroid',
+                'header_style' => 'width: 80px',
             ))
-            ->add('producto.codigo',null,[
+            ->add('producto.codigo', null, [
                 'label' => 'nomenclador.codigo',
             ])
-            ->add('producto.precio',null,[
+            ->add('producto.precio', null, [
                 'label' => 'nomenclador.precio',
             ])
-            ->add('producto.descripcion',null,[
+            ->add('producto.descripcion', null, [
                 'label' => 'nomenclador.descripcion',
             ])
             ->add('_action', null, array(
                 'label' => 'Acciones',
                 'row_align' => 'right',
-                'header_style' => 'width: 160px',
-                'actions' => $this->actions ,
+                'header_style' => 'width: 170px',
+                'actions' => $this->actions,
             ));
     }
 
@@ -59,15 +67,14 @@ class AppAccesorioAdmin extends _BaseAdmin_
                 'label' => 'nomenclador.imagen',
                 'class' => 'img-polaroid',
             ))
-            ->add('producto.codigo',null,[
+            ->add('producto.codigo', null, [
                 'label' => 'nomenclador.codigo',
             ])
-            ->add('producto.precio',null,[
+            ->add('producto.precio', null, [
                 'label' => 'nomenclador.precio',
             ])
-            ->add('producto.descripcion',null,[
+            ->add('producto.descripcion', null, [
                 'label' => 'nomenclador.descripcion',
-            ])
-        ;
+            ]);
     }
 }
