@@ -60,8 +60,9 @@ sonata_admin:
         form_type:       standard # can also be 'horizontal'
 
     templates:
-        user_block: '::Admin/Core/user_block.html.twig'
-        base_list_field:    "::Admin/CRUD/base_list_field.html.twig"
+        layout:             '::Admin/layout.html.twig'
+        user_block:         '::Admin/Core/user_block.html.twig'
+        base_list_field:    '::Admin/CRUD/base_list_field.html.twig'
 
     global_search:
         empty_boxes: hide
