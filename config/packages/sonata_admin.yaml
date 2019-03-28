@@ -43,12 +43,13 @@ sonata_admin:
                     - sonata.admin.app.movimiento_almacen
 
             servicios_ordenes:
-                label: Clientes & Servicios
+                label: Ventas
                 label_catalogue: AppBundle
-                icon: '<i class="fa fa-list-alt"></i>'
+                icon: '<i class="fa fa-money"></i>'
                 roles: [ ROLE_USER ]
                 items:
                     - sonata.admin.app.paciente
+                    - sonata.admin.app.orden_servicio
     options:
         html5_validate:  true     # enable or disable html5 form validation
         confirm_exit:    true     # enable or disable a confirmation before navigating away

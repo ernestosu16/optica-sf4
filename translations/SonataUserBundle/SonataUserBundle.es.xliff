@@ -92,7 +92,7 @@
             </trans-unit>
             <trans-unit id="user_form.label_username">
                 <source>form.label_username</source>
-                <target>Nombre de usuario</target>
+                <target>Usuario</target>
             </trans-unit>
             <trans-unit id="form.label_email">
                 <source>form.label_email</source>
@@ -168,11 +168,11 @@
             </trans-unit>
             <trans-unit id="filter.label_lastname">
                 <source>filter.label_lastname</source>
-                <target>Apellido</target>
+                <target>Apellidos</target>
             </trans-unit>
             <trans-unit id="list.label_username">
                 <source>list.label_username</source>
-                <target>Nombre de usuario</target>
+                <target>Usuario</target>
             </trans-unit>
             <trans-unit id="list.label_name">
                 <source>list.label_name</source>
@@ -212,7 +212,7 @@
             </trans-unit>
             <trans-unit id="list.label_lastname">
                 <source>list.label_lastname</source>
-                <target>Apellido</target>
+                <target>Apellidos</target>
             </trans-unit>
             <trans-unit id="label_two_step_code">
                 <source>label_two_step_code</source>
@@ -256,7 +256,7 @@
             </trans-unit>
             <trans-unit id="form.label_lastname">
                 <source>form.label_lastname</source>
-                <target>Apellido</target>
+                <target>Apellidos</target>
             </trans-unit>
             <trans-unit id="form.label_website">
                 <source>form.label_website</source>
@@ -336,7 +336,7 @@
             </trans-unit>
             <trans-unit id="show.label_lastname">
                 <source>show.label_lastname</source>
-                <target>Apellido</target>
+                <target>Apellidos</target>
             </trans-unit>
             <trans-unit id="show.label_website">
                 <source>show.label_website</source>
@@ -440,7 +440,7 @@
             </trans-unit>
             <trans-unit id="label_profile_lastname">
                 <source>label_profile_lastname</source>
-                <target>Apellido</target>
+                <target>Apellidos</target>
             </trans-unit>
             <trans-unit id="label_profile_website">
                 <source>label_profile_website</source>

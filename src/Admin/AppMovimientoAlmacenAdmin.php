@@ -3,11 +3,14 @@
 namespace App\Admin;
 
 
+use App\Entity\AppMovimientoAlmacen;
+use App\Entity\AppSubmayorProducto;
 use App\Form\SubMayorProductoType;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\Form\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 
 class AppMovimientoAlmacenAdmin extends _BaseAdmin_
@@ -26,6 +29,30 @@ class AppMovimientoAlmacenAdmin extends _BaseAdmin_
         return $query;
     }
 
+    /**
+     * @param $object AppMovimientoAlmacen
+     */
+    public function prePersist($object)
+    {
+        $token =  $this->getConfigurationPool()->getContainer()->get('security.token_storage')->getToken()->getUser() ;
+
+        $object->setOffice($token->getOffice());
+
+    }
+//    /**
+//     * @param AppMovimientoAlmacen $object
+//     */
+//    public function prePersist($object)
+//    {
+//        parent::prePersist($object);
+//
+//
+//        foreach ($object->getSubMayor() as $ar) /* @var $ar AppSubmayorProducto */ {
+//            $ar->setMovimiento($object);
+//        }
+//    }
+
+
     protected function configureFormFields(FormMapper $formMapper)
     {
         $object = $this->getSubject();
@@ -35,6 +62,7 @@ class AppMovimientoAlmacenAdmin extends _BaseAdmin_
             ->add('numero')
             ->add('state')
             ->add('discriminator')
+//            ->add('office',HiddenType::class)
             ->end()
             ->with('Productos', array('class' => 'col-md-8'))
             ->add('sub_mayor', CollectionType::class, array(
@@ -47,6 +75,7 @@ class AppMovimientoAlmacenAdmin extends _BaseAdmin_
                 )
             ), array(
                 'edit' => 'inline',
+                'sortable' => 'pos',
                 'inline' => 'table',
             ))
             ->end();
@@ -69,7 +98,7 @@ class AppMovimientoAlmacenAdmin extends _BaseAdmin_
                 'label' => 'Acciones',
                 'row_align' => 'right',
                 'header_style' => 'width: 170px',
-                'actions' => $this->actions ,
+                'actions' => $this->actions,
             ));
     }
 }

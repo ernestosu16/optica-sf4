@@ -12,17 +12,17 @@ class AppSubMayorProductoAdmin extends _BaseAdmin_
 {
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $object = $this->getSubject();
+//        $object = $this->getSubject();
 
         $formMapper
             ->add('producto', EntityType::class, [
                 'class' => AppProducto::class,
                 'label' => 'nomenclador.producto',
-                'disabled' => !$object,
+//                'disabled' => !$object,
             ])
             ->add('cantidad', NumberType::class, [
                 'label' => 'nomenclador.cantidad',
-                'disabled' => !$object,
+//                'disabled' => !$object,
                 'attr' => ['style'=>'width: 100px'],
             ])
         ;

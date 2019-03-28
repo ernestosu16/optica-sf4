@@ -34,3 +34,10 @@ services:
             - { name: sonata.admin, manager_type: orm, label: app.pacientes }
         calls:
             - [setTranslationDomain,['app']]
+    sonata.admin.app.orden_servicio:
+        class: App\Admin\AppOrdenServicioAdmin
+        arguments: [~, App\Entity\AppOrdenServicio, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: app.orden_servicio }
+        calls:
+            - [setTranslationDomain,['app']]

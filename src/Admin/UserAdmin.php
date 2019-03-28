@@ -75,7 +75,9 @@ class UserAdmin extends AbstractAdmin
             ->add('groups')
             ->add('office')
             ->add('enabled', null, ['editable' => true])
-            ->add('createdAt')
+            ->add('createdAt', null,[
+                'format' => 'Y-m-d H:i:s',
+            ])
             ->add('_action', null, array(
                 'label' => 'Acciones',
                 'row_align' => 'right',

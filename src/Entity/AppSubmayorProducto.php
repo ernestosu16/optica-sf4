@@ -41,7 +41,7 @@ class AppSubmayorProducto extends _BaseEntity_
 
     public function __toString()
     {
-        return $this->getProducto()->getCodigo() . ' (' . $this->getCantidad() . ')';
+        return "{$this->getProducto()->getCodigo()} - {$this->getProducto()->getDescripcion()}  ({$this->getCantidad()})";
     }
 
     public function getCantidad(): ?float

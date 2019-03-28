@@ -19,6 +19,11 @@ class AppMovimientoAlmacen extends _BaseEntity_
     protected $numero;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\SecurityOffice")
+     */
+    protected $office;
+
+    /**
      * @var string
      * @ORM\Column(type="string", length=10)
      */
@@ -103,6 +108,18 @@ class AppMovimientoAlmacen extends _BaseEntity_
                 $subMayor->setMovimiento(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getOffice(): ?SecurityOffice
+    {
+        return $this->office;
+    }
+
+    public function setOffice(?SecurityOffice $office): self
+    {
+        $this->office = $office;
 
         return $this;
     }
