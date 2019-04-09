@@ -74,6 +74,10 @@
                 <source>nomenclador.precio_costo</source>
                 <target>Costo</target>
             </trans-unit>
+            <trans-unit id="nomenclador.lupa">
+                <source>nomenclador.lupa</source>
+                <target>Lupas</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
