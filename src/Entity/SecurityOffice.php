@@ -28,6 +28,13 @@ class SecurityOffice
     /**
      * @var string
      *
+     * @ORM\Column(type="string", length=4, unique=true)
+     */
+    protected $number;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=100)
      */
     protected $name;
@@ -186,6 +193,18 @@ class SecurityOffice
     public function setRgt($rgt): SecurityOffice
     {
         $this->rgt = $rgt;
+
+        return $this;
+    }
+
+    public function getNumber(): ?string
+    {
+        return $this->number;
+    }
+
+    public function setNumber(string $number): self
+    {
+        $this->number = $number;
 
         return $this;
     }

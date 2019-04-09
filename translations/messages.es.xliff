@@ -66,6 +66,10 @@
                 <source>app.backup</source>
                 <target>Base de Datos</target>
             </trans-unit>
+            <trans-unit id="office.number">
+                <source>office.number</source>
+                <target>Número</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

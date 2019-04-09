@@ -24,6 +24,9 @@ class OfficeAdmin extends AbstractAdmin
             ))
             ->end()
             ->with('General',['class' => 'col-md-8'])
+            ->add('number', TextType::class, [
+                'label' => 'office.number',
+            ])
             ->add('name', TextType::class, [
                 'label' => 'office.name',
             ])
@@ -41,6 +44,7 @@ class OfficeAdmin extends AbstractAdmin
     {
         $listMapper
             ->addIdentifier('name', null, ['label' => 'office.name'])
+            ->add('number', null, ['label' => 'office.number'])
             ->add('description', null, ['label' => 'office.description'])
             ->add('_action', null, array(
                 'label' => 'Acciones',
