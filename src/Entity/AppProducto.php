@@ -44,6 +44,13 @@ class AppProducto extends _BaseEntity_
     protected $precio;
 
     /**
+     * @var float
+     *
+     * @ORM\Column(type="float")
+     */
+    protected $precio_costo;
+
+    /**
      * @ORM\ManyToOne(targetEntity="App\Application\Sonata\MediaBundle\Entity\Media", cascade={"persist"})
      * @ORM\JoinColumn(referencedColumnName="id", onDelete="SET NULL")
      */
@@ -334,6 +341,18 @@ class AppProducto extends _BaseEntity_
         if ($newProducto !== $tinte_cristales->getProducto()) {
             $tinte_cristales->setProducto($newProducto);
         }
+
+        return $this;
+    }
+
+    public function getPrecioCosto(): ?float
+    {
+        return $this->precio_costo;
+    }
+
+    public function setPrecioCosto(float $precio_costo): self
+    {
+        $this->precio_costo = $precio_costo;
 
         return $this;
     }

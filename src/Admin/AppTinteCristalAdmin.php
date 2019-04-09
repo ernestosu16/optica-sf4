@@ -51,6 +51,9 @@ class AppTinteCristalAdmin extends _BaseAdmin_
             ->add('producto.precio',null,[
                 'label' => 'nomenclador.precio',
             ])
+            ->add('producto.precio_costo', null, [
+                'label' => 'nomenclador.precio_costo',
+            ])
             ->add('producto.descripcion',null,[
                 'label' => 'nomenclador.descripcion',
             ])
