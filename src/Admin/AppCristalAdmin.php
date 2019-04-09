@@ -9,6 +9,8 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\AdminBundle\Show\ShowMapper;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 
 class AppCristalAdmin extends _BaseAdmin_
 {
@@ -16,6 +18,7 @@ class AppCristalAdmin extends _BaseAdmin_
     {
         parent::configureRoutes($collection);
     }
+
     /**
      * @param DatagridMapper $datagridMapper
      */
@@ -40,16 +43,16 @@ class AppCristalAdmin extends _BaseAdmin_
                 'class' => 'img-polaroid',
                 'header_style' => 'width: 80px',
             ))
-            ->add('producto.codigo',null,[
+            ->add('producto.codigo', null, [
                 'label' => 'nomenclador.codigo',
             ])
-            ->add('producto.precio',null,[
+            ->add('producto.precio', null, [
                 'label' => 'nomenclador.precio',
             ])
             ->add('producto.precio_costo', null, [
                 'label' => 'nomenclador.precio_costo',
             ])
-            ->add('producto.descripcion',null,[
+            ->add('producto.descripcion', null, [
                 'label' => 'nomenclador.descripcion',
             ])
             ->add('grosor')
@@ -59,7 +62,7 @@ class AppCristalAdmin extends _BaseAdmin_
                 'label' => 'Acciones',
                 'row_align' => 'right',
                 'header_style' => 'width: 170px',
-                'actions' => $this->actions ,
+                'actions' => $this->actions,
             ));
     }
 
@@ -73,9 +76,9 @@ class AppCristalAdmin extends _BaseAdmin_
             ->add('producto', ProductoType::class)
             ->end()
             ->with('Datos del Cristal', array('class' => 'col-md-3'))
-            ->add('grosor')
-            ->add('esfera')
-            ->add('cilindro')
+            ->add('grosor', IntegerType::class)
+            ->add('esfera', IntegerType::class)
+            ->add('cilindro', IntegerType::class)
             ->end();
     }
 
