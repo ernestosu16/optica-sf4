@@ -72,7 +72,7 @@ class SecurityOffice
 
     public function __toString()
     {
-        return !is_null($this->name) ? $this->name : 'null';
+        return (string) !is_null($this->name) ? $this->name : 'null';
     }
 
     /**

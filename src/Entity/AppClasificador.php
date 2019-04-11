@@ -44,7 +44,7 @@ class AppClasificador extends _BaseEntity_
 
     public function __toString()
     {
-        return $this->type;
+        return (string) $this->type;
     }
 
 

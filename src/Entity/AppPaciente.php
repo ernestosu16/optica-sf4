@@ -52,7 +52,7 @@ class AppPaciente extends _BaseEntity_
 
     public function __toString()
     {
-        return $this->nombre;
+        return (string) $this->nombre;
     }
 
     public function getCi(): ?string

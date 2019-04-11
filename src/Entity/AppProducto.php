@@ -93,7 +93,7 @@ class AppProducto extends _BaseEntity_
 
     public function __toString()
     {
-        return "{$this->codigo} - {$this->descripcion} ";
+        return (string) "{$this->codigo} - {$this->descripcion} ";
     }
 
 

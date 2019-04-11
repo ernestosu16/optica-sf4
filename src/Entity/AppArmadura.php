@@ -32,7 +32,7 @@ class AppArmadura extends _Entity_
 
     public function __toString()
     {
-        return $this->getProducto()->getCodigo();
+        return (string) $this->getProducto()->getCodigo();
     }
 
 
