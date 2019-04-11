@@ -67,13 +67,4 @@ class AppPacienteAdmin extends AbstractAdmin
                     'delete' => array())));;
     }
 
-    public function getTemplate($name)
-    {
-        switch ($name) {
-            case 'edit':
-                return '::Admin/paciente/edit.html.twig';
-        }
-        return parent::getTemplate($name);
-    }
-
 }

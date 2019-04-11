@@ -1,0 +1,13 @@
+{% extends '@SonataAdmin/CRUD/base_edit.html.twig' %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#sonata-ba-field-container-{{ admin.uniqid }}_numero').addClass('col-md-2').css({
+                'padding-left': '0px',
+                'padding-rigth': '0px'
+            });
+
+        });
+    </script>
+{% endblock %}

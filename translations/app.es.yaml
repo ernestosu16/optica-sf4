@@ -33,3 +33,14 @@ app:
     new_producto: 'Nuevo Producto'
     cantidad: 'Cantidad'
     producto: 'Producto'
+    receta: 'Recetas'
+    orden_servicio: 'Orden de Servicio'
+
+Datos Personales: Datos Personales
+Ci:	CI
+Nombre:	Nombre y Appellidos
+Historia Clinica: Historia Clínica
+Datos de Contacto: Datos de Contacto
+Direccion: Dirección
+Telefono Contacto: Teléfono
+Correo Contacto: Dirección de Correo

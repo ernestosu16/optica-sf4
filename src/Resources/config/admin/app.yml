@@ -34,6 +34,7 @@ services:
             - { name: sonata.admin, manager_type: orm, label: app.pacientes }
         calls:
             - [setTranslationDomain,['app']]
+            - [setTemplate, ['edit', '::Admin/paciente/edit.html.twig']]
     sonata.admin.app.orden_servicio:
         class: App\Admin\AppOrdenServicioAdmin
         arguments: [~, App\Entity\AppOrdenServicio, ~]
@@ -48,3 +49,4 @@ services:
             - { name: sonata.admin, manager_type: orm, label: app.receta }
         calls:
             - [setTranslationDomain,['app']]
+            - [setTemplate, ['edit', '::Admin/receta/edit.html.twig']]
