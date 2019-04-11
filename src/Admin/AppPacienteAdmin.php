@@ -23,13 +23,18 @@ class AppPacienteAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
+            ->with('Datos Personales', array('class'=>'col-md-6'))
             ->add('ci')
             ->add('nombre')
+            ->add('historia_clinica')
+            ->end()
+            ->with('Datos de Contacto', array('class'=>'col-md-6'))
             ->add('direccion')
             ->add('telefono_contacto')
             ->add('correo_contacto')
-            ->add('historia_clinica')
-            ->end();
+            ->end()
+            ->end()
+        ;
     }
 
     /**
@@ -60,6 +65,15 @@ class AppPacienteAdmin extends AbstractAdmin
                 'actions' => array(
                     'edit' => array(),
                     'delete' => array())));;
+    }
+
+    public function getTemplate($name)
+    {
+        switch ($name) {
+            case 'edit':
+                return '::Admin/paciente/edit.html.twig';
+        }
+        return parent::getTemplate($name);
     }
 
 }

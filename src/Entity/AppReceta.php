@@ -8,6 +8,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -23,6 +25,11 @@ class AppReceta extends _BaseEntity_
      * @ORM\ManyToOne(targetEntity="App\Entity\AppPaciente")
      */
     protected $paciente;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\AppRecetaComponente", mappedBy="receta")
+     */
+    protected $receta_componente;
 
     /**
      * @var string
@@ -48,11 +55,10 @@ class AppReceta extends _BaseEntity_
      */
     protected $fecha_recogida;
 
-    /**
-     * @var string
-     * @ORM\Column(type="string", length=30)
-     */
-    protected $estado;
+    public function __construct()
+    {
+        $this->receta_componente = new ArrayCollection();
+    }
 
     public function getNumero(): ?string
     {
@@ -102,18 +108,6 @@ class AppReceta extends _BaseEntity_
         return $this;
     }
 
-    public function getEstado(): ?string
-    {
-        return $this->estado;
-    }
-
-    public function setEstado(string $estado): self
-    {
-        $this->estado = $estado;
-
-        return $this;
-    }
-
     public function getPaciente(): ?AppPaciente
     {
         return $this->paciente;
@@ -122,6 +116,37 @@ class AppReceta extends _BaseEntity_
     public function setPaciente(?AppPaciente $paciente): self
     {
         $this->paciente = $paciente;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|AppRecetaComponente[]
+     */
+    public function getRecetaComponente(): Collection
+    {
+        return $this->receta_componente;
+    }
+
+    public function addRecetaComponente(AppRecetaComponente $recetaComponente): self
+    {
+        if (!$this->receta_componente->contains($recetaComponente)) {
+            $this->receta_componente[] = $recetaComponente;
+            $recetaComponente->setReceta($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRecetaComponente(AppRecetaComponente $recetaComponente): self
+    {
+        if ($this->receta_componente->contains($recetaComponente)) {
+            $this->receta_componente->removeElement($recetaComponente);
+            // set the owning side to null (unless already changed)
+            if ($recetaComponente->getReceta() === $this) {
+                $recetaComponente->setReceta(null);
+            }
+        }
 
         return $this;
     }

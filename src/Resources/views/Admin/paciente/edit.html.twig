@@ -1,0 +1,33 @@
+{% extends "SonataAdminBundle:CRUD:edit.html.twig" %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#sonata-ba-field-container-{{ admin.uniqid }}_ci').addClass('col-md-4').css({
+                'padding-left': '0px',
+                'padding-rigth': '0px'
+            });
+            $('#sonata-ba-field-container-{{ admin.uniqid }}_nombre').addClass('col-md-8').css({
+                'padding-left': '0px',
+                'padding-rigth': '0px'
+            });
+            $('#sonata-ba-field-container-{{ admin.uniqid }}_historia_clinica').addClass('col-md-4').css({
+                'padding-left': '0px',
+                'padding-rigth': '0px'
+            });
+
+            $('#sonata-ba-field-container-{{ admin.uniqid }}_direccion').addClass('col-md-12').css({
+                'padding-left': '0px',
+                'padding-rigth': '0px'
+            });
+            $('#sonata-ba-field-container-{{ admin.uniqid }}_telefono_contacto').addClass('col-md-6').css({
+                'padding-left': '0px',
+                'padding-rigth': '0px'
+            });
+            $('#sonata-ba-field-container-{{ admin.uniqid }}_correo_contacto').addClass('col-md-6').css({
+                'padding-left': '0px',
+                'padding-rigth': '0px'
+            });
+        });
+    </script>
+{% endblock %}

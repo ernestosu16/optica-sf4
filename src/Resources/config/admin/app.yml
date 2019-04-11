@@ -41,3 +41,10 @@ services:
             - { name: sonata.admin, manager_type: orm, label: app.orden_servicio }
         calls:
             - [setTranslationDomain,['app']]
+    sonata.admin.app.receta:
+        class: App\Admin\AppRecetaAdmin
+        arguments: [~, App\Entity\AppReceta, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: app.receta }
+        calls:
+            - [setTranslationDomain,['app']]

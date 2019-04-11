@@ -37,6 +37,11 @@ class AppCristal extends _Entity_
      */
     private $cilindro;
 
+    public function __toString()
+    {
+        return $this->getProducto()->getCodigo();
+    }
+
     public function getGrosor(): ?float
     {
         return $this->grosor;

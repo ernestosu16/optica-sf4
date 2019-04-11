@@ -30,6 +30,12 @@ class AppArmadura extends _Entity_
      */
     private $puente;
 
+    public function __toString()
+    {
+        return $this->getProducto()->getCodigo();
+    }
+
+
     /**
      * @var int
      *

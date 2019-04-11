@@ -50,6 +50,11 @@ class AppPaciente extends _BaseEntity_
      */
     protected $historia_clinica;
 
+    public function __toString()
+    {
+        return $this->nombre;
+    }
+
     public function getCi(): ?string
     {
         return $this->ci;

@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 class AppRecetaComponente extends _BaseEntity_
 {
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\AppReceta")
+     * @ORM\ManyToOne(targetEntity="App\Entity\AppReceta", inversedBy="receta_componente")
      */
     protected $receta;
 
@@ -35,18 +35,6 @@ class AppRecetaComponente extends _BaseEntity_
      * @ORM\Column(type="float")
      */
     protected $eje;
-
-    public function getTinteId(): ?int
-    {
-        return $this->tinte_id;
-    }
-
-    public function setTinteId(int $tinte_id): self
-    {
-        $this->tinte_id = $tinte_id;
-
-        return $this;
-    }
 
     public function getEje(): ?float
     {

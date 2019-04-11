@@ -40,6 +40,11 @@ class AppTinteCristal extends _Entity_
         $this->orden_servicios = new ArrayCollection();
     }
 
+    public function __toString()
+    {
+        return $this->getProducto()->getCodigo();
+    }
+
     public function getProducto(): ?AppProducto
     {
         return $this->producto;
