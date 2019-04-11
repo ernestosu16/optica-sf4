@@ -1,0 +1,5 @@
+{% if number > 0 %}
+    +{{ number|number_format(2, '.', ',') }}
+{% else %}
+    {{ number|number_format(2, '.', '') }}
+{% endif %}

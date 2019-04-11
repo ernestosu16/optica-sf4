@@ -9,8 +9,8 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\AdminBundle\Show\ShowMapper;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class AppCristalAdmin extends _BaseAdmin_
 {
@@ -49,15 +49,19 @@ class AppCristalAdmin extends _BaseAdmin_
             ->add('producto.precio', null, [
                 'label' => 'nomenclador.precio',
             ])
-            ->add('producto.precio_costo', null, [
-                'label' => 'nomenclador.precio_costo',
-            ])
+//            ->add('producto.precio_costo', null, [
+//                'label' => 'nomenclador.precio_costo',
+//            ])
             ->add('producto.descripcion', null, [
                 'label' => 'nomenclador.descripcion',
             ])
             ->add('grosor')
-            ->add('esfera')
-            ->add('cilindro')
+            ->add('esfera', 'string', array(
+                'template' => '::Admin/producto/list/esfera.html.twig'
+            ))
+            ->add('cilindro', 'string', array(
+                'template' => '::Admin/producto/list/cilindro.html.twig'
+            ))
             ->add('_action', null, array(
                 'label' => 'Acciones',
                 'row_align' => 'right',
@@ -76,9 +80,21 @@ class AppCristalAdmin extends _BaseAdmin_
             ->add('producto', ProductoType::class)
             ->end()
             ->with('Datos del Cristal', array('class' => 'col-md-3'))
-            ->add('grosor', IntegerType::class)
-            ->add('esfera', IntegerType::class)
-            ->add('cilindro', IntegerType::class)
+            ->add('grosor', NumberType::class, array(
+                'constraints' => array(
+                    new Regex(array('pattern' => '/^\d{0,}(\.\d{1,2})?$/')),
+                ),
+            ))
+            ->add('esfera', NumberType::class, array(
+                'constraints' => array(
+                    new Regex(array('pattern' => '/[-+]?\d{0,2}(\.\d{1,2})?$/')),
+                ),
+            ))
+            ->add('cilindro', NumberType::class, array(
+                'constraints' => array(
+                    new Regex(array('pattern' => '/[-+]?\d{0,2}(\.\d{1,2})?$/')),
+                ),
+            ))
             ->end();
     }
 
