@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -47,11 +48,18 @@ class AppOrdenServicio extends _BaseEntity_
      */
     protected $fecha_asignacion;
 
-    public function getReceta(): ?string
+    /**
+     * @return AppReceta|null
+     */
+    public function getReceta(): ?AppReceta
     {
         return $this->receta;
     }
 
+    /**
+     * @param AppReceta|null $receta
+     * @return AppOrdenServicio
+     */
     public function setReceta(?AppReceta $receta): self
     {
         $this->receta = $receta;
@@ -83,12 +91,12 @@ class AppOrdenServicio extends _BaseEntity_
         return $this;
     }
 
-    public function getFechaAsignacion(): ?\DateTimeInterface
+    public function getFechaAsignacion(): ?DateTimeInterface
     {
         return $this->fecha_asignacion;
     }
 
-    public function setFechaAsignacion(\DateTimeInterface $fecha_asignacion): self
+    public function setFechaAsignacion(DateTimeInterface $fecha_asignacion): self
     {
         $this->fecha_asignacion = $fecha_asignacion;
 

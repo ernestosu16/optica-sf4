@@ -13,6 +13,20 @@ use Symfony\Component\Form\Extension\Core\Type\FormType;
 
 class AppOrdenServicioAdmin extends _BaseAdmin_
 {
+//    protected function configureBatchActions($actions)
+//    {
+//        if (
+//            $this->hasRoute('edit') && $this->hasAccess('edit') &&
+//            $this->hasRoute('delete') && $this->hasAccess('delete')
+//        ) {
+//            $actions['merge'] = [
+//                'ask_confirmation' => true
+//            ];
+//        }
+//
+//        return $actions;
+//    }
+
     /**
      * @param FormMapper $formMapper
      */
