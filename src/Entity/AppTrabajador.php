@@ -42,17 +42,6 @@ class AppTrabajador extends _BaseEntity_
      */
     protected $oficina;
 
-    /**
-     * Constructor.
-     *
-     * @throws \Exception
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-
     public function getCi(): ?string
     {
         return $this->ci;

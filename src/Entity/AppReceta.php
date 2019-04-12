@@ -24,11 +24,6 @@ use Doctrine\ORM\Mapping as ORM;
 class AppReceta extends _BaseEntity_
 {
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\AppRecetaComponente", mappedBy="receta")
-     */
-    protected $receta_componente;
-
-    /**
      * @var string
      * @ORM\Column(type="string", length=15)
      */

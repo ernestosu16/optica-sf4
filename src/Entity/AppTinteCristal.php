@@ -24,19 +24,10 @@ class AppTinteCristal extends _Entity_
      */
     protected $producto;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\AppRecetaComponente", mappedBy="tinte_cristal")
-     */
-    protected $receta_componentes;
-
-    public function __construct()
-    {
-        $this->receta_componentes = new ArrayCollection();
-    }
 
     public function __toString()
     {
-        return (string) $this->getProducto()->getCodigo();
+        return (string)$this->producto ? $this->getProducto()->getCodigo() : '';
     }
 
     public function getProducto(): ?AppProducto
@@ -47,37 +38,6 @@ class AppTinteCristal extends _Entity_
     public function setProducto(?AppProducto $producto): self
     {
         $this->producto = $producto;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|AppRecetaComponente[]
-     */
-    public function getRecetaComponentes(): Collection
-    {
-        return $this->receta_componentes;
-    }
-
-    public function addRecetaComponente(AppRecetaComponente $recetaComponente): self
-    {
-        if (!$this->receta_componentes->contains($recetaComponente)) {
-            $this->receta_componentes[] = $recetaComponente;
-            $recetaComponente->setTinteCristal($this);
-        }
-
-        return $this;
-    }
-
-    public function removeRecetaComponente(AppRecetaComponente $recetaComponente): self
-    {
-        if ($this->receta_componentes->contains($recetaComponente)) {
-            $this->receta_componentes->removeElement($recetaComponente);
-            // set the owning side to null (unless already changed)
-            if ($recetaComponente->getTinteCristal() === $this) {
-                $recetaComponente->setTinteCristal(null);
-            }
-        }
 
         return $this;
     }

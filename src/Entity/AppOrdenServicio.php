@@ -27,6 +27,11 @@ class AppOrdenServicio extends _BaseEntity_
     protected $trabajador;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\AppArmadura")
+     */
+    protected $armadura;
+
+    /**
      * @var string
      * @ORM\Column(type="string", length=15)
      */
@@ -111,6 +116,18 @@ class AppOrdenServicio extends _BaseEntity_
     public function setTrabajador(?AppTrabajador $trabajador): self
     {
         $this->trabajador = $trabajador;
+
+        return $this;
+    }
+
+    public function getArmadura(): ?AppArmadura
+    {
+        return $this->armadura;
+    }
+
+    public function setArmadura(?AppArmadura $armadura): self
+    {
+        $this->armadura = $armadura;
 
         return $this;
     }
