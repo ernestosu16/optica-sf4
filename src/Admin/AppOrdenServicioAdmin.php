@@ -3,15 +3,13 @@
 namespace App\Admin;
 
 
+use App\Entity\AppOrdenServicio;
 use App\Entity\AppReceta;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelListType;
-use Sonata\Form\Type\CollectionType;
 use Sonata\Form\Type\DateTimePickerType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class AppOrdenServicioAdmin extends _BaseAdmin_
 {
@@ -31,14 +29,13 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
             ->end()
             ->with('Datos de la Receta', array('class' => 'col-md-7'))
             ->add($formMapper->create('receta', FormType::class, array(
-                'label' => 'Graduación',
-                'by_reference' => true,
-                'data_class' => AppReceta::class))
+                'label' => 'Graduación', 'by_reference' => true, 'data_class' => AppReceta::class))
+                # Datos general de la receta
                 ->add('numero')
                 ->add('fecha_entrega', DateTimePickerType::class)
                 ->add('dp')
                 ->add('add')
-
+                # Ojo derecho
                 ->add('eje_od', null, array(
                     'label' => 'Eje Derecho'
                 ))
@@ -48,11 +45,10 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
                 ->add('cristal_od', null, array(
                     'label' => 'Cristal Derecho'
                 ))
-
+                # Ojo izquierdo
                 ->add('eje_oi', null, array(
                     'label' => 'Eje Izquierdo'
                 ))
-
                 ->add('a_visual_oi', null, array(
                     'label' => 'Eje Derecho'
                 ))
@@ -81,8 +77,23 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
             ->end();
     }
 
-    protected function configureListFields(ListMapper $list)
+    protected function configureListFields(ListMapper $listMapper)
     {
-        // TODO: Implement configureListFields() method.
+        unset($this->listModes['mosaic']);
+
+        $listMapper
+            ->remove('batch')
+            ->add('id', null, array(
+                'label' => 'No.'
+            ))
+            ->add('create_at')
+            ->add('paciente')
+            ->add('_action', null, array(
+                'actions' => array(
+                    'show' => array(),
+                    'edit' => array(),
+                    'delete' => array(),
+                ),
+            ));
     }
 }

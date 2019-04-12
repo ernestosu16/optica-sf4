@@ -11,8 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 class AppOrdenServicio extends _BaseEntity_
 {
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\AppReceta")
-     * @ORM\Column(nullable=true)
+     * @ORM\ManyToOne(targetEntity="App\Entity\AppReceta", cascade={"persist"})
      */
     protected $receta;
 
@@ -33,20 +32,32 @@ class AppOrdenServicio extends _BaseEntity_
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=15)
+     * @ORM\Column(type="string", length=15, nullable=true)
      */
     protected $numero;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $observaciones;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected $fecha_asignacion;
+
+    public function getReceta(): ?string
+    {
+        return $this->receta;
+    }
+
+    public function setReceta(?AppReceta $receta): self
+    {
+        $this->receta = $receta;
+
+        return $this;
+    }
 
     public function getNumero(): ?string
     {
@@ -56,18 +67,6 @@ class AppOrdenServicio extends _BaseEntity_
     public function setNumero(string $numero): self
     {
         $this->numero = $numero;
-
-        return $this;
-    }
-
-    public function getReceta(): ?string
-    {
-        return $this->receta;
-    }
-
-    public function setReceta(?string $receta): self
-    {
-        $this->receta = $receta;
 
         return $this;
     }
@@ -131,4 +130,5 @@ class AppOrdenServicio extends _BaseEntity_
 
         return $this;
     }
+
 }
