@@ -1,0 +1,30 @@
+{% extends "SonataAdminBundle:CRUD:edit.html.twig" %}
+{% block javascripts %}
+    {{ parent() }}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#sonata-ba-field-container-{{ admin.uniqid }}_receta_numero').addClass('col-md-6').css({
+            'padding-left': '0px',
+            'padding-rigth': '0px'
+        });
+
+        $('#sonata-ba-field-container-{{ admin.uniqid }}_receta_cristal_od').addClass('col-md-6').css({
+            'padding-left': '0px',
+            'padding-rigth': '0px'
+        });
+        $('#sonata-ba-field-container-{{ admin.uniqid }}_receta_eje_od').addClass('col-md-6').css({
+            'padding-left': '0px',
+            'padding-rigth': '0px'
+        });
+
+        $('#sonata-ba-field-container-{{ admin.uniqid }}_receta_cristal_oi').addClass('col-md-6').css({
+            'padding-left': '0px',
+            'padding-rigth': '0px'
+        });
+        $('#sonata-ba-field-container-{{ admin.uniqid }}_receta_eje_oi').addClass('col-md-6').css({
+            'padding-left': '0px',
+            'padding-rigth': '0px'
+        });
+    });
+</script>
+{% endblock %}

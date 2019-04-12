@@ -42,6 +42,7 @@ services:
             - { name: sonata.admin, manager_type: orm, label: app.orden_servicio }
         calls:
             - [setTranslationDomain,['app']]
+            - [setTemplate, ['edit', '::Admin/orden/edit.html.twig']]
     sonata.admin.app.receta:
         class: App\Admin\AppRecetaAdmin
         arguments: [~, App\Entity\AppReceta, ~]

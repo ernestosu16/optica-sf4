@@ -8,6 +8,8 @@
 
 namespace App\Entity;
 
+use DateTime;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -22,11 +24,6 @@ use Doctrine\ORM\Mapping as ORM;
 class AppReceta extends _BaseEntity_
 {
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\AppPaciente")
-     */
-    protected $paciente;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\AppRecetaComponente", mappedBy="receta")
      */
     protected $receta_componente;
@@ -38,31 +35,57 @@ class AppReceta extends _BaseEntity_
     protected $numero;
 
     /**
-     * @var \DateTime
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="string", length=15)
+     */
+    protected $add;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\AppCristal")
+     */
+    protected $cristal_od;
+
+    /**
+     * @ORM\Column(type="string", length=15)
+     */
+    protected $eje_od;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\AppCristal")
+     */
+    protected $cristal_oi;
+
+    /**
+     * @ORM\Column(type="string", length=15)
+     */
+    protected $eje_oi;
+
+    /**
+     * @var DateTime
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected $fecha_recepcion;
 
     /**
-     * @var \DateTime
-     * @ORM\Column(type="datetime")
+     * @var DateTime
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected $fecha_entrega;
 
     /**
-     * @var \DateTime
-     * @ORM\Column(type="datetime")
+     * @var DateTime
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected $fecha_recogida;
 
     public function __construct()
     {
+        $this->fecha_recepcion = new DateTime('now');
         $this->receta_componente = new ArrayCollection();
     }
 
     public function getNumero(): ?string
     {
-        return $this->numero;
+        return (string)$this->numero;
     }
 
     public function setNumero(string $numero): self
@@ -72,50 +95,38 @@ class AppReceta extends _BaseEntity_
         return $this;
     }
 
-    public function getFechaRecepcion(): ?\DateTimeInterface
+    public function getFechaRecepcion(): ?DateTimeInterface
     {
         return $this->fecha_recepcion;
     }
 
-    public function setFechaRecepcion(\DateTimeInterface $fecha_recepcion): self
+    public function setFechaRecepcion(DateTimeInterface $fecha_recepcion): self
     {
         $this->fecha_recepcion = $fecha_recepcion;
 
         return $this;
     }
 
-    public function getFechaEntrega(): ?\DateTimeInterface
+    public function getFechaEntrega(): ?DateTimeInterface
     {
         return $this->fecha_entrega;
     }
 
-    public function setFechaEntrega(\DateTimeInterface $fecha_entrega): self
+    public function setFechaEntrega(DateTimeInterface $fecha_entrega): self
     {
         $this->fecha_entrega = $fecha_entrega;
 
         return $this;
     }
 
-    public function getFechaRecogida(): ?\DateTimeInterface
+    public function getFechaRecogida(): ?DateTimeInterface
     {
         return $this->fecha_recogida;
     }
 
-    public function setFechaRecogida(\DateTimeInterface $fecha_recogida): self
+    public function setFechaRecogida(DateTimeInterface $fecha_recogida): self
     {
         $this->fecha_recogida = $fecha_recogida;
-
-        return $this;
-    }
-
-    public function getPaciente(): ?AppPaciente
-    {
-        return $this->paciente;
-    }
-
-    public function setPaciente(?AppPaciente $paciente): self
-    {
-        $this->paciente = $paciente;
 
         return $this;
     }
@@ -147,6 +158,66 @@ class AppReceta extends _BaseEntity_
                 $recetaComponente->setReceta(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCristalOd(): ?AppCristal
+    {
+        return $this->cristal_od;
+    }
+
+    public function setCristalOd(?AppCristal $cristal_od): self
+    {
+        $this->cristal_od = $cristal_od;
+
+        return $this;
+    }
+
+    public function getCristalOi(): ?AppCristal
+    {
+        return $this->cristal_oi;
+    }
+
+    public function setCristalOi(?AppCristal $cristal_oi): self
+    {
+        $this->cristal_oi = $cristal_oi;
+
+        return $this;
+    }
+
+    public function getEjeOd(): ?string
+    {
+        return (string)$this->eje_od;
+    }
+
+    public function setEjeOd(string $eje_od): self
+    {
+        $this->eje_od = $eje_od;
+
+        return $this;
+    }
+
+    public function getEjeOi(): ?string
+    {
+        return (string)$this->eje_oi;
+    }
+
+    public function setEjeOi(string $eje_oi): self
+    {
+        $this->eje_oi = $eje_oi;
+
+        return $this;
+    }
+
+    public function getAdd(): ?string
+    {
+        return $this->add;
+    }
+
+    public function setAdd(string $add): self
+    {
+        $this->add = $add;
 
         return $this;
     }

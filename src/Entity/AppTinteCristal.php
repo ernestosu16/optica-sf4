@@ -29,15 +29,9 @@ class AppTinteCristal extends _Entity_
      */
     protected $receta_componentes;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\AppOrdenServicio", mappedBy="tinte_cristal")
-     */
-    protected $orden_servicios;
-
     public function __construct()
     {
         $this->receta_componentes = new ArrayCollection();
-        $this->orden_servicios = new ArrayCollection();
     }
 
     public function __toString()
@@ -87,36 +81,4 @@ class AppTinteCristal extends _Entity_
 
         return $this;
     }
-
-    /**
-     * @return Collection|AppOrdenServicio[]
-     */
-    public function getOrdenServicios(): Collection
-    {
-        return $this->orden_servicios;
-    }
-
-    public function addOrdenServicio(AppOrdenServicio $ordenServicio): self
-    {
-        if (!$this->orden_servicios->contains($ordenServicio)) {
-            $this->orden_servicios[] = $ordenServicio;
-            $ordenServicio->setTinteCristal($this);
-        }
-
-        return $this;
-    }
-
-    public function removeOrdenServicio(AppOrdenServicio $ordenServicio): self
-    {
-        if ($this->orden_servicios->contains($ordenServicio)) {
-            $this->orden_servicios->removeElement($ordenServicio);
-            // set the owning side to null (unless already changed)
-            if ($ordenServicio->getTinteCristal() === $this) {
-                $ordenServicio->setTinteCristal(null);
-            }
-        }
-
-        return $this;
-    }
-
 }
