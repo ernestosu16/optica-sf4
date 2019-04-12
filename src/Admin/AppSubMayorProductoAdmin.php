@@ -4,6 +4,7 @@ namespace App\Admin;
 
 
 use App\Entity\AppProducto;
+use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -28,4 +29,8 @@ class AppSubMayorProductoAdmin extends _BaseAdmin_
         ;
     }
 
+    protected function configureListFields(ListMapper $list)
+    {
+        // TODO: Implement configureListFields() method.
+    }
 }

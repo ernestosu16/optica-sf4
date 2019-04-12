@@ -22,6 +22,15 @@ sonata_admin:
 #                items:
 #                    - sonata.media.admin.media
 #                    - sonata.media.admin.gallery
+            sonata.admin.nomenclador:
+                label_catalogue: app
+                icon:  '<i class="fa fa-gears"></i>'
+                items:
+                    - sonata.admin.nomenclador.add
+                    - sonata.admin.nomenclador.agudeza_visual
+                    - sonata.admin.nomenclador.dp
+                    - sonata.admin.nomenclador.eje
+
             sonata.admin.producto_optica:
                 label_catalogue: app
                 icon:  '<i class="fa fa-gears"></i>'
@@ -32,11 +41,7 @@ sonata_admin:
                     - sonata.admin.nomenclador.cristal
                     - sonata.admin.nomenclador.tinte_cristal
                     - sonata.admin.nomenclador.lupa
-#            sonata.admin.producto_taller:
-#                label_catalogue: app
-#                icon:  '<i class="fa fa-gears"></i>'
-#                items:
-#                    - sonata.admin.nomenclador.cristal_semiterminado
+
             sonata.admin.almacen:
                 label_catalogue: app
                 icon:  '<i class="fa fa-folder"></i>'

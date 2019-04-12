@@ -39,3 +39,32 @@ services:
         calls:
             - [ setTranslationDomain, ["NomencladorBundle"] ]
             - [ setTemplate, ['edit', '::Admin/producto/edit.html.twig']]
+
+    sonata.admin.nomenclador.add:
+        class: App\Admin\Nomenclador\AddAdmin
+        arguments: [~, App\Entity\Nomenclador\NcAdd, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: nomenclador.add }
+        calls:
+            - [ setTranslationDomain, ["NomencladorBundle"] ]
+    sonata.admin.nomenclador.agudeza_visual:
+        class: App\Admin\Nomenclador\AgudezaVisualAdmin
+        arguments: [~, App\Entity\Nomenclador\NcAgudezaVisual, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: nomenclador.agudeza_visual }
+        calls:
+            - [ setTranslationDomain, ["NomencladorBundle"] ]
+    sonata.admin.nomenclador.dp:
+        class: App\Admin\Nomenclador\DpAdmin
+        arguments: [~, App\Entity\Nomenclador\NcDp, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: nomenclador.dp }
+        calls:
+            - [ setTranslationDomain, ["NomencladorBundle"] ]
+    sonata.admin.nomenclador.eje:
+        class: App\Admin\Nomenclador\EjeAdmin
+        arguments: [~, App\Entity\Nomenclador\NcEje, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: nomenclador.eje }
+        calls:
+            - [ setTranslationDomain, ["NomencladorBundle"] ]

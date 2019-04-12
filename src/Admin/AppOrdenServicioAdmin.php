@@ -4,6 +4,7 @@ namespace App\Admin;
 
 
 use App\Entity\AppReceta;
+use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelListType;
 use Sonata\Form\Type\CollectionType;
@@ -68,5 +69,10 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
 //                'inline' => 'table',
 //            ))
             ->end();
+    }
+
+    protected function configureListFields(ListMapper $list)
+    {
+        // TODO: Implement configureListFields() method.
     }
 }
