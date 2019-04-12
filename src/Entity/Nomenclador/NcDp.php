@@ -11,6 +11,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class NcDp extends _BaseEntity_
 {
+    public function __toString()
+    {
+        return (string)$this->cerca . '/' . $this->lejos;
+    }
+
     /**
      * @var string
      * @ORM\Column(type="string", length=15)

@@ -8,6 +8,11 @@ use Doctrine\ORM\Mapping as ORM;
 
 abstract class _NcBase_ extends _BaseEntity_
 {
+    public function __toString()
+    {
+        return (string)$this->valor;
+    }
+
     /**
      * @var string
      * @ORM\Column(type="string", length=15)

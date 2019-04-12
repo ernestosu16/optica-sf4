@@ -36,15 +36,25 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
                 'data_class' => AppReceta::class))
                 ->add('numero')
                 ->add('fecha_entrega', DateTimePickerType::class)
+                ->add('dp')
                 ->add('add')
-                ->add('eje_od', IntegerType::class, array(
+
+                ->add('eje_od', null, array(
+                    'label' => 'Eje Derecho'
+                ))
+                ->add('a_visual_od', null, array(
                     'label' => 'Eje Derecho'
                 ))
                 ->add('cristal_od', null, array(
                     'label' => 'Cristal Derecho'
                 ))
-                ->add('eje_oi', IntegerType::class, array(
+
+                ->add('eje_oi', null, array(
                     'label' => 'Eje Izquierdo'
+                ))
+
+                ->add('a_visual_oi', null, array(
+                    'label' => 'Eje Derecho'
                 ))
                 ->add('cristal_oi', null, array(
                     'label' => 'Cristal Izquierdo'

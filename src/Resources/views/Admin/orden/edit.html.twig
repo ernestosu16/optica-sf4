@@ -4,16 +4,19 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $('#sonata-ba-field-container-{{ admin.uniqid }}_receta_numero').addClass('col-md-3');
-        $('#sonata-ba-field-container-{{ admin.uniqid }}_receta_fecha_entrega').addClass('col-md-5');
+        $('#sonata-ba-field-container-{{ admin.uniqid }}_receta_fecha_entrega').addClass('col-md-3');
+        $('#sonata-ba-field-container-{{ admin.uniqid }}_receta_dp').addClass('col-md-3');
         $('#sonata-ba-field-container-{{ admin.uniqid }}_receta_add')
             .addClass('col-md-3').after("<div class='row'></div>");
 
 
         $('#sonata-ba-field-container-{{ admin.uniqid }}_receta_eje_od').addClass('col-md-3');
-        $('#sonata-ba-field-container-{{ admin.uniqid }}_receta_cristal_od').addClass('col-md-8');
+        $('#sonata-ba-field-container-{{ admin.uniqid }}_receta_a_visual_od').addClass('col-md-3');
+        $('#sonata-ba-field-container-{{ admin.uniqid }}_receta_cristal_od').addClass('col-md-6');
 
         $('#sonata-ba-field-container-{{ admin.uniqid }}_receta_eje_oi').addClass('col-md-3');
-        $('#sonata-ba-field-container-{{ admin.uniqid }}_receta_cristal_oi').addClass('col-md-8');
+        $('#sonata-ba-field-container-{{ admin.uniqid }}_receta_a_visual_oi').addClass('col-md-3');
+        $('#sonata-ba-field-container-{{ admin.uniqid }}_receta_cristal_oi').addClass('col-md-6');
     });
 </script>
 {% endblock %}

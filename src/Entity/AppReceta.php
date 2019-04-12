@@ -8,6 +8,10 @@
 
 namespace App\Entity;
 
+use App\Entity\Nomenclador\NcAdd;
+use App\Entity\Nomenclador\NcAgudezaVisual;
+use App\Entity\Nomenclador\NcDp;
+use App\Entity\Nomenclador\NcEje;
 use DateTime;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -30,9 +34,15 @@ class AppReceta extends _BaseEntity_
     protected $numero;
 
     /**
-     * @ORM\Column(type="string", length=15)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Nomenclador\NcAdd")
      */
     protected $add;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Nomenclador\NcDp")
+     */
+    protected $dp;
+
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\AppCristal")
@@ -40,9 +50,14 @@ class AppReceta extends _BaseEntity_
     protected $cristal_od;
 
     /**
-     * @ORM\Column(type="string", length=15)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Nomenclador\NcEje")
      */
     protected $eje_od;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Nomenclador\NcAgudezaVisual")
+     */
+    protected $a_visual_od;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\AppCristal")
@@ -50,9 +65,14 @@ class AppReceta extends _BaseEntity_
     protected $cristal_oi;
 
     /**
-     * @ORM\Column(type="string", length=15)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Nomenclador\NcEje")
      */
     protected $eje_oi;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Nomenclador\NcAgudezaVisual")
+     */
+    protected $a_visual_oi;
 
     /**
      * @var DateTime
@@ -126,36 +146,6 @@ class AppReceta extends _BaseEntity_
         return $this;
     }
 
-    /**
-     * @return Collection|AppRecetaComponente[]
-     */
-    public function getRecetaComponente(): Collection
-    {
-        return $this->receta_componente;
-    }
-
-    public function addRecetaComponente(AppRecetaComponente $recetaComponente): self
-    {
-        if (!$this->receta_componente->contains($recetaComponente)) {
-            $this->receta_componente[] = $recetaComponente;
-            $recetaComponente->setReceta($this);
-        }
-
-        return $this;
-    }
-
-    public function removeRecetaComponente(AppRecetaComponente $recetaComponente): self
-    {
-        if ($this->receta_componente->contains($recetaComponente)) {
-            $this->receta_componente->removeElement($recetaComponente);
-            // set the owning side to null (unless already changed)
-            if ($recetaComponente->getReceta() === $this) {
-                $recetaComponente->setReceta(null);
-            }
-        }
-
-        return $this;
-    }
 
     public function getCristalOd(): ?AppCristal
     {
@@ -181,39 +171,76 @@ class AppReceta extends _BaseEntity_
         return $this;
     }
 
-    public function getEjeOd(): ?string
+    public function getAdd(): ?NcAdd
     {
-        return (string)$this->eje_od;
+        return $this->add;
     }
 
-    public function setEjeOd(string $eje_od): self
+    public function setAdd(?NcAdd $add): self
+    {
+        $this->add = $add;
+
+        return $this;
+    }
+
+    public function getDp(): ?NcDp
+    {
+        return $this->dp;
+    }
+
+    public function setDp(?NcDp $dp): self
+    {
+        $this->dp = $dp;
+
+        return $this;
+    }
+
+    public function getEjeOd(): ?NcEje
+    {
+        return $this->eje_od;
+    }
+
+    public function setEjeOd(?NcEje $eje_od): self
     {
         $this->eje_od = $eje_od;
 
         return $this;
     }
 
-    public function getEjeOi(): ?string
+    public function getAVisualOd(): ?NcAgudezaVisual
     {
-        return (string)$this->eje_oi;
+        return $this->a_visual_od;
     }
 
-    public function setEjeOi(string $eje_oi): self
+    public function setAVisualOd(?NcAgudezaVisual $a_visual_od): self
+    {
+        $this->a_visual_od = $a_visual_od;
+
+        return $this;
+    }
+
+    public function getEjeOi(): ?NcEje
+    {
+        return $this->eje_oi;
+    }
+
+    public function setEjeOi(?NcEje $eje_oi): self
     {
         $this->eje_oi = $eje_oi;
 
         return $this;
     }
 
-    public function getAdd(): ?string
+    public function getAVisualOi(): ?NcAgudezaVisual
     {
-        return $this->add;
+        return $this->a_visual_oi;
     }
 
-    public function setAdd(string $add): self
+    public function setAVisualOi(?NcAgudezaVisual $a_visual_oi): self
     {
-        $this->add = $add;
+        $this->a_visual_oi = $a_visual_oi;
 
         return $this;
     }
+
 }
