@@ -55,7 +55,7 @@ sonata_admin:
                 roles: [ ROLE_USER ]
                 items:
                     - sonata.admin.app.paciente
-                    - sonata.admin.app.receta
+#                    - sonata.admin.app.receta
                     - sonata.admin.app.orden_servicio
     options:
         html5_validate:  true     # enable or disable html5 form validation
