@@ -36,6 +36,8 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
 
         $formMapper
             ->with('Datos de la Orden', array('class' => 'col-md-12'))
+            ->add('numero')
+            ->add('precio')
             ->add('paciente', $object->getId() ? null : ModelListType::class, array(
                 'required' => true,
                 'disabled' => $object->getId(),

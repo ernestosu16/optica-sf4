@@ -38,6 +38,12 @@ class AppOrdenServicio extends _BaseEntity_
     protected $numero;
 
     /**
+     * @var int
+     * @ORM\Column(type="float")
+     */
+    protected $precio;
+
+    /**
      * @var string
      * @ORM\Column(type="string", length=255, nullable=true)
      */
@@ -135,6 +141,18 @@ class AppOrdenServicio extends _BaseEntity_
     public function setArmadura(?AppArmadura $armadura): self
     {
         $this->armadura = $armadura;
+
+        return $this;
+    }
+
+    public function getPrecio(): ?int
+    {
+        return $this->precio;
+    }
+
+    public function setPrecio(int $precio): self
+    {
+        $this->precio = $precio;
 
         return $this;
     }
