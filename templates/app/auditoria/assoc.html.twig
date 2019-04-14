@@ -1,0 +1,4 @@
+{#<a href="{{ path('admin_sip_auditoria_auditorialog_list', {filters: {history: assoc.fk, source_class: assoc.class}}) }}">#}
+<a href="{{ path('admin_app_auditoria_auditorialog_list', {'filter[source_class][value]': assoc.class}) }}">
+    {{ assoc.label }} <i class="fa fa-history" title="Mostrar todo el histórico"></i>
+</a>

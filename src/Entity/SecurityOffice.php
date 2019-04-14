@@ -3,12 +3,14 @@
 namespace App\Entity;
 
 use App\Application\Sonata\MediaBundle\Entity\Media;
+use App\Auditoria\Annotation as Auditar;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Sonata\MediaBundle\Model\MediaInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\SecurityOfficeRepository")
+ * @Auditar\Auditar()
  */
 class SecurityOffice
 {

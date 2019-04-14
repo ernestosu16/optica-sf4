@@ -6,6 +6,8 @@ namespace App\Admin;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 abstract class _BaseAdmin_ extends AbstractAdmin
 {
@@ -25,5 +27,30 @@ abstract class _BaseAdmin_ extends AbstractAdmin
         $collection->remove('delete');
         // OR remove all route except named ones
         return $collection->clearExcept(array('create','list','edit', 'show'));
+    }
+
+    /**
+     * @param $id
+     * @return RedirectResponse
+     */
+    protected function deleteAction($id)
+    {
+        $object = $this->admin->getSubject();
+
+        if (!$object) {
+            throw new NotFoundHttpException(sprintf('unable to find the object with id: %s', $id));
+        }
+
+        // Be careful, you may need to overload the __clone method of your object
+        // to set its id to null !
+        $clonedObject = clone $object;
+
+        $clonedObject->setName($object->getName().' (Clone)');
+
+        $this->admin->create($clonedObject);
+
+        $this->addFlash('sonata_flash_success', 'Cloned successfully');
+
+        return new RedirectResponse($this->admin->generateUrl('list'));
     }
 }

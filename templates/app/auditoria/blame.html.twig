@@ -1,0 +1,5 @@
+{% if blame %}
+    por {{ audit_assoc(blame) }}
+{% else %}
+    por <strong>super usuario o cron.</strong>
+{% endif %}

@@ -1,0 +1,19 @@
+
+<tr>
+    <td class="col-min">
+        <span class="label label-info"><i class="fa fa-pencil"></i></span>
+    </td>
+    <td>
+        <strong>{{ log.source.typLabel }}</strong> {{ audit_assoc(log.source) }} fue actualizado
+        {{ audit_blame(log.blame) }} desde {{ log.ip }}
+        {% if log.blameImpersonate is defined and log.blameImpersonate  is not null %}
+            suplantado por  {{ audit_assoc(log.blameImpersonate) }}
+        {% endif %}
+    </td>
+    <td class="col-min">{{ log.loggedAt | date("d/m/y") }}</td>
+    <td class="col-min">
+        <a class="btn btn-xs btn-link" href="{{ path('admin_app_auditoria_auditorialog_show', {id: log.id}) }}">
+            <i class="fa fa-search" title="Mostrar Diferencias"></i>
+        </a>
+    </td>
+</tr>

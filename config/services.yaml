@@ -1,5 +1,6 @@
 imports:
     - { resource: '../src/Resources/config/config.yml' }
+    - { resource: '../src/Auditoria/Config/config.yaml'}
 
 # This file is the entry point to configure your own services.
 # Files in the packages/ subdirectory configure your dependencies.
@@ -46,6 +47,9 @@ services:
 #        - { name: doctrine.event_listener, event: prePersist }
 #        - { name: doctrine.event_listener, event: preUpdate }
 #        - { name: doctrine.event_listener, event: postLoad }
-
+    App\Auditoria\EventListener\AuditoriaListener:
+        arguments: ['@security.token_storage','@annotation_reader', '@monolog.logger.doctrine']
+        tags:
+            - { name: doctrine.event_listener, event: onFlush }
     #-------------------------------------------------------------------------------------------------------------------
 

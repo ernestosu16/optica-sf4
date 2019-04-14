@@ -1,0 +1,17 @@
+services:
+    app_auditoria.admin.auditoria_log:
+        class: App\Auditoria\Admin\AuditoriaLogAdmin
+        arguments: [~, App\Auditoria\Entity\AuditoriaLog, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Auditoria }
+
+    App\Auditoria\Admin\AuditoriaLogAdmin:
+        alias:  app_auditoria.admin.auditoria_log
+
+#    App\Auditoria\EventListener\AuditoriaListener:
+#        arguments: ['@security.token_storage','@annotation_reader', '@monolog.logger.doctrine']
+#        tags:
+#            - { name: 'doctrine.event_subscriber', connection: default }
+#
+#    app_auditoria.listener_log:
+#        alias:  App\Auditoria\EventListener\AuditoriaListener

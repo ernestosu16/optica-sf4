@@ -8,6 +8,7 @@
 
 namespace App\Entity;
 
+use App\Auditoria\Annotation as Auditar;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -15,6 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Entity()
  * @ORM\HasLifecycleCallbacks()
+ * @Auditar\Auditar()
  */
 class AppTrabajador extends _BaseEntity_
 {

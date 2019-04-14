@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Application\Sonata\MediaBundle\Entity\Media;
+use App\Auditoria\Annotation as Auditar;
 use Doctrine\ORM\Mapping as ORM;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\UserBundle\Entity\BaseUser;
@@ -10,6 +11,7 @@ use Sonata\UserBundle\Entity\BaseUser;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\SecurityUserRepository")
+ * @Auditar\Auditar()
  */
 class SecurityUser extends BaseUser
 {

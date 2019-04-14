@@ -1,0 +1,14 @@
+
+<tr>
+    <td class="col-min">
+        <span class="label label-success"><i class="fa fa-random"></i></span>
+    </td>
+    <td>
+        <strong>{{ log.source.typLabel }}</strong> {{ audit_assoc(log.source) }} fue asociado con
+
+        <strong>{{ log.target.typLabel }}</strong> {{ audit_assoc(log.target) }},
+
+    </td>
+    <td class="col-min">{{ log.loggedAt| date("d/m/y") }}</td>
+    <td class="col-min"></td>
+</tr>
