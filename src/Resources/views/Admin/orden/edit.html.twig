@@ -6,28 +6,91 @@
 {% endblock stylesheets %}
 {% block javascripts %}
     {{ parent() }}
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('#sonata-ba-field-container-{{ admin.uniqid }}_numero').addClass('col-md-6');
-        $('#sonata-ba-field-container-{{ admin.uniqid }}_precio').addClass('col-md-6');
-        $('#sonata-ba-field-container-{{ admin.uniqid }}_paciente').addClass('col-md-12');
-        $('#field_widget_{{ admin.uniqid }}_paciente').addClass('col-md-12')
-            .after("<br><br>");
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#sonata-ba-field-container-{{ admin.uniqid }}_numero').addClass('col-md-6');
+            $('#sonata-ba-field-container-{{ admin.uniqid }}_precio').addClass('col-md-6');
+            $('#sonata-ba-field-container-{{ admin.uniqid }}_paciente').addClass('col-md-12');
+            $('#field_widget_{{ admin.uniqid }}_paciente').addClass('col-md-12')
+                .after("<br><br>");
 
-        $('#sonata-ba-field-container-{{ admin.uniqid }}_receta_numero').addClass('col-md-3');
-        $('#sonata-ba-field-container-{{ admin.uniqid }}_receta_fecha').addClass('col-md-3');
-        $('#sonata-ba-field-container-{{ admin.uniqid }}_receta_dp').addClass('col-md-3');
-        $('#sonata-ba-field-container-{{ admin.uniqid }}_receta_add')
-            .addClass('col-md-3').after("<div class='row'></div>");
+            $('#sonata-ba-field-container-{{ admin.uniqid }}_receta_numero').addClass('col-md-3');
+            $('#sonata-ba-field-container-{{ admin.uniqid }}_receta_fecha').addClass('col-md-3');
+            $('#sonata-ba-field-container-{{ admin.uniqid }}_receta_dp').addClass('col-md-3');
+            $('#sonata-ba-field-container-{{ admin.uniqid }}_receta_add')
+                .addClass('col-md-3').after("<div class='row'></div>");
 
 
-        $('#sonata-ba-field-container-{{ admin.uniqid }}_receta_eje_od').addClass('col-md-3');
-        $('#sonata-ba-field-container-{{ admin.uniqid }}_receta_a_visual_od').addClass('col-md-3');
-        $('#sonata-ba-field-container-{{ admin.uniqid }}_receta_cristal_od').addClass('col-md-6');
+            $('#sonata-ba-field-container-{{ admin.uniqid }}_receta_eje_od').addClass('col-md-3');
+            $('#sonata-ba-field-container-{{ admin.uniqid }}_receta_a_visual_od').addClass('col-md-3');
+            $('#sonata-ba-field-container-{{ admin.uniqid }}_receta_cristal_od').addClass('col-md-6');
 
-        $('#sonata-ba-field-container-{{ admin.uniqid }}_receta_eje_oi').addClass('col-md-3');
-        $('#sonata-ba-field-container-{{ admin.uniqid }}_receta_a_visual_oi').addClass('col-md-3');
-        $('#sonata-ba-field-container-{{ admin.uniqid }}_receta_cristal_oi').addClass('col-md-6');
-    });
-</script>
+            $('#sonata-ba-field-container-{{ admin.uniqid }}_receta_eje_oi').addClass('col-md-3');
+            $('#sonata-ba-field-container-{{ admin.uniqid }}_receta_a_visual_oi').addClass('col-md-3');
+            $('#sonata-ba-field-container-{{ admin.uniqid }}_receta_cristal_oi').addClass('col-md-6');
+
+            var oferta = {
+                'input_pecio': $("#{{ admin.uniqid }}_precio"),
+                'precio_default': 2.00,
+                'precio': 0.00,
+
+                /**
+                 * @return {void}
+                 */
+                calcularPrecioVenta: function () {
+                    $("#{{ admin.uniqid }}_receta_cristal_od").on('change', function () {
+                        let precio = oferta.getSelectPrecio($('option:selected', this).text());
+                        console.log('Seleccionado el precio del producto, $ ' + oferta.NumberFormat(precio, 2));
+                        oferta.setInputPrecio(precio);
+                    })
+                },
+
+                /**
+                 * @return {number}
+                 */
+                getSelectPrecio: function (text) {
+                    let precio_string = text.match(/[$]\d+\.\d+/).pop();
+                    if (!precio_string) {
+                        alert('No se pudo encontrar el precio.');
+                        return false
+                    }
+
+
+                    return parseFloat(precio_string.match(/\d+\.\d+/).pop());
+                },
+
+                /**
+                 * @return {void}
+                 */
+                setInputPrecio: function (v) {
+                    oferta.input_pecio.val(
+                        oferta.NumberFormat(v, 2)
+                    )
+                },
+
+                /**
+                 * @return {string}
+                 */
+                NumberFormat: function (x, f) {
+                    return oferta.CambiarPuntoPorComa(
+                        Number.parseFloat(x).toFixed(f)
+                    );
+                },
+
+                /**
+                 * @return {string}
+                 */
+                CambiarPuntoPorComa: function (text) {
+                    return text.toString().replace(/\./g, ',');
+                },
+
+                init: function () {
+                    this.setInputPrecio(this.precio);
+                    this.calcularPrecioVenta();
+                }
+            };
+
+            oferta.init();
+        });
+    </script>
 {% endblock %}

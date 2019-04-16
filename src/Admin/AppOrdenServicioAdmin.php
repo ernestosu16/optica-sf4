@@ -43,7 +43,6 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
             ->add('numero', null, ['label' => 'Número'])
             ->add('precio', MoneyType::class, [
                 'currency' => 'USD',
-                'data' => $object->getId() ? $object->getPrecio() : 2,
                 'attr' => [
                     'readonly' => true
                 ]
