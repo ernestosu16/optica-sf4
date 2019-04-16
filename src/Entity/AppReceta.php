@@ -29,7 +29,7 @@ class AppReceta extends _BaseEntity_
 {
     /**
      * @var string
-     * @ORM\Column(type="string", length=15)
+     * @ORM\Column(type="string", length=15, nullable=true)
      */
     protected $numero;
 
@@ -78,19 +78,7 @@ class AppReceta extends _BaseEntity_
      * @var DateTime
      * @ORM\Column(type="datetime", nullable=true)
      */
-    protected $fecha_recepcion;
-
-    /**
-     * @var DateTime
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    protected $fecha_entrega;
-
-    /**
-     * @var DateTime
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    protected $fecha_recogida;
+    protected $fecha;
 
     public function __construct()
     {
@@ -103,49 +91,12 @@ class AppReceta extends _BaseEntity_
         return (string)$this->numero;
     }
 
-    public function setNumero(string $numero): self
+    public function setNumero(?string $numero): self
     {
         $this->numero = $numero;
 
         return $this;
     }
-
-    public function getFechaRecepcion(): ?DateTimeInterface
-    {
-        return $this->fecha_recepcion;
-    }
-
-    public function setFechaRecepcion(DateTimeInterface $fecha_recepcion): self
-    {
-        $this->fecha_recepcion = $fecha_recepcion;
-
-        return $this;
-    }
-
-    public function getFechaEntrega(): ?DateTimeInterface
-    {
-        return $this->fecha_entrega;
-    }
-
-    public function setFechaEntrega(DateTimeInterface $fecha_entrega): self
-    {
-        $this->fecha_entrega = $fecha_entrega;
-
-        return $this;
-    }
-
-    public function getFechaRecogida(): ?DateTimeInterface
-    {
-        return $this->fecha_recogida;
-    }
-
-    public function setFechaRecogida(DateTimeInterface $fecha_recogida): self
-    {
-        $this->fecha_recogida = $fecha_recogida;
-
-        return $this;
-    }
-
 
     public function getCristalOd(): ?AppCristal
     {
@@ -239,6 +190,18 @@ class AppReceta extends _BaseEntity_
     public function setAVisualOi(?NcAgudezaVisual $a_visual_oi): self
     {
         $this->a_visual_oi = $a_visual_oi;
+
+        return $this;
+    }
+
+    public function getFecha(): ?\DateTimeInterface
+    {
+        return $this->fecha;
+    }
+
+    public function setFecha(?\DateTimeInterface $fecha): self
+    {
+        $this->fecha = $fecha;
 
         return $this;
     }

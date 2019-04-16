@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use DateTime;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -53,6 +54,18 @@ class AppOrdenServicio extends _BaseEntity_
      * @ORM\Column(type="datetime", nullable=true)
      */
     protected $fecha_asignacion;
+
+    /**
+     * @var DateTime
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    protected $fecha_entrega;
+
+    /**
+     * @var DateTime
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    protected $fecha_recogida;
 
     /**
      * @return AppReceta|null
@@ -153,6 +166,30 @@ class AppOrdenServicio extends _BaseEntity_
     public function setPrecio(int $precio): self
     {
         $this->precio = $precio;
+
+        return $this;
+    }
+
+    public function getFechaEntrega(): ?\DateTimeInterface
+    {
+        return $this->fecha_entrega;
+    }
+
+    public function setFechaEntrega(?\DateTimeInterface $fecha_entrega): self
+    {
+        $this->fecha_entrega = $fecha_entrega;
+
+        return $this;
+    }
+
+    public function getFechaRecogida(): ?\DateTimeInterface
+    {
+        return $this->fecha_recogida;
+    }
+
+    public function setFechaRecogida(?\DateTimeInterface $fecha_recogida): self
+    {
+        $this->fecha_recogida = $fecha_recogida;
 
         return $this;
     }

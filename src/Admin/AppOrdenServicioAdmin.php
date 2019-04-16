@@ -9,7 +9,9 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelListType;
 use Sonata\Form\Type\DateTimePickerType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 
 class AppOrdenServicioAdmin extends _BaseAdmin_
 {
@@ -32,64 +34,90 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
+        /** @var AppOrdenServicio $object */
         $object = $this->getSubject();
 
         $formMapper
-            ->with('Datos de la Orden', array('class' => 'col-md-12'))
-            ->add('numero')
-            ->add('precio')
+            ->tab('General')
+            ->with('Datos de la Orden', ['class' => 'col-md-4'])
+            ->add('numero', null, ['label' => 'Número'])
+            ->add('precio', MoneyType::class, [
+                'currency' => 'USD',
+                'data' => $object->getId() ? $object->getPrecio() : 2,
+                'attr' => [
+                    'readonly' => true
+                ]
+            ])
             ->add('paciente', $object->getId() ? null : ModelListType::class, array(
                 'required' => true,
                 'disabled' => $object->getId(),
             ))
-            ->end()
-            ->with('Datos de la Receta', array('class' => 'col-md-7'))
-            ->add($formMapper->create('receta', FormType::class, array(
-                'label' => 'Graduación', 'by_reference' => true, 'data_class' => AppReceta::class))
-                # Datos general de la receta
-                ->add('numero')
-                ->add('fecha_entrega', DateTimePickerType::class)
-                ->add('dp')
-                ->add('add')
-                # Ojo derecho
-                ->add('eje_od', null, array(
-                    'label' => 'Eje Derecho'
-                ))
-                ->add('a_visual_od', null, array(
-                    'label' => 'Eje Derecho'
-                ))
-                ->add('cristal_od', null, array(
-                    'label' => 'Cristal Derecho'
-                ))
-                # Ojo izquierdo
-                ->add('eje_oi', null, array(
-                    'label' => 'Eje Izquierdo'
-                ))
-                ->add('a_visual_oi', null, array(
-                    'label' => 'Eje Derecho'
-                ))
-                ->add('cristal_oi', null, array(
-                    'label' => 'Cristal Izquierdo'
-                ))
+            ->end();
+
+        # Receta
+        $formMapper
+            ->with('Receta', ['class' => 'col-md-8'])
+            ->add(
+                $formMapper->create('receta', FormType::class, array(
+                    'label' => false, 'by_reference' => true, 'data_class' => AppReceta::class))
+                    # Datos general de la receta
+                    ->add('numero', null, [
+                        'disabled' => $object->getId(),
+                    ])
+                    ->add('fecha', DateTimePickerType::class, [
+                        'disabled' => $object->getId(),
+                        'required' => false
+                    ])
+                    ->add('dp', null, [
+                        'disabled' => $object->getId(),
+                        'label' => 'DP'
+                    ])
+                    ->add('add', null, [
+                        'disabled' => $object->getId(),
+                    ])
+                    # Ojo derecho
+                    ->add('eje_od', null, array(
+                        'disabled' => $object->getId(),
+                        'label' => 'Eje Derecho'
+                    ))
+                    ->add('a_visual_od', null, array(
+                        'disabled' => $object->getId(),
+                        'label' => 'Eje Derecho'
+                    ))
+                    ->add('cristal_od', null, array(
+                        'disabled' => $object->getId(),
+                        'label' => 'Cristal Derecho'
+                    ))
+                    # Ojo izquierdo
+                    ->add('eje_oi', null, array(
+                        'disabled' => $object->getId(),
+                        'label' => 'Eje Izquierdo'
+                    ))
+                    ->add('a_visual_oi', null, array(
+                        'disabled' => $object->getId(),
+                        'label' => 'Eje Derecho'
+                    ))
+                    ->add('cristal_oi', null, array(
+                        'disabled' => $object->getId(),
+                        'label' => 'Cristal Izquierdo'
+                    ))
             )
             ->end()
-            ->with('Armadura', array('class' => 'col-md-5'))
-            ->add('armadura')
+            ->end();
+
+        # Armadura y Accesorios
+        $formMapper
+            ->tab('Armadura y Accesorios', array('class' => 'col-md-5'))
+            ->with('Armadura', ['class' => 'col-md-6'])
+            ->add('armadura', null, [
+                'disabled' => $object->getId(),
+            ])
+            ->end();
+
+        # Accesorios
+        $formMapper
+            ->with('Accesorios', ['class' => 'col-md-6'])
             ->end()
-            ->with('Accesorios Extras', array('class' => 'col-md-5'))
-//            ->add('sub_mayor', CollectionType::class, array(
-//                'label' => false,
-//                'disabled' => $object->getId(),
-//                'by_reference' => false,
-//                'btn_add' => $object->getId() ? false : 'link_add',
-//                'type_options' => array(
-//                    'delete' => !$object->getId(),
-//                )
-//            ), array(
-//                'edit' => 'inline',
-//                'sortable' => 'pos',
-//                'inline' => 'table',
-//            ))
             ->end();
     }
 
@@ -102,8 +130,11 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
             ->add('id', null, array(
                 'label' => 'No.'
             ))
-            ->add('create_at')
+            ->add('created_at', null, ['label' => 'Fecha'])
+            ->add('numero')
+            ->add('precio')
             ->add('paciente')
+            ->add('fecha_entrega')
             ->add('_action', null, array(
                 'actions' => array(
                     'show' => array(),

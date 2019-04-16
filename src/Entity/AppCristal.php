@@ -41,7 +41,7 @@ class AppCristal extends _Entity_
     {
         return (string)'(' . ($this->esfera > 0 ? '+' : '') .
             $this->esfera . ',' . ($this->cilindro > 0 ? '+' : '') .
-            $this->cilindro . ')';
+            $this->cilindro . ') - $' . number_format($this->getProducto()->getPrecio(), 2);
     }
 
     public function getGrosor(): ?float

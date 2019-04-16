@@ -8,11 +8,14 @@
     {{ parent() }}
 <script type="text/javascript">
     $(document).ready(function () {
-        $('#sonata-ba-field-container-{{ admin.uniqid }}_numero').addClass('col-md-2');
-        $('#sonata-ba-field-container-{{ admin.uniqid }}_precio').addClass('col-md-2');
+        $('#sonata-ba-field-container-{{ admin.uniqid }}_numero').addClass('col-md-6');
+        $('#sonata-ba-field-container-{{ admin.uniqid }}_precio').addClass('col-md-6');
+        $('#sonata-ba-field-container-{{ admin.uniqid }}_paciente').addClass('col-md-12');
+        $('#field_widget_{{ admin.uniqid }}_paciente').addClass('col-md-12')
+            .after("<br><br>");
 
         $('#sonata-ba-field-container-{{ admin.uniqid }}_receta_numero').addClass('col-md-3');
-        $('#sonata-ba-field-container-{{ admin.uniqid }}_receta_fecha_entrega').addClass('col-md-3');
+        $('#sonata-ba-field-container-{{ admin.uniqid }}_receta_fecha').addClass('col-md-3');
         $('#sonata-ba-field-container-{{ admin.uniqid }}_receta_dp').addClass('col-md-3');
         $('#sonata-ba-field-container-{{ admin.uniqid }}_receta_add')
             .addClass('col-md-3').after("<div class='row'></div>");
