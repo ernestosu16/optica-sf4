@@ -39,7 +39,7 @@ class AppOrdenServicio extends _BaseEntity_
     protected $numero;
 
     /**
-     * @var int
+     * @var float
      * @ORM\Column(type="float")
      */
     protected $precio;
@@ -158,12 +158,12 @@ class AppOrdenServicio extends _BaseEntity_
         return $this;
     }
 
-    public function getPrecio(): ?int
+    public function getPrecio(): ?float
     {
         return $this->precio;
     }
 
-    public function setPrecio(int $precio): self
+    public function setPrecio(float $precio): self
     {
         $this->precio = $precio;
 

@@ -2,17 +2,22 @@
 {% block stylesheets %}
     {{ parent() }}
     <style>
+        .select2-container {
+            width: 100% !important;
+        }
     </style>
 {% endblock stylesheets %}
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript">
         $(document).ready(function () {
+            $('select').select2();
+
             $('#sonata-ba-field-container-{{ admin.uniqid }}_numero').addClass('col-md-6');
             $('#sonata-ba-field-container-{{ admin.uniqid }}_precio').addClass('col-md-6');
             $('#sonata-ba-field-container-{{ admin.uniqid }}_paciente').addClass('col-md-12');
-            $('#field_widget_{{ admin.uniqid }}_paciente').addClass('col-md-12')
-                .after("<br><br>");
+            {#$('#field_widget_{{ admin.uniqid }}_paciente').addClass('col-md-12')#}
+            {#    .after("<br><br>");#}
 
             $('#sonata-ba-field-container-{{ admin.uniqid }}_receta_numero').addClass('col-md-3');
             $('#sonata-ba-field-container-{{ admin.uniqid }}_receta_fecha').addClass('col-md-3');
@@ -31,28 +36,52 @@
 
             var oferta = {
                 'input_pecio': $("#{{ admin.uniqid }}_precio"),
-                'precio_default': 2.00,
-                'precio': 0.00,
-
+                'precio_inicial': 2.00,
+                'select_precio': [
+                    'receta_cristal_od',
+                    'receta_cristal_oi',
+                    'armadura'
+                ],
                 /**
                  * @return {void}
                  */
-                calcularPrecioVenta: function () {
-                    $("#{{ admin.uniqid }}_receta_cristal_od").on('change', function () {
-                        let precio = oferta.getSelectPrecio($('option:selected', this).text());
-                        console.log('Seleccionado el precio del producto, $ ' + oferta.NumberFormat(precio, 2));
-                        oferta.setInputPrecio(precio);
-                    })
+                evento: function () {
+                    oferta.select_precio.forEach(function (item, index, array) {
+                        $("#{{ admin.uniqid }}_" + item).on('change', function () {
+                            oferta.calcularOden();
+                        });
+                    });
+                },
+
+                calcularOden: function () {
+                    var importe_total = 0;
+
+                    oferta.select_precio.forEach(function (item, index, array) {
+                        importe_total += oferta.getSelectPrecio(
+                            $('#{{ admin.uniqid }}_' + item + ' option:selected').text()
+                        )
+                    });
+
+                    importe_total += oferta.precio_inicial;
+
+                    oferta.setInputPrecio(importe_total);
+
                 },
 
                 /**
+                 * Ejemplo:
+                 *   text = (+6.9,+11.5) - $1.20, devuelve = 1.2
+                 *
                  * @return {number}
                  */
                 getSelectPrecio: function (text) {
+                    if (!text) {
+                        return 0
+                    }
                     let precio_string = text.match(/[$]\d+\.\d+/).pop();
                     if (!precio_string) {
                         alert('No se pudo encontrar el precio.');
-                        return false
+                        return 0
                     }
 
 
@@ -84,9 +113,18 @@
                     return text.toString().replace(/\./g, ',');
                 },
 
+                formValidate: function () {
+                    // $('form').submit(function (event) {
+                    //
+                    //     event.preventDefault();
+                    // });
+                },
+
                 init: function () {
-                    this.setInputPrecio(this.precio);
-                    this.calcularPrecioVenta();
+                    this.setInputPrecio(this.precio_inicial);
+                    this.evento();
+                    this.calcularOden();
+                    this.formValidate();
                 }
             };
 

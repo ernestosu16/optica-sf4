@@ -8,6 +8,7 @@ use App\Entity\AppReceta;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelListType;
+use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\Form\Type\DateTimePickerType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -40,14 +41,14 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
         $formMapper
             ->tab('General')
             ->with('Datos de la Orden', ['class' => 'col-md-4'])
-            ->add('numero', null, ['label' => 'Número'])
+            ->add('numero', null, ['label' => 'Número', 'required' => true])
             ->add('precio', MoneyType::class, [
                 'currency' => 'USD',
                 'attr' => [
                     'readonly' => true
                 ]
             ])
-            ->add('paciente', $object->getId() ? null : ModelListType::class, array(
+            ->add('paciente', $object->getId() ? null : ModelType::class, array(
                 'required' => true,
                 'disabled' => $object->getId(),
             ))

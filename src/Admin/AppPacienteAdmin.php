@@ -10,7 +10,10 @@ namespace App\Admin;
 
 
 use App\Entity\AppClasificador;
+use App\Entity\AppPaciente;
 use App\Entity\SecurityOffice;
+use Doctrine\ORM\EntityManager;
+use Sonata\Form\Validator\ErrorElement;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
@@ -23,18 +26,17 @@ class AppPacienteAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->with('Datos Personales', array('class'=>'col-md-6'))
+            ->with('Datos Personales', array('class' => 'col-md-6'))
             ->add('ci')
             ->add('nombre')
             ->add('historia_clinica')
             ->end()
-            ->with('Datos de Contacto', array('class'=>'col-md-6'))
+            ->with('Datos de Contacto', array('class' => 'col-md-6'))
             ->add('direccion')
             ->add('telefono_contacto')
-            ->add('correo_contacto')
+            ->add('correo_contacto', EmailType::class)
             ->end()
-            ->end()
-        ;
+            ->end();
     }
 
     /**
@@ -65,6 +67,51 @@ class AppPacienteAdmin extends AbstractAdmin
                 'actions' => array(
                     'edit' => array(),
                     'delete' => array())));;
+    }
+
+    /**
+     * @param ErrorElement $errorElement
+     * @param $object AppPaciente
+     */
+    public function validate(ErrorElement $errorElement, $object)
+    {
+//        dump($object->getCi());exit;
+        /** @var EntityManager $em */
+        $em = $this->getConfigurationPool()->getContainer()->get('doctrine.orm.entity_manager');
+
+        $paciente = $em->getRepository(AppPaciente::class)->findOneBy(['ci' => $object->getCi()]);
+
+        if ($paciente) {
+            $errorElement
+                ->with('ci')
+                ->addViolation('Ya existe el CI de este paciente')
+                ->end();
+        }
+
+        $paciente = $em->getRepository(AppPaciente::class)->findOneBy(
+            ['historia_clinica' => $object->getHistoriaClinica()]);
+        if ($paciente) {
+            $errorElement
+                ->with('historia_clinica')
+                ->addViolation('Ya existe este número de historia clínica')
+                ->end();
+        }
+
+        $errorElement
+            ->with('ci')
+            ->assertLength(['min' => 11, 'max' => 11])
+            ->end()
+            ->with('nombre')
+            ->assertLength(['min' => 11])
+            ->end()
+            ->with('direccion')
+            ->assertLength(['min' => 10])
+            ->end()
+            ->with('telefono_contacto')
+            ->assertLength(['min' => 8, 'max' => 8])
+            ->end();
+
+        parent::validate($errorElement, $object);
     }
 
 }
