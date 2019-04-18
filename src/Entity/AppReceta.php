@@ -82,8 +82,6 @@ class AppReceta extends _BaseEntity_
 
     public function __construct()
     {
-        $this->fecha_recepcion = new DateTime('now');
-        $this->receta_componente = new ArrayCollection();
     }
 
     public function getNumero(): ?string
