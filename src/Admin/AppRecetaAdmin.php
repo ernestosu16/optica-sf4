@@ -32,9 +32,7 @@ class AppRecetaAdmin extends _BaseAdmin_
     {
         $list
             ->add('numero')
-            ->add('fecha_recepcion')
-            ->add('fecha_entrega')
-            ->add('fecha_recogida')
+            ->add('fecha')
         ;
     }
 
