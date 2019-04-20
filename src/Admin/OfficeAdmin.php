@@ -20,7 +20,8 @@ class OfficeAdmin extends AbstractAdmin
             ->with('label.image',['class' => 'col-md-4'])
             ->add('media', MediaType::class, array(
                 'provider' => 'sonata.media.provider.image',
-                'context' => 'office'
+                'context' => 'office',
+                'required' => false,
             ))
             ->end()
             ->with('General',['class' => 'col-md-8'])

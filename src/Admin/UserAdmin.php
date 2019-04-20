@@ -6,6 +6,7 @@ namespace App\Admin;
 
 use App\Entity\SecurityOffice;
 use App\Entity\SecurityUser;
+use Doctrine\ORM\EntityManager;
 use FOS\UserBundle\Model\UserManagerInterface;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -13,11 +14,12 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\AdminBundle\Show\ShowMapper;
+use Sonata\Form\Validator\ErrorElement;
 use Sonata\MediaBundle\Form\Type\MediaType;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormTypeInterface;
+use Symfony\Component\Validator\Constraints\Regex;
 
 
 class UserAdmin extends AbstractAdmin
@@ -75,7 +77,7 @@ class UserAdmin extends AbstractAdmin
             ->add('groups')
             ->add('office')
             ->add('enabled', null, ['editable' => true])
-            ->add('createdAt', null,[
+            ->add('createdAt', null, [
                 'format' => 'Y-m-d H:i:s',
             ])
             ->add('_action', null, array(
@@ -130,10 +132,11 @@ class UserAdmin extends AbstractAdmin
         // define group zoning
         $formMapper
             ->tab('User')
-            ->with('label.image',['class' => 'col-md-4'])
+            ->with('label.image', ['class' => 'col-md-4'])
             ->add('media', MediaType::class, array(
                 'provider' => 'sonata.media.provider.image',
-                'context' => 'users'
+                'context' => 'users',
+                'required' => false,
             ))
             ->end()
             ->with('Profile', ['class' => 'col-md-4'])->end()
@@ -162,19 +165,30 @@ class UserAdmin extends AbstractAdmin
             ->add('username')
             ->add('plainPassword', RepeatedType::class, array(
                     'type' => PasswordType::class,
-                    'options' => array('translation_domain' => 'FOSUserBundle'),
+                    'options' => array(
+                        'translation_domain' => 'FOSUserBundle',
+                        'attr' => [
+                            'title' => 'Mayúscula, minúscula, numero y 8 o más caracteres',
+                            'pattern' => '/^\S*(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])(?=\S*[\W])\S*$/',
+                        ]
+                    ),
                     'first_options' => array('label' => 'form.password'),
                     'second_options' => array('label' => 'form.password_confirmation'),
                     'invalid_message' => 'fos_user.password.mismatch',
-                    'required'    => false,
+                    'required' => false,
+                    'attr' => ['title' => "Please enter at least 5 characters"],
                 )
             )
             ->add('enabled', null, ['required' => false])
             ->end()
             ->with('Profile')
+            ->add('ci', null, [
+                'required' => true,
+                'attr' => ['title' => 'Carnet de identidad es incorrecto']
+            ])
             ->add('firstname', null, ['required' => true])
             ->add('lastname', null, ['required' => true])
-            ->add('office', EntityType::class, [
+            ->add('office', ModelType::class, [
                 'class' => SecurityOffice::class,
                 'placeholder' => '',
                 'label' => 'office',
@@ -199,5 +213,46 @@ class UserAdmin extends AbstractAdmin
     public function preValidate($object)
     {
         $object->setEmail($object->getUsername() . '@local.local');
+    }
+
+    /**
+     * @param ErrorElement $errorElement
+     * @param $object SecurityUser
+     */
+    public function validate(ErrorElement $errorElement, $object)
+    {
+        if ($object->getId() === null) {
+            $errorElement->with('password')
+                ->addViolation('Debe introducir una "Contraseña" por primera vez')
+                ->end();
+
+            /** @var EntityManager $em */
+            $em = $this->getConfigurationPool()->getContainer()->get('doctrine.orm.entity_manager');
+
+            $ci = $em->getRepository(SecurityUser::class)->findOneBy(
+                ['ci' => $object->getCi()]
+            );
+
+            if ($ci) {
+                $errorElement
+                    ->with('ci')
+                    ->addViolation('Ya existe el CI de este usuario')
+                    ->end();
+            }
+
+            $username = $em->getRepository(SecurityUser::class)->findOneBy(
+                ['username' => $object->getUsername()]
+            );
+
+            if ($username) {
+                $errorElement
+                    ->with('username')
+                    ->addViolation('Ya existe este usuario')
+                    ->end();
+            }
+        }
+
+
+
     }
 }

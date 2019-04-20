@@ -7,6 +7,7 @@ use App\Auditoria\Annotation as Auditar;
 use Doctrine\ORM\Mapping as ORM;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\UserBundle\Entity\BaseUser;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
@@ -33,6 +34,16 @@ class SecurityUser extends BaseUser
      * @ORM\JoinColumn(referencedColumnName="id", onDelete="SET NULL")
      */
     protected $media;
+
+    /**
+     * @var string
+     * @Assert\Regex(
+     *     "/^\d{2}(0?[1-9]|1[012])(0?[1-9]|[12][0-9]|3[01])(\d{5})$/",
+     *     message="El número del carnet de identidad no es correcto"
+     * )
+     * @ORM\Column(type="string", length=11)
+     */
+    protected $ci;
 
     public function __construct()
     {
@@ -77,6 +88,18 @@ class SecurityUser extends BaseUser
     public function setOffice(SecurityOffice $office): SecurityUser
     {
         $this->office = $office;
+
+        return $this;
+    }
+
+    public function getCi(): ?string
+    {
+        return $this->ci;
+    }
+
+    public function setCi(string $ci): self
+    {
+        $this->ci = $ci;
 
         return $this;
     }

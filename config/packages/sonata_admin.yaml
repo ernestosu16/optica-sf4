@@ -76,6 +76,16 @@ sonata_admin:
 
     global_search:
         empty_boxes: hide
+    assets:
+        # stylesheet paths to add to the page in addition to the list above
+        extra_stylesheets:
+            - css/app.css
+
+          # javascript paths to add to the page in addition to the list above
+        extra_javascripts:
+            - js/jquery.validate.js
+            - js/additional-methods.js
+            - js/app.js
 sonata_block:
     blocks:
         sonata.admin.block.admin_list:

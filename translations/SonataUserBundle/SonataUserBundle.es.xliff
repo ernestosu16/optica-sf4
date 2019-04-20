@@ -6,6 +6,14 @@
                 <source>title_user_registration</source>
                 <target>Registrarse</target>
             </trans-unit>
+            <trans-unit id="form.label_carnet_identidad">
+                <source>form.label_carnet_identidad</source>
+                <target>Carnet de Identidad</target>
+            </trans-unit>
+            <trans-unit id="form.label_ci">
+                <source>form.label_ci</source>
+                <target>Carnet de Identidad</target>
+            </trans-unit>
             <trans-unit id="title_user_account">
                 <source>title_user_account</source>
                 <target>Perfil de Usuario</target>
