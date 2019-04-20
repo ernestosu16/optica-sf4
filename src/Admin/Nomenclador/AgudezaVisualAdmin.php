@@ -11,9 +11,9 @@ use Sonata\AdminBundle\Show\ShowMapper;
 
 class AgudezaVisualAdmin extends _BaseAdmin_
 {
-	/**
-	* Para indicar los formatos a los que permitirá exportar la lista
-	*/
+    /**
+     * Para indicar los formatos a los que permitirá exportar la lista
+     */
     public function getExportFormats()
     {
         return array(// 'json', 'xml', 'csv', 'xls'
@@ -31,7 +31,7 @@ class AgudezaVisualAdmin extends _BaseAdmin_
         $routes->remove('show');
         $routes->remove('export');
     }
-	
+
     /**
      * @param DatagridMapper $datagridMapper
      */
@@ -40,9 +40,8 @@ class AgudezaVisualAdmin extends _BaseAdmin_
         $datagridMapper
             //->add('id')
             ->add('valor', null, array(
-				'label'=>'Valor de la Agudeza'
-			))
-        ;
+                'label' => 'Valor de la Agudeza'
+            ));
     }
 
     /**
@@ -50,24 +49,23 @@ class AgudezaVisualAdmin extends _BaseAdmin_
      */
     protected function configureListFields(ListMapper $listMapper)
     {
-		unset($this->listModes['mosaic']);
-		
+        unset($this->listModes['mosaic']);
+
         $listMapper
-			->remove('batch')
+            ->remove('batch')
             ->add('id', null, array(
-				'label'=>'No.'
-			))
+                'label' => 'No.'
+            ))
             ->add('valor')
             ->add('_action', null, array(
-				'row_align' => 'right',
-				'header_style' => 'width: 190px',
+                'row_align' => 'right',
+                'header_style' => 'width: 190px',
                 'actions' => array(
                     'show' => array(),
                     'edit' => array(),
                     'delete' => array(),
                 ),
-            ))
-        ;
+            ));
     }
 
     /**
@@ -77,12 +75,16 @@ class AgudezaVisualAdmin extends _BaseAdmin_
     {
         $formMapper
             //->add('id')
-			->with('Indique valor de la Agudeza Visual', array(
-				'class'=>'col-md-4'
-			))
-            ->add('valor')
-			->end()
-        ;
+            ->with('Indique valor de la Agudeza Visual', array(
+                'class' => 'col-md-4'
+            ))
+            ->add('valor', null, [
+                'attr' => [
+                    'title' => 'El campo solo puedo contener número',
+                    'pattern' => '^[\d]*$',
+                ]
+            ])
+            ->end();
     }
 
     /**
@@ -92,7 +94,6 @@ class AgudezaVisualAdmin extends _BaseAdmin_
     {
         $showMapper
             //->add('id')
-            ->add('valor')
-        ;
+            ->add('valor');
     }
 }

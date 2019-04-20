@@ -27,12 +27,28 @@ class OfficeAdmin extends AbstractAdmin
             ->with('General',['class' => 'col-md-8'])
             ->add('number', TextType::class, [
                 'label' => 'office.number',
+                'attr' => [
+                    'title' => 'El campo solo puedo contener número',
+                    'pattern' => '^[\d]*$',
+                ]
             ])
             ->add('name', TextType::class, [
                 'label' => 'office.name',
+                'attr' => [
+                    'title' => 'El campo solo puedo contener números y letras',
+                    'pattern' => '^[\da-zA-Z áéíóú]*$',
+                ]
             ])
-            ->add('description', TextType::class, [
-                'label' => 'office.description',
+            ->add('telefono', null, [
+                'label' => 'Teléfono',
+                'required' => false,
+                'attr' => [
+                    'title' => 'El campo solo puedo contener número',
+                    'pattern' => '^[\d]*$',
+                ]
+            ])
+            ->add('direccion', null, [
+                'label' => 'Dirección',
                 'required' => false,
             ])
             ->end();
@@ -46,7 +62,8 @@ class OfficeAdmin extends AbstractAdmin
         $listMapper
             ->addIdentifier('name', null, ['label' => 'office.name'])
             ->add('number', null, ['label' => 'office.number'])
-            ->add('description', null, ['label' => 'office.description'])
+            ->add('telefono', null, ['label' => 'Teléfono'])
+            ->add('direccion', null, ['label' => 'Dirección'])
             ->add('_action', null, array(
                 'label' => 'Acciones',
                 'row_align' => 'right',

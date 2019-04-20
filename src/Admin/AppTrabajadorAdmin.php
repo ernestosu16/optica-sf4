@@ -35,8 +35,17 @@ class AppTrabajadorAdmin extends AbstractAdmin
             ])
             ->end()
             ->with('Trabajador', ['class' => 'col-md-6'])
-            ->add('ci', TextType::class, ['label' => 'app.ci'])
-            ->add('nombreApellidos', TextType::class, ['label' => 'app.nombre_apellidos'])
+            ->add('ci', null, [
+                'label' => 'app.ci',
+                'attr' => ['title' => 'Carnet de identidad es incorrecto']
+            ])
+            ->add('nombreApellidos', TextType::class, [
+                'label' => 'app.nombre_apellidos',
+                'attr' => [
+                    'title' => 'El campo solo puedo contener letras',
+                    'pattern' => '^[a-zA-Z áéíóú]*$',
+                ]
+            ])
             ->end();
     }
 

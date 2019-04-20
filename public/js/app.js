@@ -6,9 +6,11 @@ $(document).ready(function () {
     $('form').validate({
         highlight: function (element) {
             $(element).closest('.form-group').addClass('has-error');
+            $('.sonata-ba-form-actions').find('button').attr("disabled", false);
         },
         unhighlight: function (element) {
             $(element).closest('.form-group').removeClass('has-error');
+            $('.sonata-ba-form-actions').find('button').attr("disabled", false);
         }
     });
 

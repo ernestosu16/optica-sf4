@@ -32,15 +32,6 @@ class AppClasificador extends _BaseEntity_
      */
     protected $type;
 
-    /**
-     * Constructor.
-     *
-     * @throws \Exception
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
 
     public function __toString()
     {

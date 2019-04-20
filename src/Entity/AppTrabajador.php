@@ -10,6 +10,7 @@ namespace App\Entity;
 
 use App\Auditoria\Annotation as Auditar;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class AppTrabajador
@@ -28,6 +29,10 @@ class AppTrabajador extends _BaseEntity_
 
     /**
      * @var string
+     * @Assert\Regex(
+     *     "/^\d{2}(0?[1-9]|1[012])(0?[1-9]|[12][0-9]|3[01])(\d{5})$/",
+     *     message="El número del carnet de identidad no es correcto"
+     * )
      * @ORM\Column(type="string", length=15, unique=true)
      */
     protected $ci;

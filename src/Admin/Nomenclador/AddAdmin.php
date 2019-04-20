@@ -43,9 +43,8 @@ class AddAdmin extends _BaseAdmin_
         $datagridMapper
             //->add('id')
             ->add('valor', null, array(
-                'label'=>'Valor de Add'
-            ))
-        ;
+                'label' => 'Valor de Add'
+            ));
     }
 
     /**
@@ -58,7 +57,7 @@ class AddAdmin extends _BaseAdmin_
         $listMapper
             ->remove('batch')
             ->add('id', null, array(
-                'label'=>'No.'
+                'label' => 'No.'
             ))
             ->add('valor')
             ->add('_action', null, array(
@@ -69,8 +68,7 @@ class AddAdmin extends _BaseAdmin_
                     'edit' => array(),
                     'delete' => array(),
                 ),
-            ))
-        ;
+            ));
     }
 
     /**
@@ -81,11 +79,15 @@ class AddAdmin extends _BaseAdmin_
         $formMapper
             //->add('id')
             ->with('Indique valor del Add', array(
-                'class'=>'col-md-3'
+                'class' => 'col-md-3'
             ))
-            ->add('valor')
-            ->end()
-        ;
+            ->add('valor', null, [
+                'attr' => [
+                    'title' => 'El campo solo puedo contener número',
+                    'pattern' => '^[\d]*$',
+                ]
+            ])
+            ->end();
     }
 
     /**
@@ -95,7 +97,6 @@ class AddAdmin extends _BaseAdmin_
     {
         $showMapper
             //->add('id')
-            ->add('valor')
-        ;
+            ->add('valor');
     }
 }

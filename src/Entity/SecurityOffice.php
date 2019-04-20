@@ -44,9 +44,16 @@ class SecurityOffice
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=8, nullable=true)
      */
-    protected $description;
+    protected $telefono;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $direccion;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
@@ -124,25 +131,6 @@ class SecurityOffice
     }
 
     /**
-     * @return string
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    /**
-     * @param string $description
-     * @return SecurityOffice
-     */
-    public function setDescription(string $description): SecurityOffice
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    /**
      * @return int
      */
     public function getPosition(): ?int
@@ -207,6 +195,30 @@ class SecurityOffice
     public function setNumber(string $number): self
     {
         $this->number = $number;
+
+        return $this;
+    }
+
+    public function getTelefono(): ?string
+    {
+        return $this->telefono;
+    }
+
+    public function setTelefono(?string $telefono): self
+    {
+        $this->telefono = $telefono;
+
+        return $this;
+    }
+
+    public function getDireccion(): ?string
+    {
+        return $this->direccion;
+    }
+
+    public function setDireccion(?string $direccion): self
+    {
+        $this->direccion = $direccion;
 
         return $this;
     }

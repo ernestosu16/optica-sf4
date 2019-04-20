@@ -11,9 +11,9 @@ use Sonata\AdminBundle\Show\ShowMapper;
 
 class DpAdmin extends _BaseAdmin_
 {
-	/**
-	* Para indicar los formatos a los que permitirá exportar la lista
-	*/
+    /**
+     * Para indicar los formatos a los que permitirá exportar la lista
+     */
     public function getExportFormats()
     {
         return array(// 'json', 'xml', 'csv', 'xls'
@@ -31,7 +31,7 @@ class DpAdmin extends _BaseAdmin_
         $routes->remove('show');
         $routes->remove('export');
     }
-	
+
     /**
      * @param DatagridMapper $datagridMapper
      */
@@ -40,8 +40,7 @@ class DpAdmin extends _BaseAdmin_
         $datagridMapper
             //->add('id')
             ->add('cerca')
-            ->add('lejos')
-        ;
+            ->add('lejos');
     }
 
     /**
@@ -49,25 +48,24 @@ class DpAdmin extends _BaseAdmin_
      */
     protected function configureListFields(ListMapper $listMapper)
     {
-		unset($this->listModes['mosaic']);
-		
+        unset($this->listModes['mosaic']);
+
         $listMapper
-			->remove('batch')
+            ->remove('batch')
             ->add('id', null, array(
-				'label'=>'No.'
-			))
+                'label' => 'No.'
+            ))
             ->add('cerca')
             ->add('lejos')
             ->add('_action', null, array(
-				'row_align' => 'right',
-				'header_style' => 'width: 190px',
+                'row_align' => 'right',
+                'header_style' => 'width: 190px',
                 'actions' => array(
                     'show' => array(),
                     'edit' => array(),
                     'delete' => array(),
                 ),
-            ))
-        ;
+            ));
     }
 
     /**
@@ -77,13 +75,22 @@ class DpAdmin extends _BaseAdmin_
     {
         $formMapper
             //->add('id')
-			->with('Indique valores', array(
-				'class'=>'col-md-3'
-			))
-            ->add('cerca')
-            ->add('lejos')
-			->end()
-        ;
+            ->with('Indique valores', array(
+                'class' => 'col-md-3'
+            ))
+            ->add('cerca', null, [
+                'attr' => [
+                    'title' => 'El campo solo puedo contener número',
+                    'pattern' => '^[\d]*$',
+                ]
+            ])
+            ->add('lejos', null, [
+                'attr' => [
+                    'title' => 'El campo solo puedo contener número',
+                    'pattern' => '^[\d]*$',
+                ]
+            ])
+            ->end();
     }
 
     /**
@@ -94,7 +101,6 @@ class DpAdmin extends _BaseAdmin_
         $showMapper
             //->add('id')
             ->add('cerca')
-            ->add('lejos')
-        ;
+            ->add('lejos');
     }
 }

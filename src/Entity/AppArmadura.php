@@ -33,8 +33,12 @@ class AppArmadura extends _Entity_
     public function __toString()
     {
         $producto = $this->getProducto();
-        return (string)$producto->getCodigo() . '-' . $producto->getDescripcion().
-            ' - $' . number_format($this->getProducto()->getPrecio(), 2);
+        if ($producto) {
+            return (string)$producto->getCodigo() . '-' . $producto->getDescripcion() .
+                ' - $' . number_format($this->getProducto()->getPrecio(), 2);
+        } else {
+            return '';
+        }
     }
 
 

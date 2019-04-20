@@ -7,6 +7,7 @@ namespace App\Admin;
 use App\Entity\SecurityOffice;
 use App\Entity\SecurityUser;
 use Doctrine\ORM\EntityManager;
+use Exception;
 use FOS\UserBundle\Model\UserManagerInterface;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -19,7 +20,6 @@ use Sonata\MediaBundle\Form\Type\MediaType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormTypeInterface;
-use Symfony\Component\Validator\Constraints\Regex;
 
 
 class UserAdmin extends AbstractAdmin
@@ -125,7 +125,7 @@ class UserAdmin extends AbstractAdmin
 
     /**
      * {@inheritdoc}
-     * @throws \Exception
+     * @throws Exception
      */
     protected function configureFormFields(FormMapper $formMapper): void
     {
@@ -146,7 +146,6 @@ class UserAdmin extends AbstractAdmin
             ->with('Groups', ['class' => 'col-md-12'])->end()
             ->end();
 
-        $now = new \DateTime();
 
         $genderOptions = [
             'choices' => call_user_func([$this->getUserManager()->getClass(), 'getGenderList']),
@@ -186,8 +185,19 @@ class UserAdmin extends AbstractAdmin
                 'required' => true,
                 'attr' => ['title' => 'Carnet de identidad es incorrecto']
             ])
-            ->add('firstname', null, ['required' => true])
-            ->add('lastname', null, ['required' => true])
+            ->add('firstname', null, [
+                'required' => true,
+                'attr' => [
+                    'title' => 'El campo solo puedo contener letras',
+                    'pattern' => '^[a-zA-Z áéíóú]*$',
+                ]
+            ])
+            ->add('lastname', null, [
+                'required' => true,
+                'attr' => [
+                    'title' => 'El campo solo puedo contener letras',
+                    'pattern' => '^[a-zA-Z áéíóú]*$',
+                ]])
             ->add('office', ModelType::class, [
                 'class' => SecurityOffice::class,
                 'placeholder' => '',
@@ -251,7 +261,6 @@ class UserAdmin extends AbstractAdmin
                     ->end();
             }
         }
-
 
 
     }
