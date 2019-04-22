@@ -39,9 +39,13 @@ class AppCristal extends _Entity_
 
     public function __toString()
     {
-        return (string)'(' . ($this->esfera > 0 ? '+' : '') .
-            $this->esfera . ',' . ($this->cilindro > 0 ? '+' : '') .
-            $this->cilindro . ') - $' . number_format($this->getProducto()->getPrecio(), 2);
+        if ($this->getProducto()) {
+            return (string)'(' . ($this->esfera > 0 ? '+' : '') .
+                $this->esfera . ',' . ($this->cilindro > 0 ? '+' : '') .
+                $this->cilindro . ') - $' . number_format($this->getProducto()->getPrecio(), 2);
+        }
+
+        return '';
     }
 
     public function getGrosor(): ?float

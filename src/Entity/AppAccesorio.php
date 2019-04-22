@@ -22,6 +22,10 @@ class AppAccesorio extends _Entity_
      */
     protected $producto;
 
+    public function __toString()
+    {
+        return (string)$this->producto ? $this->getProducto()->getCodigo() : '';
+    }
 
     public function getProducto(): ?AppProducto
     {

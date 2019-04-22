@@ -25,6 +25,11 @@ class AppLupa extends _Entity_
      */
     protected $dioptrias;
 
+    public function __toString()
+    {
+        return (string)$this->producto ? $this->getProducto()->getCodigo() : '';
+    }
+
     public function getDioptrias(): ?string
     {
         return $this->dioptrias;
