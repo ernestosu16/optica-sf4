@@ -5,10 +5,18 @@ namespace App\Entity;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 
-
+/**
+ * Class _BaseEntity_
+ * @package App\Entity
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=false)
+ */
 abstract class _BaseEntity_ extends _Entity_
 {
+    use SoftDeleteableEntity;
+
     /**
      * @var DateTime
      * @ORM\Column(type="datetime", nullable=true)
@@ -20,12 +28,6 @@ abstract class _BaseEntity_ extends _Entity_
      * @ORM\Column(type="datetime", nullable=true)
      */
     protected $update_at;
-
-    /**
-     * @var DateTime
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    protected $delete_at;
 
     /**
      * @return DateTime
@@ -61,25 +63,6 @@ abstract class _BaseEntity_ extends _Entity_
     public function setUpdateAt(DateTime $update_at): self
     {
         $this->update_at = $update_at;
-
-        return $this;
-    }
-
-    /**
-     * @return DateTime
-     */
-    public function getDeleteAt(): DateTime
-    {
-        return $this->delete_at;
-    }
-
-    /**
-     * @param DateTime $delete_at
-     * @return _BaseEntity_
-     */
-    public function setDeleteAt(DateTime $delete_at): self
-    {
-        $this->delete_at = $delete_at;
 
         return $this;
     }

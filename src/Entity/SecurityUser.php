@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Application\Sonata\MediaBundle\Entity\Media;
 use App\Auditoria\Annotation as Auditar;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Doctrine\ORM\Mapping as ORM;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\UserBundle\Entity\BaseUser;
@@ -12,10 +14,13 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\SecurityUserRepository")
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=false)
  * @Auditar\Auditar()
  */
 class SecurityUser extends BaseUser
 {
+    use SoftDeleteableEntity;
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue(strategy="UUID")

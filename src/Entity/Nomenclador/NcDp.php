@@ -3,11 +3,13 @@
 namespace App\Entity\Nomenclador;
 
 use App\Entity\_BaseEntity_;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity()
  * @ORM\HasLifecycleCallbacks()
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=false)
  */
 class NcDp extends _BaseEntity_
 {

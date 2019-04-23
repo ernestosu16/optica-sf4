@@ -4,16 +4,21 @@ namespace App\Entity;
 
 use App\Application\Sonata\MediaBundle\Entity\Media;
 use App\Auditoria\Annotation as Auditar;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Sonata\MediaBundle\Model\MediaInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\SecurityOfficeRepository")
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=false)
  * @Auditar\Auditar()
  */
 class SecurityOffice
 {
+    use SoftDeleteableEntity;
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
