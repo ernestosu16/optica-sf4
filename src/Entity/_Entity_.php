@@ -1,10 +1,14 @@
 <?php
+
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 
 abstract class _Entity_
 {
+    use SoftDeleteableEntity;
+
     /**
      * @var integer
      *

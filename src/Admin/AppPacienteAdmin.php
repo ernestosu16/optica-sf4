@@ -21,7 +21,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
-class AppPacienteAdmin extends AbstractAdmin
+class AppPacienteAdmin extends _BaseAdmin_
 {
     protected function configureFormFields(FormMapper $formMapper)
     {
@@ -34,7 +34,9 @@ class AppPacienteAdmin extends AbstractAdmin
             ->with('Datos de Contacto', array('class' => 'col-md-6'))
             ->add('direccion')
             ->add('telefono_contacto')
-            ->add('correo_contacto', EmailType::class)
+            ->add('correo_contacto', EmailType::class, array(
+                'required' => false
+            ))
             ->end()
             ->end();
     }
@@ -50,6 +52,10 @@ class AppPacienteAdmin extends AbstractAdmin
             ])
             ->add('nombre', TextType::class, [
                 'label' => 'app.nombre',
+            ])
+            ->add('sexo', 'string', [
+                'label' => 'Sexo',
+                'template' => '::Admin/producto/list/sexo.html.twig',
             ])
             ->add('telefono_contacto', TextType::class, [
                 'label' => 'app.telefono_contacto',
@@ -75,9 +81,14 @@ class AppPacienteAdmin extends AbstractAdmin
      */
     public function validate(ErrorElement $errorElement, $object)
     {
-//        dump($object->getCi());exit;
+//        dump($object);exit;
         /** @var EntityManager $em */
-        $em = $this->getConfigurationPool()->getContainer()->get('doctrine.orm.entity_manager');
+        $em = $this->getConfigurationPool()
+            ->getContainer()
+            ->get('doctrine.orm.entity_manager');
+
+//        $filters = $em->getFilters();
+//        $filters->disable('softdeleteable');
 
         $paciente = $em->getRepository(AppPaciente::class)->findOneBy(['ci' => $object->getCi()]);
 
@@ -88,15 +99,17 @@ class AppPacienteAdmin extends AbstractAdmin
                 ->end();
         }
 
-        $paciente = $em->getRepository(AppPaciente::class)->findOneBy(
-            ['historia_clinica' => $object->getHistoriaClinica()]);
-        if ($paciente) {
-            $errorElement
-                ->with('historia_clinica')
-                ->addViolation('Ya existe este número de historia clínica')
-                ->end();
-        }
+        if ($object->getHistoriaClinica()) {
+            $paciente = $em->getRepository(AppPaciente::class)->findOneBy(
+                ['historia_clinica' => $object->getHistoriaClinica()]);
 
+            if ($paciente) {
+                $errorElement
+                    ->with('historia_clinica')
+                    ->addViolation('Ya existe este número de historia clínica')
+                    ->end();
+            }
+        }
         $errorElement
             ->with('ci')
             ->assertLength(['min' => 11, 'max' => 11])
@@ -111,7 +124,6 @@ class AppPacienteAdmin extends AbstractAdmin
             ->assertLength(['min' => 8, 'max' => 8])
             ->end();
 
-        parent::validate($errorElement, $object);
     }
 
 }

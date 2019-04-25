@@ -18,7 +18,7 @@ class AppPaciente extends _BaseEntity_
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=15, unique=true)
+     * @ORM\Column(type="string", length=15)
      */
     protected $ci;
 
@@ -30,13 +30,13 @@ class AppPaciente extends _BaseEntity_
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=15)
+     * @ORM\Column(type="string", length=15, nullable=true)
      */
     protected $telefono_contacto;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=50, nullable=true)
      */
     protected $correo_contacto;
 
@@ -48,13 +48,13 @@ class AppPaciente extends _BaseEntity_
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=15)
+     * @ORM\Column(type="string", length=15, nullable=true)
      */
     protected $historia_clinica;
 
     public function __toString()
     {
-        return (string) $this->nombre;
+        return (string)$this->nombre;
     }
 
     public function getCi(): ?string

@@ -1,0 +1,11 @@
+{% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
+
+{% block field %}
+    <div>
+        {% if object.ci | slice(9,1) is divisible by(2) %}
+            M
+        {% else %}
+            F
+        {% endif %}
+    </div>
+{% endblock %}
