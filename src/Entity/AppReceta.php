@@ -80,6 +80,16 @@ class AppReceta extends _BaseEntity_
      */
     protected $fecha;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\AppRecetaTrabajador")
+     */
+    protected $receta_trabajador;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\AppRecetaLugar")
+     */
+    protected $receta_lugar;
+
     public function __construct()
     {
     }
@@ -200,6 +210,30 @@ class AppReceta extends _BaseEntity_
     public function setFecha(?\DateTimeInterface $fecha): self
     {
         $this->fecha = $fecha;
+
+        return $this;
+    }
+
+    public function getRecetaTrabajador(): ?AppRecetaTrabajador
+    {
+        return $this->receta_trabajador;
+    }
+
+    public function setRecetaTrabajador(?AppRecetaTrabajador $receta_trabajador): self
+    {
+        $this->receta_trabajador = $receta_trabajador;
+
+        return $this;
+    }
+
+    public function getRecetaLugar(): ?AppRecetaLugar
+    {
+        return $this->receta_lugar;
+    }
+
+    public function setRecetaLugar(?AppRecetaLugar $receta_lugar): self
+    {
+        $this->receta_lugar = $receta_lugar;
 
         return $this;
     }

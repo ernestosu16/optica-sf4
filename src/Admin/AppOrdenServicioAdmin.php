@@ -5,11 +5,13 @@ namespace App\Admin;
 
 use App\Entity\AppOrdenServicio;
 use App\Entity\AppReceta;
+use App\Entity\AppRecetaLugar;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelListType;
 use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\Form\Type\DateTimePickerType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
@@ -66,7 +68,8 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
                     ])
                     ->add('fecha', DateTimePickerType::class, [
                         'disabled' => $object->getId(),
-                        'required' => false
+                        'required' => false,
+                        'label' => 'Fecha de Refracción'
                     ])
                     ->add('dp', null, [
                         'disabled' => $object->getId(),
@@ -78,29 +81,31 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
                     # Ojo derecho
                     ->add('eje_od', null, array(
                         'disabled' => $object->getId(),
-                        'label' => 'Eje Derecho'
+                        'label' => 'Eje'
                     ))
                     ->add('a_visual_od', null, array(
                         'disabled' => $object->getId(),
-                        'label' => 'Eje Derecho'
+                        'label' => 'Agudeza Visual'
                     ))
                     ->add('cristal_od', null, array(
                         'disabled' => $object->getId(),
-                        'label' => 'Cristal Derecho'
+                        'label' => 'Cristal'
                     ))
                     # Ojo izquierdo
                     ->add('eje_oi', null, array(
                         'disabled' => $object->getId(),
-                        'label' => 'Eje Izquierdo'
+                        'label' => 'Eje'
                     ))
                     ->add('a_visual_oi', null, array(
                         'disabled' => $object->getId(),
-                        'label' => 'Eje Derecho'
+                        'label' => 'Agudeza Visual'
                     ))
                     ->add('cristal_oi', null, array(
                         'disabled' => $object->getId(),
-                        'label' => 'Cristal Izquierdo'
+                        'label' => 'Cristal'
                     ))
+                    ->add('receta_trabajador')
+                    ->add('receta_lugar')
             )
             ->end()
             ->end();
