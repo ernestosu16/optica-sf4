@@ -20,14 +20,14 @@ class AppMovimientoAlmacenAdmin extends _BaseAdmin_
         parent::configureRoutes($collection);
     }
 
-    public function createQuery($context = 'list')
-    {
-        $query = parent::createQuery($context);
-
-        $query->where("{$query->getRootAliases()[0]}.delete_at is NULL");
-
-        return $query;
-    }
+//    public function createQuery($context = 'list')
+//    {
+//        $query = parent::createQuery($context);
+//
+//        $query->where("{$query->getRootAliases()[0]}.deleted_at is NULL");
+//
+//        return $query;
+//    }
 
     /**
      * @param $object AppMovimientoAlmacen

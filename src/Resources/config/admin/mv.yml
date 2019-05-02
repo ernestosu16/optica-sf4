@@ -1,0 +1,15 @@
+services:
+    sonata.admin.mv.factura:
+        class: App\Admin\Mv\MvFacturaAdmin
+        arguments: [~, App\Entity\MovimientoAlmacen\MvFactura, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: 'Facturación' }
+        calls:
+            - [setTranslationDomain,['mv']]
+    sonata.admin.mv.factura_producto:
+        class: App\Admin\Mv\MvFacturaProductoAdmin
+        arguments: [~, App\Entity\MovimientoAlmacen\MvFacturaProducto, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Factura Producto }
+        calls:
+            - [setTranslationDomain,['mv']]

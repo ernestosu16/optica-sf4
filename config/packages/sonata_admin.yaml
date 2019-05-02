@@ -47,6 +47,7 @@ sonata_admin:
                 label_catalogue: app
                 icon:  '<i class="fa fa-folder"></i>'
                 items:
+                    - sonata.admin.mv.factura
                     - sonata.admin.app.movimiento_almacen
 
             servicios_ordenes:

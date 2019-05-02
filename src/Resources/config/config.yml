@@ -5,4 +5,5 @@ imports:
     - { resource: 'services.yml'}
     - { resource: 'security.yml'}
     - { resource: 'admin/app.yml'}
+    - { resource: 'admin/mv.yml'}
     - { resource: 'admin/nomenclador.yml'}
