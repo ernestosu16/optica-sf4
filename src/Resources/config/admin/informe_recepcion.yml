@@ -1,0 +1,25 @@
+services:
+    app.informe_recepcion_optica:
+        class: App\Admin\InformeRecepcionOptiaAdmin
+        arguments: [~, App\Entity\MovimientoAlmacen\InformeRecepcionOptica, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: 'Productos de la Óptica' }
+
+
+    app.informe_recepcion_accesorio:
+        class: App\Admin\InformeRecepcionOpticaProductoAdmin
+        arguments: [~, App\Entity\MovimientoAlmacen\InformeRecepcionOpticaAccesorio, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: 'InformeRecepcionOpticaAccesorio' }
+
+    app.informe_recepcion_armadura:
+        class: App\Admin\InformeRecepcionOpticaProductoAdmin
+        arguments: [~, App\Entity\MovimientoAlmacen\InformeRecepcionOpticaArmadura, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: 'InformeRecepcionOpticaAccesorio' }
+
+    app.informe_recepcion_cristal:
+        class: App\Admin\InformeRecepcionOpticaProductoAdmin
+        arguments: [~, App\Entity\MovimientoAlmacen\InformeRecepcionOpticaCristal, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: 'InformeRecepcionOpticaCristal' }

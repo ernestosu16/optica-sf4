@@ -47,8 +47,9 @@ sonata_admin:
                 label_catalogue: app
                 icon:  '<i class="fa fa-folder"></i>'
                 items:
-                    - sonata.admin.mv.factura
-                    - sonata.admin.app.movimiento_almacen
+#                    - sonata.admin.mv.factura
+#                    - sonata.admin.app.movimiento_almacen
+                    - app.informe_recepcion_optica
 
             servicios_ordenes:
                 label: Ventas

@@ -26,7 +26,13 @@ class AppAccesorio extends _Entity_
 
     public function __toString()
     {
-        return (string)$this->producto ? $this->getProducto()->getCodigo() : '';
+        $producto = $this->getProducto();
+        if ($producto) {
+            return (string)$producto->getCodigo() . ' - ' . $producto->getDescripcion() .
+                ' - $' . number_format($this->getProducto()->getPrecio(), 2);
+        } else {
+            return '';
+        }
     }
 
     public function getProducto(): ?AppProducto
