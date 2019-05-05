@@ -60,6 +60,7 @@ class AlamacenAdmin extends _BaseAdmin_
     {
         $listMapper
             ->add('producto')
+            ->add('producto.precio')
             ->add('cantidad_existencia', null, [
                 'label' => 'Existencia'
             ])
@@ -77,5 +78,21 @@ class AlamacenAdmin extends _BaseAdmin_
                 ->obtenerFacturaAsignadaOficina($security->getToken()->getUser()->getOffice());
             $this->count = count($object);
         }
+    }
+
+    public function createQuery($context = 'list')
+    {
+        $security = $this->getConfigurationPool()->getContainer()->get('security.token_storage');
+
+        $query = parent::createQuery($context);
+
+        $oficinaID = 0;
+        if ($security->getToken() && $security->getToken()->getUser()->getOffice()) {
+            $oficinaID = $security->getToken()->getUser()->getOffice()->getId();
+        }
+
+        $query->where("{$query->getRootAliases()[0]}.office = {$oficinaID}");
+
+        return $query;
     }
 }
