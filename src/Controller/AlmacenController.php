@@ -27,8 +27,11 @@ class AlmacenController extends CRUDController
     {
         $this->user = $this->getUser();
         $this->em = $this->getDoctrine()->getManager();
-        $object = $this->em->getRepository(InformeRecepcionOptica::class)
-            ->obtenerFacturaAsignadaOficina($this->user->getOffice());
+        $object = null;
+        if ($this->user->getOffice()) {
+            $object = $this->em->getRepository(InformeRecepcionOptica::class)
+                ->obtenerFacturaAsignadaOficina($this->user->getOffice());
+        }
 
         return $this->renderWithExtraParams($this->admin->getTemplate('confirm_factura'), array(
             'object' => $object

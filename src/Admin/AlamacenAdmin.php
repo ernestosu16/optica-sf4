@@ -71,7 +71,7 @@ class AlamacenAdmin extends _BaseAdmin_
         $em = $this->getConfigurationPool()->getContainer()->get('doctrine');
         $security = $this->getConfigurationPool()->getContainer()->get('security.token_storage');
 
-        if ($security->getToken()) {
+        if ($security->getToken() && $security->getToken()->getUser()->getOffice()) {
 
             $object = $em->getRepository(InformeRecepcionOptica::class)
                 ->obtenerFacturaAsignadaOficina($security->getToken()->getUser()->getOffice());
