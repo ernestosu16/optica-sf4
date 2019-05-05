@@ -5,6 +5,7 @@ namespace App\Admin;
 
 use App\Entity\MovimientoAlmacen\InformeRecepcionOptica;
 use App\Entity\MovimientoAlmacen\InformeRecepcionOpticaArmadura;
+use Doctrine\ORM\EntityManager;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\Form\Type\CollectionType;
@@ -17,6 +18,10 @@ class InformeRecepcionOptiaAdmin extends _BaseAdmin_
         $object = $this->getSubject();
         /* @var $object InformeRecepcionOptica */
 
+        /** @var EntityManager $em */
+        $em = $this->getConfigurationPool()->getContainer()->get('doctrine');
+
+        $lastRow = $em->getRepository(InformeRecepcionOptica::class)->getLastRow();
 
         $formMapper
             ->with('Datos de la Recepcion', array('class' => 'col-md-6'))
@@ -28,6 +33,7 @@ class InformeRecepcionOptiaAdmin extends _BaseAdmin_
             ->add('id', null, array(
                 'disabled' => true,
                 'label' => 'Número de la factura',
+                'data' => $lastRow->getId() + 1,
             ))
             ->add('office_destino', null, [
                 'label' => 'Oficina destino',

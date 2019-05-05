@@ -20,14 +20,6 @@ class InformeRecepcionOpticaRepository extends ServiceEntityRepository
         parent::__construct($registry, InformeRecepcionOptica::class);
     }
 
-    /**
-     * @param SecurityOffice $office
-     * @return InformeRecepcionOptica[]
-     */
-    public function obtenerFacturaAsignadaOficina(SecurityOffice $office)
-    {
-        return $this->findBy(['office_destino' => $office, 'confirmado' => false, 'devuelto' => false]);
-    }
     // /**
     //  * @return InformeRecepcionOptica[] Returns an array of InformeRecepcionOptica objects
     //  */
@@ -56,4 +48,20 @@ class InformeRecepcionOpticaRepository extends ServiceEntityRepository
         ;
     }
     */
+
+
+    /**
+     * @param SecurityOffice $office
+     * @return InformeRecepcionOptica[]
+     */
+    public function obtenerFacturaAsignadaOficina(SecurityOffice $office)
+    {
+        return $this->findBy(['office_destino' => $office, 'confirmado' => false, 'devuelto' => false]);
+    }
+
+    public function getLastRow()
+    {
+        return $this->findOneBy([], ['id' => 'desc']);
+
+    }
 }
