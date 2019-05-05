@@ -1,0 +1,82 @@
+{% extends base_template %}
+{% import 'SonataAdminBundle:CRUD:base_show_macro.html.twig' as show_helper %}
+
+{% block show %}
+    <section class="content">
+        <div class="row">
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h4 class="box-title">
+                        Lista de Factura(s) Asignada(s)
+                    </h4>
+                </div>
+                <div class="box-body table-responsive no-padding">
+                    <table class="table table-bordered table-striped table-hover sonata-ba-list">
+                        <thead>
+                        <tr class="sonata-ba-list-field-header">
+                            <th class="sonata-ba-list-field-header-date">Fecha</th>
+                            <th class="sonata-ba-list-field-header-integer">Número Factura</th>
+                            <th class="sonata-ba-list-field-header-orm_one_to_many ">
+                                Accesorios
+                            </th>
+                            <th class="sonata-ba-list-field-header-orm_one_to_many ">
+                                Armaduras
+                            </th>
+                            <th class="sonata-ba-list-field-header-orm_one_to_many ">
+                                Cristales
+                            </th>
+                            <th class="sonata-ba-list-field-header-text "></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for value in object %}
+                            <tr>
+                                <td class="sonata-ba-list-field sonata-ba-list-field-date"
+                                    objectid="{{ value.id }}">
+                                    {{ value.fecha|date('d/m/Y') }}</td>
+                                <td class="sonata-ba-list-field sonata-ba-list-field-text"
+                                    objectid="{{ value.id }}">
+                                    {{ value.id }}</td>
+                                <td class="sonata-ba-list-field sonata-ba-list-field-orm_one_to_many"
+                                    objectid="{{ value.id }}">
+                                    {% include '::Admin/Almacen/_orm_one_to_many.html.twig' with {'object': value.accesorios} %}
+                                </td>
+                                <td class="sonata-ba-list-field sonata-ba-list-field-orm_one_to_many"
+                                    objectid="{{ value.id }}">
+                                    {% include '::Admin/Almacen/_orm_one_to_many.html.twig' with {'object': value.armaduras} %}
+                                </td>
+                                <td class="sonata-ba-list-field sonata-ba-list-field-orm_one_to_many"
+                                    objectid="{{ value.id }}">
+                                    {% include '::Admin/Almacen/_orm_one_to_many.html.twig' with {'object': value.cristales} %}
+                                </td>
+                                <td class="sonata-ba-list-field sonata-ba-list-field-text"
+                                    objectid="{{ value.id }}">
+                                    <div class="btn-group">
+                                        <a href="{{ admin.generateUrl('save_confirmar_factura',{'id':value.id}) }}"
+                                           class="btn btn-sm btn-success" title="Confirmar">
+                                            <i class="fa fa-plus-square" aria-hidden="true"></i>
+                                            Confirmar
+                                        </a>
+                                        <a href="{{ admin.generateUrl('cancelar_factura',{'id':value.id}) }}"
+                                           class="btn btn-sm btn-warning" title="Cancelar">
+                                            <i class="fa fa-close" aria-hidden="true"></i>
+                                            Cancelar
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="box-footer">
+                <a href="{{ admin.generateUrl('list') }}"
+                   class="btn btn-sm btn-default" title="Cancelar">
+                    <i class="fa fa-backward" aria-hidden="true"></i>
+                    Regresar
+                </a>
+            </div>
+        </div>
+    </section>
+{% endblock %}

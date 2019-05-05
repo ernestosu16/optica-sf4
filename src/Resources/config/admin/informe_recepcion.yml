@@ -3,7 +3,7 @@ services:
         class: App\Admin\InformeRecepcionOptiaAdmin
         arguments: [~, App\Entity\MovimientoAlmacen\InformeRecepcionOptica, ~]
         tags:
-            - { name: sonata.admin, manager_type: orm, label: 'Productos de la Óptica' }
+            - { name: sonata.admin, manager_type: orm, label: 'Facturación' }
 
 
     app.informe_recepcion_accesorio:

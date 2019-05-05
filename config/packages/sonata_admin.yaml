@@ -50,6 +50,7 @@ sonata_admin:
 #                    - sonata.admin.mv.factura
 #                    - sonata.admin.app.movimiento_almacen
                     - app.informe_recepcion_optica
+                    - app.almacen
 
             servicios_ordenes:
                 label: Ventas

@@ -12,7 +12,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="App\Repository\InformeRecepcionOpticaRepository")
  */
 class InformeRecepcionOptica extends _BaseEntity_
 {
@@ -23,11 +23,11 @@ class InformeRecepcionOptica extends _BaseEntity_
      */
     protected $fecha;
 
-    /**
-     * @var string
-     * @ORM\Column(length=15))
-     */
-    protected $numero_factura;
+//    /**
+//     * @var string
+//     * @ORM\Column(length=15))
+//     */
+//    protected $numero_factura;
 
 //    /**
 //     * @ORM\ManyToOne(targetEntity="App\Entity\SecurityOffice")
@@ -74,6 +74,12 @@ class InformeRecepcionOptica extends _BaseEntity_
      */
     protected $cristales;
 
+    public function __toString()
+    {
+        return (string)$this->getId();
+    }
+
+
     public function __construct()
     {
         $this->created_at = new DateTime();
@@ -97,17 +103,17 @@ class InformeRecepcionOptica extends _BaseEntity_
         return $this;
     }
 
-    public function getNumeroFactura(): ?string
-    {
-        return $this->numero_factura;
-    }
-
-    public function setNumeroFactura(string $numero_factura): self
-    {
-        $this->numero_factura = $numero_factura;
-
-        return $this;
-    }
+//    public function getNumeroFactura(): ?string
+//    {
+//        return $this->numero_factura;
+//    }
+//
+//    public function setNumeroFactura(string $numero_factura): self
+//    {
+//        $this->numero_factura = $numero_factura;
+//
+//        return $this;
+//    }
 
     public function getDevuelto(): ?bool
     {

@@ -25,8 +25,8 @@ class InformeRecepcionOptiaAdmin extends _BaseAdmin_
                 'required' => true,
                 'disabled' => $object->getId(),
             ))
-            ->add('numero_factura', null, array(
-                'disabled' => $object->getId(),
+            ->add('id', null, array(
+                'disabled' => true,
                 'label' => 'Número de la factura',
             ))
             ->add('office_destino', null, [

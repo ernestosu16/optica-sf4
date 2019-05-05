@@ -4,6 +4,7 @@ imports:
     - { resource: 'parameters.yml'}
     - { resource: 'services.yml'}
     - { resource: 'security.yml'}
+    - { resource: 'admin/almacen.yml'}
     - { resource: 'admin/app.yml'}
     - { resource: 'admin/informe_recepcion.yml'}
     - { resource: 'admin/nomenclador.yml'}

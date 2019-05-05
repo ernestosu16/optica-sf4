@@ -11,3 +11,7 @@ services:
             - { name: kernel.event_listener, event: sonata.admin.event.configure.menu.sidebar, method: addMenuItems }
         arguments:
           ['@service_container']
+
+    App\Repository\InformeRecepcionOpticaRepository:
+        public: true
+        factory: 'Doctrine\ORM\EntityManagerInterface:getRepository'
