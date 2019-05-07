@@ -10,6 +10,8 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\Form\Type\CollectionType;
 use Sonata\Form\Type\DatePickerType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class InformeRecepcionOptiaAdmin extends _BaseAdmin_
 {
@@ -24,7 +26,18 @@ class InformeRecepcionOptiaAdmin extends _BaseAdmin_
         $lastRow = $em->getRepository(InformeRecepcionOptica::class)->getLastRow();
 
         $formMapper
-            ->with('Datos de la Recepcion', array('class' => 'col-md-6'))
+            ->with('Tipo de Factura', array('class' => 'col-md-2'))
+            ->add('tipo_factura', ChoiceType::class, [
+                'expanded' => true,
+                'label' => false,
+                'choices' => [
+                    'Acccesorios' => 0,
+                    'Armaduras' => 1,
+                    'Cristales' => 2,
+                ]
+            ])
+            ->end()
+            ->with('Datos de la Recepcion', array('class' => 'col-md-4'))
             ->add('fecha', DatePickerType::class, array(
                 'format' => 'dd/MM/yyyy',
                 'required' => true,

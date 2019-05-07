@@ -74,6 +74,8 @@ class InformeRecepcionOptica extends _BaseEntity_
      */
     protected $cristales;
 
+    public $tipo_factura;
+
     public function __toString()
     {
         return (string)$this->getId();

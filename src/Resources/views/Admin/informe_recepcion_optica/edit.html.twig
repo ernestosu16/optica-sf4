@@ -1,0 +1,45 @@
+{% extends "SonataAdminBundle:CRUD:edit.html.twig" %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            const tipo_factura = ['accesorios', 'armaduras', 'cristales'];
+
+            function hidden() {
+                for (let i = 0; i < tipo_factura.length; i++) {
+                    $('#sonata-ba-field-container-{{ admin.uniqid }}_' + tipo_factura[i]).parent().parent().parent().hide();
+                    $('#field_widget_{{ admin.uniqid }}_' + tipo_factura[i]).remove();
+                }
+            }
+
+            function checked() {
+                const radio_checked = $('input:radio:checked');
+
+                if (radio_checked.val()) {
+                    hidden();
+
+                    switch (radio_checked.val()) {
+                        case '0' :
+                            $('#sonata-ba-field-container-{{ admin.uniqid }}_' + tipo_factura[0]).parent().parent().parent().show();
+                            break;
+                        case '1' :
+                            $('#sonata-ba-field-container-{{ admin.uniqid }}_' + tipo_factura[1]).parent().parent().parent().show();
+                            break;
+                        case '2' :
+                            $('#sonata-ba-field-container-{{ admin.uniqid }}_' + tipo_factura[2]).parent().parent().parent().show();
+                            break;
+                    }
+                }
+            }
+
+            $('[name="{{ admin.uniqid }}[tipo_factura]"]').on('change', function () {
+                hidden();
+                checked()
+            });
+
+            hidden();
+            checked()
+
+        });
+    </script>
+{% endblock %}

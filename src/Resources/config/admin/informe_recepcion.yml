@@ -4,6 +4,9 @@ services:
         arguments: [~, App\Entity\MovimientoAlmacen\InformeRecepcionOptica, ~]
         tags:
             - { name: sonata.admin, manager_type: orm, label: 'Facturación' }
+        calls:
+            - [setTranslationDomain,['app']]
+            - [setTemplate, ['edit', '::Admin/informe_recepcion_optica/edit.html.twig']]
 
 
     app.informe_recepcion_accesorio:
