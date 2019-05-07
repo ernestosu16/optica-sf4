@@ -1,0 +1,48 @@
+<h4>Factura # {{ object.id }}</h4>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Código</th>
+        <th>Descripción</th>
+        <th>Cantidad</th>
+        <th>Precio de Costo</th>
+        <th>Precio de Venta</th>
+        <th>Importe de Costo</th>
+        <th>Importe de Venta</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% set importe_total_costo = 0 %}
+    {% set importe_total_venta = 0 %}
+
+    {# @var \App\Entity\MovimientoAlmacen\InformeRecepcionOptica object    #}
+    {% for value in object.accesorios %}
+        {% include '::Admin/Almacen/_producto_tr.html.twig' %}
+        {% set importe_total_costo = importe_total_costo + (value.cantidad * value.producto.producto.precioCosto) %}
+        {% set importe_total_venta = importe_total_venta + (value.cantidad * value.producto.producto.precio) %}
+    {% endfor %}
+    {% for value in object.armaduras %}
+        {% include '::Admin/Almacen/_producto_tr.html.twig' %}
+        {% set importe_total_costo = importe_total_costo + (value.cantidad * value.producto.producto.precioCosto) %}
+        {% set importe_total_venta = importe_total_venta + (value.cantidad * value.producto.producto.precio) %}
+    {% endfor %}
+    {% for value in object.cristales %}
+        {% include '::Admin/Almacen/_producto_tr.html.twig' %}
+        {% set importe_total_costo = importe_total_costo + (value.cantidad * value.producto.producto.precioCosto) %}
+        {% set importe_total_venta = importe_total_venta + (value.cantidad * value.producto.producto.precio) %}
+    {% endfor %}
+    </tbody>
+    <tfoot>
+    <tr>
+        <th colspan="5" style="text-align: right">Total</th>
+        <th>$ {{ importe_total_costo| number_format(2, '.', ',') }}</th>
+        <th>$ {{ importe_total_venta| number_format(2, '.', ',') }}</th>
+    </tr>
+    </tfoot>
+</table>
+<a href="{{ admin.generateUrl('save_confirmar_factura',{'id':object.id}) }}"
+   class="btn btn-sm btn-success" title="Confirmar">
+    <i class="fa fa-plus-square" aria-hidden="true"></i>
+    Confirmar
+</a>
+<button class="btn btn-sm btn-default" onclick="alert('En desarrollo')">Exportar PDF</button>

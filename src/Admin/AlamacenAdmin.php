@@ -28,6 +28,7 @@ class AlamacenAdmin extends _BaseAdmin_
         $collection->add('confirmar_factura', 'confirmar_factura');
         $collection->add('save_confirmar_factura', 'confirmar_factura/' . $this->getRouterIdParameter() . '/save');
         $collection->add('cancelar_factura', 'cancelar_factura/' . $this->getRouterIdParameter());
+        $collection->add('lista_producto_factura', 'lista_producto_factura/' . $this->getRouterIdParameter());
 
     }
 
@@ -48,6 +49,9 @@ class AlamacenAdmin extends _BaseAdmin_
 
         if ($name == "cancelar_factura")
             return '::Admin\Almacen\view__cancelar_factura.html.twig';
+
+        if ($name == "lista_producto_factura")
+            return '::Admin\Almacen\view__lista_producto_factura.html.twig';
 
         return parent::getTemplate($name);
     }

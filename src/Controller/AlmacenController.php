@@ -145,5 +145,21 @@ class AlmacenController extends CRUDController
         ));
     }
 
+    public function listaProductoFacturaAction($id)
+    {
+        $object = null;
+        $this->em = $this->getDoctrine()->getManager();
+
+        if ($id) {
+            /** @var InformeRecepcionOptica $factura */
+            $object = $this->em->getRepository(InformeRecepcionOptica::class)
+                ->find($id);
+        }
+
+        return $this->renderWithExtraParams($this->admin->getTemplate('lista_producto_factura'), array(
+            'object' => $object
+        ));
+    }
+
 
 }
