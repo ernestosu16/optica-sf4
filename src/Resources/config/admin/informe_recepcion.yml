@@ -1,12 +1,16 @@
 services:
     app.informe_recepcion_optica:
         class: App\Admin\InformeRecepcionOptiaAdmin
-        arguments: [~, App\Entity\MovimientoAlmacen\InformeRecepcionOptica, ~]
+        arguments:
+            - ~
+            - App\Entity\MovimientoAlmacen\InformeRecepcionOptica
+            - App\Controller\InformeRecepcionOpticaAdminController
         tags:
             - { name: sonata.admin, manager_type: orm, label: 'Facturación' }
         calls:
             - [setTranslationDomain,['app']]
             - [setTemplate, ['edit', '::Admin/informe_recepcion_optica/edit.html.twig']]
+            - [setTemplate, ['list', '::Admin/informe_recepcion_optica/list.html.twig']]
 
 
     app.informe_recepcion_accesorio:

@@ -1,0 +1,14 @@
+{% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
+
+{% block field %}
+    {#  @var \App\Entity\MovimientoAlmacen\InformeRecepcionOptica object   #}
+    {% for value in object.accesorios %}
+        {{ value }},
+    {% endfor %}
+    {% for value in object.armaduras %}
+        {{ value }},
+    {% endfor %}
+    {% for value in object.cristales %}
+        {{ value }},
+    {% endfor %}
+{% endblock %}

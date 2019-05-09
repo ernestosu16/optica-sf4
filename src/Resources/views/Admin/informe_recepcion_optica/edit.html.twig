@@ -6,6 +6,12 @@
             const tipo_factura = ['accesorios', 'armaduras', 'cristales'];
 
             function hidden() {
+                const radio_checked = $('input:radio');
+
+                if (!radio_checked.length) {
+                    return;
+                }
+
                 for (let i = 0; i < tipo_factura.length; i++) {
                     $('#sonata-ba-field-container-{{ admin.uniqid }}_' + tipo_factura[i]).parent().parent().parent().hide();
                     $('#field_widget_{{ admin.uniqid }}_' + tipo_factura[i]).remove();

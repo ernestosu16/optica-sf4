@@ -63,8 +63,9 @@ class AlamacenAdmin extends _BaseAdmin_
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('producto')
-            ->add('producto.precio')
+            ->add('producto.codigo', null, ['label' => 'Código'])
+            ->add('producto.descripcion', null, ['label' => 'Descripción'])
+            ->add('producto.precio', null, ['label' => 'Precio'])
             ->add('cantidad_existencia', null, [
                 'label' => 'Existencia'
             ])

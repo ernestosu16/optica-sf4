@@ -45,6 +45,12 @@ class InformeRecepcionOptica extends _BaseEntity_
      * @var boolean
      * @ORM\Column(type="boolean")
      */
+    protected $confirmado;
+
+    /**
+     * @var boolean
+     * @ORM\Column(type="boolean")
+     */
     protected $devuelto;
 
     /**
@@ -52,12 +58,6 @@ class InformeRecepcionOptica extends _BaseEntity_
      * @ORM\Column(type="string", nullable=true)
      */
     protected $devuelto_descripcion;
-
-    /**
-     * @var boolean
-     * @ORM\Column(type="boolean")
-     */
-    protected $confirmado;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\MovimientoAlmacen\InformeRecepcionOpticaAccesorio", mappedBy="informe_recepcion", cascade={"all"}, orphanRemoval=true)
