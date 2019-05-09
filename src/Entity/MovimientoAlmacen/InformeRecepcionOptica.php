@@ -74,6 +74,16 @@ class InformeRecepcionOptica extends _BaseEntity_
      */
     protected $cristales;
 
+    /**
+     * @ORM\OneToMany(targetEntity="InformeRecepcionOpticaLupa", mappedBy="informe_recepcion", cascade={"all"}, orphanRemoval=true)
+     */
+    protected $lupas;
+
+    /**
+     * @ORM\OneToMany(targetEntity="InformeRecepcionOpticaTinteCrital", mappedBy="informe_recepcion", cascade={"all"}, orphanRemoval=true)
+     */
+    protected $tinte_cristales;
+
     public $tipo_factura;
 
     public function __toString()
@@ -91,6 +101,8 @@ class InformeRecepcionOptica extends _BaseEntity_
         $this->accesorios = new ArrayCollection();
         $this->armaduras = new ArrayCollection();
         $this->cristales = new ArrayCollection();
+        $this->lupas = new ArrayCollection();
+        $this->tinte_cristales = new ArrayCollection();
     }
 
     public function getFecha(): ?DateTimeInterface
@@ -264,6 +276,68 @@ class InformeRecepcionOptica extends _BaseEntity_
             // set the owning side to null (unless already changed)
             if ($cristale->getInformeRecepcion() === $this) {
                 $cristale->setInformeRecepcion(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|InformeRecepcionOpticaLupa[]
+     */
+    public function getLupas(): Collection
+    {
+        return $this->lupas;
+    }
+
+    public function addLupa(InformeRecepcionOpticaLupa $lupa): self
+    {
+        if (!$this->lupas->contains($lupa)) {
+            $this->lupas[] = $lupa;
+            $lupa->setInformeRecepcion($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLupa(InformeRecepcionOpticaLupa $lupa): self
+    {
+        if ($this->lupas->contains($lupa)) {
+            $this->lupas->removeElement($lupa);
+            // set the owning side to null (unless already changed)
+            if ($lupa->getInformeRecepcion() === $this) {
+                $lupa->setInformeRecepcion(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|InformeRecepcionOpticaTinteCrital[]
+     */
+    public function getTinteCristales(): Collection
+    {
+        return $this->tinte_cristales;
+    }
+
+    public function addTinteCristale(InformeRecepcionOpticaTinteCrital $tinteCristale): self
+    {
+        if (!$this->tinte_cristales->contains($tinteCristale)) {
+            $this->tinte_cristales[] = $tinteCristale;
+            $tinteCristale->setInformeRecepcion($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTinteCristale(InformeRecepcionOpticaTinteCrital $tinteCristale): self
+    {
+        if ($this->tinte_cristales->contains($tinteCristale)) {
+            $this->tinte_cristales->removeElement($tinteCristale);
+            // set the owning side to null (unless already changed)
+            if ($tinteCristale->getInformeRecepcion() === $this) {
+                $tinteCristale->setInformeRecepcion(null);
             }
         }
 
