@@ -73,14 +73,20 @@ class AlmacenController extends CRUDController
 
     private function confirmFactura(InformeRecepcionOptica $factura)
     {
-        foreach ($factura->getAccesorios() as $accesorio) {
-            $this->save($accesorio);
+        foreach ($factura->getAccesorios() as $item) {
+            $this->save($item);
         }
-        foreach ($factura->getArmaduras() as $accesorio) {
-            $this->save($accesorio);
+        foreach ($factura->getArmaduras() as $item) {
+            $this->save($item);
         }
-        foreach ($factura->getCristales() as $accesorio) {
-            $this->save($accesorio);
+        foreach ($factura->getCristales() as $item) {
+            $this->save($item);
+        }
+        foreach ($factura->getLupas() as $item) {
+            $this->save($item);
+        }
+        foreach ($factura->getTinteCristales() as $item) {
+            $this->save($item);
         }
 
         $factura->setConfirmado(true);

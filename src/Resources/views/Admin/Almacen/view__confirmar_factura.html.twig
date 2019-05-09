@@ -17,13 +17,7 @@
                             <th class="sonata-ba-list-field-header-date">Fecha</th>
                             <th class="sonata-ba-list-field-header-integer">Número Factura</th>
                             <th class="sonata-ba-list-field-header-orm_one_to_many ">
-                                Accesorios
-                            </th>
-                            <th class="sonata-ba-list-field-header-orm_one_to_many ">
-                                Armaduras
-                            </th>
-                            <th class="sonata-ba-list-field-header-orm_one_to_many ">
-                                Cristales
+                                Productos
                             </th>
                             <th class="sonata-ba-list-field-header-text "></th>
                         </tr>
@@ -31,23 +25,28 @@
                         <tbody>
                         {% for value in object %}
                             <tr>
-                                <td class="sonata-ba-list-field sonata-ba-list-field-date"
-                                    objectid="{{ value.id }}">
+                                <td class="sonata-ba-list-field sonata-ba-list-field-date" objectid="{{ value.id }}">
                                     {{ value.fecha|date('d/m/Y') }}</td>
                                 <td class="sonata-ba-list-field sonata-ba-list-field-text"
                                     objectid="{{ value.id }}">
                                     {{ value.id }}</td>
-                                <td class="sonata-ba-list-field sonata-ba-list-field-orm_one_to_many"
-                                    objectid="{{ value.id }}">
-                                    {% include '::Admin/Almacen/_orm_one_to_many.html.twig' with {'object': value.accesorios} %}
-                                </td>
-                                <td class="sonata-ba-list-field sonata-ba-list-field-orm_one_to_many"
-                                    objectid="{{ value.id }}">
-                                    {% include '::Admin/Almacen/_orm_one_to_many.html.twig' with {'object': value.armaduras} %}
-                                </td>
-                                <td class="sonata-ba-list-field sonata-ba-list-field-orm_one_to_many"
-                                    objectid="{{ value.id }}">
-                                    {% include '::Admin/Almacen/_orm_one_to_many.html.twig' with {'object': value.cristales} %}
+                                <td class="sonata-ba-list-field sonata-ba-list-field-orm_one_to_many">
+                                    {#  @var \App\Entity\MovimientoAlmacen\InformeRecepcionOptica object   #}
+                                    {% for value in value.accesorios %}
+                                        {{ value }},
+                                    {% endfor %}
+                                    {% for value in value.armaduras %}
+                                        {{ value }},
+                                    {% endfor %}
+                                    {% for value in value.cristales %}
+                                        {{ value }},
+                                    {% endfor %}
+                                    {% for value in value.lupas %}
+                                        {{ value }},
+                                    {% endfor %}
+                                    {% for value in value.tinteCristales %}
+                                        {{ value }},
+                                    {% endfor %}
                                 </td>
                                 <td class="sonata-ba-list-field sonata-ba-list-field-text"
                                     objectid="{{ value.id }}">
@@ -87,10 +86,10 @@
     <div id="myModal" class="modal fade" role="dialog">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-{#                <div class="modal-header">#}
-{#                    <button type="button" class="close" data-dismiss="modal">&times;</button>#}
-{#                    <h4>Datos de La Factura</h4>#}
-{#                </div>#}
+                {#                <div class="modal-header">#}
+                {#                    <button type="button" class="close" data-dismiss="modal">&times;</button>#}
+                {#                    <h4>Datos de La Factura</h4>#}
+                {#                </div>#}
                 <div class="modal-body">
                     <div id="loading"><img src="{{ asset('bundles/sonataadmin/ajax-loader.gif') }}"></div>
                     <div id="data"></div>

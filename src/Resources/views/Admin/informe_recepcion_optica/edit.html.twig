@@ -3,7 +3,7 @@
     {{ parent() }}
     <script type="text/javascript">
         $(document).ready(function () {
-            const tipo_factura = ['accesorios', 'armaduras', 'cristales'];
+            const tipo_factura = ['accesorios', 'armaduras', 'cristales', 'lupas', 'tinte_cristales'];
 
             function hidden() {
                 const radio_checked = $('input:radio');
@@ -34,6 +34,12 @@
                         case '2' :
                             $('#sonata-ba-field-container-{{ admin.uniqid }}_' + tipo_factura[2]).parent().parent().parent().show();
                             break;
+                        case '3' :
+                            $('#sonata-ba-field-container-{{ admin.uniqid }}_' + tipo_factura[3]).parent().parent().parent().show();
+                            break;
+                        case '4' :
+                            $('#sonata-ba-field-container-{{ admin.uniqid }}_' + tipo_factura[4]).parent().parent().parent().show();
+                            break;
                     }
                 }
             }
@@ -44,7 +50,7 @@
             });
 
             hidden();
-            checked()
+            checked();
 
         });
     </script>

@@ -31,6 +31,16 @@
         {% set importe_total_costo = importe_total_costo + (value.cantidad * value.producto.producto.precioCosto) %}
         {% set importe_total_venta = importe_total_venta + (value.cantidad * value.producto.producto.precio) %}
     {% endfor %}
+    {% for value in object.lupas %}
+        {% include '::Admin/Almacen/_producto_tr.html.twig' %}
+        {% set importe_total_costo = importe_total_costo + (value.cantidad * value.producto.producto.precioCosto) %}
+        {% set importe_total_venta = importe_total_venta + (value.cantidad * value.producto.producto.precio) %}
+    {% endfor %}
+    {% for value in object.tinteCristales %}
+        {% include '::Admin/Almacen/_producto_tr.html.twig' %}
+        {% set importe_total_costo = importe_total_costo + (value.cantidad * value.producto.producto.precioCosto) %}
+        {% set importe_total_venta = importe_total_venta + (value.cantidad * value.producto.producto.precio) %}
+    {% endfor %}
     </tbody>
     <tfoot>
     <tr>

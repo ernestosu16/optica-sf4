@@ -47,6 +47,8 @@ class InformeRecepcionOptiaAdmin extends _BaseAdmin_
                         'Acccesorios' => 0,
                         'Armaduras' => 1,
                         'Cristales' => 2,
+                        'Lupas' => 3,
+                        'Tinte Cristal' => 4,
                     ]
                 ])
                 ->end();
@@ -85,11 +87,15 @@ class InformeRecepcionOptiaAdmin extends _BaseAdmin_
         }
 
         if (!$object->getId() || count($object->getAccesorios())) {
-            $formMapper->with('Accesorios Recibidos', array('class' => 'col-md-6'))
+            $formMapper->with('Accesorios', array('class' => 'col-md-6'))
                 ->add('accesorios', CollectionType::class, array(
                     'label' => false,
                     'disabled' => $disabled,
                     "by_reference" => false,
+                    'btn_add' => $disabled ? false : 'link_add',
+                    'type_options' => array(
+                        'delete' => !$disabled,
+                    )
                 ), array(
                     'edit' => 'inline',
                     'inline' => 'table',
@@ -98,7 +104,7 @@ class InformeRecepcionOptiaAdmin extends _BaseAdmin_
         }
 
         if (!$object->getId() || count($object->getArmaduras())) {
-            $formMapper->with('Armaduras Recibidas', array('class' => 'col-md-6'))
+            $formMapper->with('Armaduras', array('class' => 'col-md-6'))
                 ->add('armaduras', CollectionType::class, array(
                     'label' => false,
                     'disabled' => $disabled,
@@ -115,11 +121,48 @@ class InformeRecepcionOptiaAdmin extends _BaseAdmin_
         }
 
         if (!$object->getId() || count($object->getCristales())) {
-            $formMapper->with('Cristales Recibidos', array('class' => 'col-md-6'))
+            $formMapper->with('Cristales', array('class' => 'col-md-6'))
                 ->add('cristales', CollectionType::class, array(
                     'label' => false,
                     'disabled' => $disabled,
                     "by_reference" => false,
+                    'btn_add' => $disabled ? false : 'link_add',
+                    'type_options' => array(
+                        'delete' => !$disabled,
+                    )
+                ), array(
+                    'edit' => 'inline',
+                    'inline' => 'table',
+                ))
+                ->end();
+        }
+
+        if (!$object->getId() || count($object->getLupas())) {
+            $formMapper->with('Lupas', array('class' => 'col-md-6'))
+                ->add('lupas', CollectionType::class, array(
+                    'label' => false,
+                    'disabled' => $disabled,
+                    "by_reference" => false,
+                    'btn_add' => $disabled ? false : 'link_add',
+                    'type_options' => array(
+                        'delete' => !$disabled,
+                    )
+                ), array(
+                    'edit' => 'inline',
+                    'inline' => 'table',
+                ))
+                ->end();
+        }
+        if (!$object->getId() || count($object->getTinteCristales())) {
+            $formMapper->with('Tinte Cristal', array('class' => 'col-md-6'))
+                ->add('tinte_cristales', CollectionType::class, array(
+                    'label' => false,
+                    'disabled' => $disabled,
+                    "by_reference" => false,
+                    'btn_add' => $disabled ? false : 'link_add',
+                    'type_options' => array(
+                        'delete' => !$disabled,
+                    )
                 ), array(
                     'edit' => 'inline',
                     'inline' => 'table',

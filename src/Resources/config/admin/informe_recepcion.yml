@@ -30,3 +30,15 @@ services:
         arguments: [~, App\Entity\MovimientoAlmacen\InformeRecepcionOpticaCristal, ~]
         tags:
             - { name: sonata.admin, manager_type: orm, label: 'InformeRecepcionOpticaCristal' }
+
+    app.informe_recepcion_lupas:
+        class: App\Admin\InformeRecepcionOpticaProductoAdmin
+        arguments: [~, App\Entity\MovimientoAlmacen\InformeRecepcionOpticaLupa, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: 'InformeRecepcionOpticaLupa' }
+
+    app.informe_recepcion_tinte_cristal:
+        class: App\Admin\InformeRecepcionOpticaProductoAdmin
+        arguments: [~, App\Entity\MovimientoAlmacen\InformeRecepcionOpticaTinteCrital, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: 'InformeRecepcionOpticaTinteCrital' }
