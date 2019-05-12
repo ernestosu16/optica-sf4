@@ -9,11 +9,13 @@
 namespace App\Admin;
 
 
+use App\Entity\AppTinteCristal;
 use App\Form\ProductoType;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\AdminBundle\Show\ShowMapper;
 
@@ -23,6 +25,7 @@ class AppTinteCristalAdmin extends _BaseAdmin_
     {
         parent::configureRoutes($collection);
     }
+
     /**
      * @param DatagridMapper $datagridMapper
      */
@@ -45,23 +48,20 @@ class AppTinteCristalAdmin extends _BaseAdmin_
                 'class' => 'img-polaroid',
                 'header_style' => 'width: 80px',
             ))
-            ->add('producto.codigo',null,[
+            ->add('producto.codigo', null, [
                 'label' => 'nomenclador.codigo',
             ])
-            ->add('producto.precio',null,[
+            ->add('producto.precio', null, [
                 'label' => 'nomenclador.precio',
             ])
-//            ->add('producto.precio_costo', null, [
-//                'label' => 'nomenclador.precio_costo',
-//            ])
-            ->add('producto.descripcion',null,[
+            ->add('producto.descripcion', null, [
                 'label' => 'nomenclador.descripcion',
             ])
             ->add('_action', null, array(
                 'label' => 'Acciones',
                 'row_align' => 'right',
                 'header_style' => 'width: 170px',
-                'actions' => $this->actions ,
+                'actions' => $this->actions,
             ));
     }
 
@@ -73,6 +73,13 @@ class AppTinteCristalAdmin extends _BaseAdmin_
         $formMapper
             ->with('Datos Primarios', array('class' => 'col-md-6'))
             ->add('producto', ProductoType::class)
+            ->end()
+            ->with('Tinte Cristal', array('class' => 'col-md-6'))
+            ->add('color',ModelType::class, [
+                'placeholder' => '',
+                'label' => 'Color',
+                'required' => true
+            ])
             ->end();
     }
 
@@ -86,15 +93,14 @@ class AppTinteCristalAdmin extends _BaseAdmin_
                 'label' => 'nomenclador.imagen',
                 'class' => 'img-polaroid',
             ))
-            ->add('producto.codigo',null,[
+            ->add('producto.codigo', null, [
                 'label' => 'nomenclador.codigo',
             ])
-            ->add('producto.precio',null,[
+            ->add('producto.precio', null, [
                 'label' => 'nomenclador.precio',
             ])
-            ->add('producto.descripcion',null,[
+            ->add('producto.descripcion', null, [
                 'label' => 'nomenclador.descripcion',
-            ])
-        ;
+            ]);
     }
 }

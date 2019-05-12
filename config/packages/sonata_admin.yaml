@@ -31,6 +31,7 @@ sonata_admin:
                     - sonata.admin.nomenclador.agudeza_visual
                     - sonata.admin.nomenclador.dp
                     - sonata.admin.nomenclador.eje
+                    - sonata.admin.nomenclador.color
 
             sonata.admin.producto_optica:
                 label_catalogue: app

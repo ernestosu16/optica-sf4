@@ -68,3 +68,10 @@ services:
             - { name: sonata.admin, manager_type: orm, label: nomenclador.eje }
         calls:
             - [ setTranslationDomain, ["NomencladorBundle"] ]
+    sonata.admin.nomenclador.color:
+        class: App\Admin\Nomenclador\ColorAdmin
+        arguments: [~, App\Entity\Nomenclador\NcColor, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Colores }
+        calls:
+            - [ setTranslationDomain, ["NomencladorBundle"] ]

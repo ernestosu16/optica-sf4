@@ -3,6 +3,7 @@
 namespace App\Entity\Nomenclador;
 
 use App\Entity\_BaseEntity_;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 
@@ -12,6 +13,12 @@ abstract class _NcBase_ extends _BaseEntity_
     {
         return (string)$this->valor;
     }
+
+    public function __construct()
+    {
+        $this->created_at = new DateTime();
+    }
+
 
     /**
      * @var string

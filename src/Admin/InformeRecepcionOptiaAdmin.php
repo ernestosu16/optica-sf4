@@ -39,7 +39,7 @@ class InformeRecepcionOptiaAdmin extends _BaseAdmin_
 
         if (!$object->getId()) {
             $formMapper
-                ->with('Tipo de Factura', array('class' => 'col-md-2'))
+                ->with('Tipo de Factura', array('class' => 'col-md-3'))
                 ->add('tipo_factura', ChoiceType::class, [
                     'expanded' => true,
                     'label' => false,
@@ -53,7 +53,7 @@ class InformeRecepcionOptiaAdmin extends _BaseAdmin_
                 ])
                 ->end();
         }
-        $formMapper->with('Datos de la Recepcion', array('class' => 'col-md-4'))
+        $formMapper->with('Datos de la Recepcion', array('class' => 'col-md-3'))
             ->add('fecha', DatePickerType::class, array(
                 'format' => 'dd/MM/yyyy',
                 'required' => true,

@@ -8,6 +8,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Nomenclador\NcColor;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -26,10 +27,20 @@ class AppTinteCristal extends _BaseEntity_
      */
     protected $producto;
 
+    /**
+     * @var NcColor
+     * @ORM\ManyToOne(targetEntity="App\Entity\Nomenclador\NcColor")
+     */
+    protected $color;
 
     public function __toString()
     {
-        return (string)$this->producto ? $this->getProducto()->getCodigo() : '';
+        if ($producto = $this->getProducto()) {
+            return (string)$producto->getCodigo() . ' - ' . $producto->getDescripcion() . ' ' . $this->color .
+                ' - $' . number_format($producto->getPrecio(), 2);
+        } else {
+            return '';
+        }
     }
 
     public function getProducto(): ?AppProducto
@@ -40,6 +51,18 @@ class AppTinteCristal extends _BaseEntity_
     public function setProducto(?AppProducto $producto): self
     {
         $this->producto = $producto;
+
+        return $this;
+    }
+
+    public function getColor(): ?NcColor
+    {
+        return $this->color;
+    }
+
+    public function setColor(?NcColor $color): self
+    {
+        $this->color = $color;
 
         return $this;
     }

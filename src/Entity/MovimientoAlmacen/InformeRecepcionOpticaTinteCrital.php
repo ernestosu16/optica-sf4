@@ -4,6 +4,7 @@
 namespace App\Entity\MovimientoAlmacen;
 
 use App\Entity\AppLupa;
+use App\Entity\AppTinteCristal;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -19,7 +20,7 @@ class InformeRecepcionOpticaTinteCrital extends InformeRecepcionOpticaProducto
     protected $cantidad;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\AppLupa")
+     * @ORM\ManyToOne(targetEntity="App\Entity\AppTinteCristal")
      */
     protected $producto;
 
@@ -41,12 +42,12 @@ class InformeRecepcionOpticaTinteCrital extends InformeRecepcionOpticaProducto
         return $this;
     }
 
-    public function getProducto(): ?AppLupa
+    public function getProducto(): ?AppTinteCristal
     {
         return $this->producto;
     }
 
-    public function setProducto(?AppLupa $producto): self
+    public function setProducto(?AppTinteCristal $producto): self
     {
         $this->producto = $producto;
 

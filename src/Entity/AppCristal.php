@@ -41,10 +41,11 @@ class AppCristal extends _Entity_
 
     public function __toString()
     {
-        if ($this->getProducto()) {
-            return (string)'(' . ($this->esfera > 0 ? '+' : '') .
+        if ($producto = $this->getProducto()) {
+            return (string)$producto->getCodigo() . ' - ' . $producto->getDescripcion() .
+                ' (' . ($this->esfera > 0 ? '+' : '') .
                 $this->esfera . ',' . ($this->cilindro > 0 ? '+' : '') .
-                $this->cilindro . ') - $' . number_format($this->getProducto()->getPrecio(), 2);
+                $this->cilindro . ') - $' . number_format($producto->getPrecio(), 2);
         }
 
         return '';

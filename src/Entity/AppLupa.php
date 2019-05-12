@@ -29,7 +29,12 @@ class AppLupa extends _Entity_
 
     public function __toString()
     {
-        return (string)$this->producto ? $this->getProducto()->getCodigo() : '';
+        if ($producto = $this->getProducto()) {
+            return (string)$producto->getCodigo() . ' - ' . $producto->getDescripcion() .
+                ' - $' . number_format($producto->getPrecio(), 2);
+        } else {
+            return '';
+        }
     }
 
     public function getDioptrias(): ?string
