@@ -25,7 +25,6 @@ class InformeRecepcionOpticaAdminController extends CRUDController
 
         $object = $this->em->getRepository(InformeRecepcionOptica::class)->find($id);
 
-        dump($object);
         return $this->renderWithExtraParams($this->admin->getTemplate('export_pdf'), array(
             'object' => $object
         ));

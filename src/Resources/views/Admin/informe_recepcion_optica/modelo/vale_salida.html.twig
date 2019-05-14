@@ -1,4 +1,5 @@
 {% extends "base-print-layout.html.twig" %}
+{% block title %}Factura para {{ object.officeDestino }}{% endblock %}
 {% block body %}
     {#  @var \App\Entity\MovimientoAlmacen\InformeRecepcionOptica object   #}
     <table>
@@ -30,10 +31,10 @@
                         <th colspan="2">Despachado por:</th>
                     </tr>
                     <tr>
-                        <td>Nombre y Apellidos:</td>
-                        <td style="width: 13%">Firma:</td>
-                        <td>Nombre y Apellidos:</td>
-                        <td style="width: 13%">Firma:</td>
+                        <td style="width: 35%">Nombre y Apellidos: <strong>{{ object.usuarioConfirmado }}</strong></td>
+                        <td style="width: 15%">Firma:</td>
+                        <td style="width: 35%">Nombre y Apellidos: <strong>{{ object.usuarioCreador }}</strong></td>
+                        <td style="width: 15%">Firma:</td>
                     </tr>
                     </tbody>
                 </table>

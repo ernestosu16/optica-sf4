@@ -5,15 +5,18 @@ namespace App\Admin;
 
 use App\Entity\MovimientoAlmacen\InformeRecepcionOptica;
 use App\Entity\MovimientoAlmacen\InformeRecepcionOpticaArmadura;
+use App\Entity\SecurityUser;
 use Doctrine\ORM\EntityManager;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Form\Type\ModelHiddenType;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\Form\Type\CollectionType;
 use Sonata\Form\Type\DatePickerType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class InformeRecepcionOptiaAdmin extends _BaseAdmin_
 {
@@ -45,9 +48,12 @@ class InformeRecepcionOptiaAdmin extends _BaseAdmin_
             $lastRow = $em->getRepository(InformeRecepcionOptica::class)->getLastRow();
         }
 
+
         if (!$object->getId()) {
             $formMapper
                 ->with('Tipo de Factura', array('class' => 'col-md-3'))
+//                ->add('usuario_creador', TextType::class, ['data'=>$this->getUser()])
+//                ->add('office_origen', ModelHiddenType::class)
                 ->add('tipo_factura', ChoiceType::class, [
                     'expanded' => true,
                     'label' => false,
@@ -208,7 +214,7 @@ class InformeRecepcionOptiaAdmin extends _BaseAdmin_
                     'edit' => array(),
                     'delete' => array(),
                     'export' => array(
-                        'template'=>'::Admin\informe_recepcion_optica\list__action_export.html.twig'
+                        'template' => '::Admin\informe_recepcion_optica\list__action_export.html.twig'
                     ),
                 ),
             ));
@@ -219,6 +225,9 @@ class InformeRecepcionOptiaAdmin extends _BaseAdmin_
      */
     public function prePersist($object)
     {
+        /** @var SecurityUser $user */
+        $user = $this->getConfigurationPool()->getContainer()->get('security.token_storage')->getToken()->getUser();
+
         /** @var InformeRecepcionOpticaArmadura[] $armadura */
         $armaduras = $this->getForm()->get('armaduras')->getData();
 
@@ -227,6 +236,9 @@ class InformeRecepcionOptiaAdmin extends _BaseAdmin_
             $item->setInformeRecepcion($this->getSubject());
 
         }
+
+        $object->setUsuarioCreador($user);
+        $object->setOfficeOrigen($user->getOffice());
     }
 
     /**

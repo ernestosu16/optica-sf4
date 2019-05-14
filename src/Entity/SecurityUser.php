@@ -50,6 +50,12 @@ class SecurityUser extends BaseUser
      */
     protected $ci;
 
+    public function __toString()
+    {
+        return $this->getNombreApellidos();
+    }
+
+
     public function __construct()
     {
         parent::__construct();
@@ -107,6 +113,15 @@ class SecurityUser extends BaseUser
         $this->ci = $ci;
 
         return $this;
+    }
+
+    public function getNombreApellidos(): ?string
+    {
+        if ($this->firstname) {
+            return "$this->firstname $this->lastname";
+        } else {
+            return "$this->username";
+        }
     }
 
 }

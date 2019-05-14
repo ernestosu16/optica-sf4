@@ -89,6 +89,10 @@ class AlmacenController extends CRUDController
             $this->save($item);
         }
 
+        /** @var SecurityUser user */
+        $this->user = $this->getUser();
+
+        $factura->setUsuarioConfirmado($this->user);
         $factura->setConfirmado(true);
         $this->em->persist($factura);
         $this->em->flush();

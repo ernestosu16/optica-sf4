@@ -5,8 +5,10 @@
         <th>CÓDIGO</th>
         <th>DESCRIPCIÓN</th>
         <th>CANTIDAD</th>
-        <th>PRECIO</th>
-        <th>IMPORTE</th>
+        <th>PRECIO DE COSTO</th>
+        <th>PRECIO DE VENTA</th>
+        <th>IMPORTE DE COSTO</th>
+        <th>IMPORTE DE VENTA</th>
     </tr>
     </thead>
     <tbody>
@@ -18,25 +20,21 @@
         object.lupas,
     ] %}
 
-    {% set importe_total = 0 %}
+    {% set importe_total_costo = 0 %}
+    {% set importe_total_venta = 0 %}
     {% for producto in productos %}
-        {% for item in producto %}
-            <tr>
-                <td>{{ item.producto.producto.codigo }}</td>
-                <td>{{ item.producto.producto.descripcion }}</td>
-                <td style="text-align: right">{{ item.cantidad }}</td>
-                <td style="text-align: right">$ {{ item.producto.producto.precio|number_format(2, '.', ',') }}</td>
-                <td style="text-align: right">
-                    $ {{ (item.cantidad * item.producto.producto.precio)|number_format(2, '.', ',') }}</td>
-            </tr>
-            {% set importe_total = importe_total + (item.cantidad * item.producto.producto.precio) %}
+        {% for value in producto %}
+            {% include '::Admin/Almacen/_producto_tr.html.twig' %}
+            {% set importe_total_costo = importe_total_costo + (value.cantidad * value.producto.producto.precioCosto) %}
+            {% set importe_total_venta = importe_total_venta + (value.cantidad * value.producto.producto.precio) %}
         {% endfor %}
     {% endfor %}
     </tbody>
     <tfoot>
     <tr>
-        <th colspan="4" style="text-align: right">Total:</th>
-        <th style="text-align: right">$ {{ importe_total|number_format(2, '.', ',') }}</th>
+        <th colspan="5" style="text-align: right">Total:</th>
+        <th style="text-align: right">$ {{ importe_total_costo|number_format(2, '.', ',') }}</th>
+        <th style="text-align: right">$ {{ importe_total_venta|number_format(2, '.', ',') }}</th>
     </tr>
     </tfoot>
 </table>

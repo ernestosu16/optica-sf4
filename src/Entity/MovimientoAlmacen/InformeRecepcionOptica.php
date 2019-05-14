@@ -4,6 +4,7 @@
 namespace App\Entity\MovimientoAlmacen;
 
 use App\Entity\SecurityOffice;
+use App\Entity\SecurityUser;
 use App\Entity\_BaseEntity_;
 use DateTime;
 use DateTimeInterface;
@@ -23,17 +24,24 @@ class InformeRecepcionOptica extends _BaseEntity_
      */
     protected $fecha;
 
-//    /**
-//     * @var string
-//     * @ORM\Column(length=15))
-//     */
-//    protected $numero_factura;
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\SecurityUser")
+     * @ORM\JoinColumn(name="usuario_creador_id", referencedColumnName="id", nullable=true)
+     */
+    protected $usuario_creador;
 
-//    /**
-//     * @ORM\ManyToOne(targetEntity="App\Entity\SecurityOffice")
-//     * @ORM\JoinColumn(name="office_origen_id", referencedColumnName="id")
-//     */
-//    protected $office_origen;
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\SecurityUser")
+     * @ORM\JoinColumn(name="usuario_confirmado_id", referencedColumnName="id", nullable=true)
+     */
+    protected $usuario_confirmado;
+
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\SecurityOffice")
+     * @ORM\JoinColumn(name="office_origen_id", referencedColumnName="id", nullable=true)
+     */
+    protected $office_origen;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\SecurityOffice")
@@ -340,6 +348,42 @@ class InformeRecepcionOptica extends _BaseEntity_
                 $tinteCristale->setInformeRecepcion(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUsuarioCreador(): ?SecurityUser
+    {
+        return $this->usuario_creador;
+    }
+
+    public function setUsuarioCreador(?SecurityUser $usuario_creador): self
+    {
+        $this->usuario_creador = $usuario_creador;
+
+        return $this;
+    }
+
+    public function getOfficeOrigen(): ?SecurityOffice
+    {
+        return $this->office_origen;
+    }
+
+    public function setOfficeOrigen(?SecurityOffice $office_origen): self
+    {
+        $this->office_origen = $office_origen;
+
+        return $this;
+    }
+
+    public function getUsuarioConfirmado(): ?SecurityUser
+    {
+        return $this->usuario_confirmado;
+    }
+
+    public function setUsuarioConfirmado(?SecurityUser $usuario_confirmado): self
+    {
+        $this->usuario_confirmado = $usuario_confirmado;
 
         return $this;
     }
