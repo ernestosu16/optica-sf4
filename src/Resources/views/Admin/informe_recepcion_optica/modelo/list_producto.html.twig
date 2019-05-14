@@ -1,0 +1,42 @@
+{#  @var \App\Entity\MovimientoAlmacen\InformeRecepcionOptica object   #}
+<table>
+    <thead>
+    <tr>
+        <th>CÓDIGO</th>
+        <th>DESCRIPCIÓN</th>
+        <th>CANTIDAD</th>
+        <th>PRECIO</th>
+        <th>IMPORTE</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% set productos = [
+        object.accesorios,
+        object.armaduras,
+        object.cristales,
+        object.tinteCristales,
+        object.lupas,
+    ] %}
+
+    {% set importe_total = 0 %}
+    {% for producto in productos %}
+        {% for item in producto %}
+            <tr>
+                <td>{{ item.producto.producto.codigo }}</td>
+                <td>{{ item.producto.producto.descripcion }}</td>
+                <td style="text-align: right">{{ item.cantidad }}</td>
+                <td style="text-align: right">$ {{ item.producto.producto.precio|number_format(2, '.', ',') }}</td>
+                <td style="text-align: right">
+                    $ {{ (item.cantidad * item.producto.producto.precio)|number_format(2, '.', ',') }}</td>
+            </tr>
+            {% set importe_total = importe_total + (item.cantidad * item.producto.producto.precio) %}
+        {% endfor %}
+    {% endfor %}
+    </tbody>
+    <tfoot>
+    <tr>
+        <th colspan="4" style="text-align: right">Total:</th>
+        <th style="text-align: right">$ {{ importe_total|number_format(2, '.', ',') }}</th>
+    </tr>
+    </tfoot>
+</table>

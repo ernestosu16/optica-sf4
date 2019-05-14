@@ -24,6 +24,14 @@ class InformeRecepcionOptiaAdmin extends _BaseAdmin_
         $collection->add('export_pdf', $this->getRouterIdParameter() . "/export");
     }
 
+    public function getTemplate($name)
+    {
+        if ($name == "export_pdf")
+            return '::Admin\informe_recepcion_optica\modelo\vale_salida.html.twig';
+
+        return parent::getTemplate($name);
+    }
+
     protected function configureFormFields(FormMapper $formMapper)
     {
         $object = $this->getSubject();

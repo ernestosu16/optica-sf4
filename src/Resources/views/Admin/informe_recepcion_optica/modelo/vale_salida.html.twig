@@ -1,0 +1,44 @@
+{% extends "base-print-layout.html.twig" %}
+{% block body %}
+    {#  @var \App\Entity\MovimientoAlmacen\InformeRecepcionOptica object   #}
+    <table>
+        <thead>
+        <tr>
+            <th style="width: 30%">ENTIDAD: {{ object.officeDestino }}</th>
+            <th style="width: 30%">CÓDIGO: {{ object.officeDestino.number }}</th>
+            <th rowspan="2" style="width: 40%"><h3>VALE DE SALIDA</h3></th>
+        </tr>
+        <tr>
+            <th>ALMACÉN:</th>
+            <th>CÓDIGO:</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td colspan="3" style="padding: 0px">
+                {% include '::Admin/informe_recepcion_optica/modelo/list_producto.html.twig' %}
+            </td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="3" style="padding: 0px">
+                <table>
+                    <tbody>
+                    <tr>
+                        <th colspan="2">Recibido por:</th>
+                        <th colspan="2">Despachado por:</th>
+                    </tr>
+                    <tr>
+                        <td>Nombre y Apellidos:</td>
+                        <td style="width: 13%">Firma:</td>
+                        <td>Nombre y Apellidos:</td>
+                        <td style="width: 13%">Firma:</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        </tfoot>
+    </table>
+{% endblock %}
