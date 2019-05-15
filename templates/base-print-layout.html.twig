@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <title>{% block title %}Welcome!{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="{{ asset('vendor/bootstrap/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('vendor/fontawesome/css/all.min.css') }}">
     {% block stylesheets %}
         <style>
             body {
@@ -15,6 +13,8 @@
             table {
                 width: 100%;
                 border: 1px solid grey;
+                border-collapse: collapse;
+                border-spacing: 0;
             }
 
             td, th {
@@ -35,8 +35,5 @@
 {% block body %}{% endblock %}
 </body>
 {% block script %}
-    <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
-    <script src="{{ asset('vendor/popper/popper.min.js') }}"></script>
-    <script src="{{ asset('vendor/bootstrap/bootstrap.min.js') }}"></script>
 {% endblock %}
 </html>

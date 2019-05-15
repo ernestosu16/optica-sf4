@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Entity\MovimientoAlmacen\InformeRecepcionOptica;
 use Doctrine\Common\Persistence\ObjectManager;
+use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Sonata\AdminBundle\Controller\CRUDController;
 
 class InformeRecepcionOpticaAdminController extends CRUDController
@@ -23,11 +24,17 @@ class InformeRecepcionOpticaAdminController extends CRUDController
         $object = null;
         $url = null;
 
+        /** @var InformeRecepcionOptica $object */
         $object = $this->em->getRepository(InformeRecepcionOptica::class)->find($id);
 
-        return $this->renderWithExtraParams($this->admin->getTemplate('export_pdf'), array(
+        $html = $this->renderView('::Admin\informe_recepcion_optica\modelo\vale_salida.html.twig', array(
             'object' => $object
         ));
+
+        return new PdfResponse(
+            $this->get('knp_snappy.pdf')->getOutputFromHtml($html, array('orientation' => 'Landscape')),
+            $object->getOfficeDestino() . '-' . $id . '.pdf'
+        );
     }
 
 }
