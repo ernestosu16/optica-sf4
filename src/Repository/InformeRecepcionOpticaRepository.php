@@ -56,7 +56,15 @@ class InformeRecepcionOpticaRepository extends ServiceEntityRepository
      */
     public function obtenerFacturaAsignadaOficina(SecurityOffice $office)
     {
-        return $this->findBy(['office_destino' => $office, 'confirmado' => false, 'devuelto' => false]);
+        return $this->findBy(['office_destino' => $office, 'confirmado' => false, 'pendiente' => false, 'devuelto' => false]);
+    }
+
+    /**
+     * @return InformeRecepcionOptica[]
+     */
+    public function obtenerFacturaPendienteEconomico()
+    {
+        return $this->findBy(['pendiente' => true, 'devuelto' => false]);
     }
 
     public function getLastRow()

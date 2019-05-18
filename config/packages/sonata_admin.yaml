@@ -44,13 +44,24 @@ sonata_admin:
                     - sonata.admin.nomenclador.tinte_cristal
                     - sonata.admin.nomenclador.lupa
 
+            sonata.admin.dpto_economia:
+                label: "Dpto. Economía"
+                items:
+                    - route: admin_app_movimientoalmacen_alamacen_lista_factura
+                      label: Factura
+                      roles: ['ROLE_ADMIN']
+
+            sonata.admin.dpto_comercial:
+                label: "Dpto. Comercial"
+                items:
+                    - app.informe_recepcion_optica
+
             sonata.admin.almacen:
                 label_catalogue: app
                 icon:  '<i class="fa fa-folder"></i>'
                 items:
 #                    - sonata.admin.mv.factura
 #                    - sonata.admin.app.movimiento_almacen
-                    - app.informe_recepcion_optica
                     - app.almacen
 
             servicios_ordenes:

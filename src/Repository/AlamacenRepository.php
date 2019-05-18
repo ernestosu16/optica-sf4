@@ -40,6 +40,15 @@ class AlamacenRepository extends ServiceEntityRepository
         return $c;
     }
 
+    public static function addProductoOficinaPendiente(int $cantidad, AppProducto $producto, SecurityOffice $office)
+    {
+        $c = new Alamacen();
+        $c->setCantidadPendiente($cantidad);
+        $c->setProducto($producto);
+        $c->setOffice($office);
+        return $c;
+    }
+
     // /**
     //  * @return Alamacen[] Returns an array of Alamacen objects
     //  */

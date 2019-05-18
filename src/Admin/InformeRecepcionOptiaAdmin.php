@@ -76,7 +76,7 @@ class InformeRecepcionOptiaAdmin extends _BaseAdmin_
             ->add('id', null, array(
                 'disabled' => true,
                 'label' => 'Número de la factura',
-                'data' => ($object->getId()) ? $object->getId() : ($lastRow->getId() + 1),
+                'data' => ($object->getId()) ? $object->getId() : ($object->getId() == null) ? 1 : ($lastRow->getId() + 1),
             ))
             ->add('office_destino', null, [
                 'label' => 'Oficina destino',
@@ -206,6 +206,7 @@ class InformeRecepcionOptiaAdmin extends _BaseAdmin_
 //            ->add('armaduras')
 //            ->add('cristales')
             ->add('confirmado')
+            ->add('pendiente')
             ->add('devuelto')
             ->add('_action', null, array(
                 'label' => '',

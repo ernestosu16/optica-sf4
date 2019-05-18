@@ -59,6 +59,12 @@ class InformeRecepcionOptica extends _BaseEntity_
      * @var boolean
      * @ORM\Column(type="boolean")
      */
+    protected $pendiente;
+
+    /**
+     * @var boolean
+     * @ORM\Column(type="boolean")
+     */
     protected $devuelto;
 
     /**
@@ -105,6 +111,7 @@ class InformeRecepcionOptica extends _BaseEntity_
         $this->created_at = new DateTime();
         $this->fecha = new DateTime();
         $this->devuelto = false;
+        $this->pendiente = false;
         $this->confirmado = false;
         $this->accesorios = new ArrayCollection();
         $this->armaduras = new ArrayCollection();
@@ -384,6 +391,18 @@ class InformeRecepcionOptica extends _BaseEntity_
     public function setUsuarioConfirmado(?SecurityUser $usuario_confirmado): self
     {
         $this->usuario_confirmado = $usuario_confirmado;
+
+        return $this;
+    }
+
+    public function getPendiente(): ?bool
+    {
+        return $this->pendiente;
+    }
+
+    public function setPendiente(bool $pendiente): self
+    {
+        $this->pendiente = $pendiente;
 
         return $this;
     }

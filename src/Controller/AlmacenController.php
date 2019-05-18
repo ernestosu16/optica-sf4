@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Entity\MovimientoAlmacen\Alamacen;
 use App\Entity\MovimientoAlmacen\InformeRecepcionOptica;
+use App\Entity\MovimientoAlmacen\InformeRecepcionOpticaAccesorio;
 use App\Entity\SecurityUser;
 
 use App\Repository\AlamacenRepository;
@@ -41,6 +42,8 @@ class AlmacenController extends CRUDController
     /**
      * @param $id
      * @return RedirectResponse
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function saveConfirmarFacturaAction($id)
     {
@@ -71,34 +74,49 @@ class AlmacenController extends CRUDController
         return new RedirectResponse($url);
     }
 
+    /**
+     * @param InformeRecepcionOptica $factura
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
     private function confirmFactura(InformeRecepcionOptica $factura)
     {
-        foreach ($factura->getAccesorios() as $item) {
-            $this->save($item);
-        }
-        foreach ($factura->getArmaduras() as $item) {
-            $this->save($item);
-        }
-        foreach ($factura->getCristales() as $item) {
-            $this->save($item);
-        }
-        foreach ($factura->getLupas() as $item) {
-            $this->save($item);
-        }
-        foreach ($factura->getTinteCristales() as $item) {
-            $this->save($item);
+        $productos = [
+            $factura->getAccesorios(),
+            $factura->getArmaduras(),
+            $factura->getCristales(),
+            $factura->getLupas(),
+            $factura->getTinteCristales(),
+        ];
+
+        foreach ($productos as $producto) {
+            foreach ($producto as $item) {
+                $this->save($item, $factura->getPendiente());
+            }
         }
 
         /** @var SecurityUser user */
         $this->user = $this->getUser();
 
         $factura->setUsuarioConfirmado($this->user);
-        $factura->setConfirmado(true);
+
+        if ($factura->getPendiente()) {
+            $factura->setConfirmado(true);
+            $factura->setPendiente(false);
+        } else {
+            $factura->setPendiente(true);
+        }
+
         $this->em->persist($factura);
         $this->em->flush();
     }
 
-    private function save($item)
+    /**
+     * @param $item InformeRecepcionOpticaAccesorio
+     * @param $pendiente bool
+     * @throws ORMException
+     */
+    private function save($item, bool $pendiente)
     {
         $producto = $this->em->getRepository(Alamacen::class)
             ->getProductoOficina(
@@ -106,12 +124,19 @@ class AlmacenController extends CRUDController
                 $this->user->getOffice());
 
         if ($producto) {
-            $producto->setCantidadExistencia(
-                $producto->getCantidadExistencia() + $item->getCantidad()
-            );
+            if ($pendiente) {
+                $cantidad_pendiente = $producto->getCantidadPendiente() - $item->getCantidad();
+                $cantidad_existencia = $producto->getCantidadExistencia() + $item->getCantidad();
+            } else {
+                $cantidad_pendiente = $producto->getCantidadPendiente() + $item->getCantidad();
+                $cantidad_existencia = $producto->getCantidadExistencia();
+            }
+
+            $producto->setCantidadPendiente($cantidad_pendiente);
+            $producto->setCantidadExistencia($cantidad_existencia);
             $this->em->persist($producto);
         } else {
-            $new = AlamacenRepository::addProductoOficina(
+            $new = AlamacenRepository::addProductoOficinaPendiente(
                 $item->getCantidad(),
                 $item->getProducto()->getProducto(),
                 $this->user->getOffice());
@@ -167,6 +192,19 @@ class AlmacenController extends CRUDController
         }
 
         return $this->renderWithExtraParams($this->admin->getTemplate('lista_producto_factura'), array(
+            'object' => $object
+        ));
+    }
+
+    public function listaFacturaAction()
+    {
+        $object = null;
+        $this->em = $this->getDoctrine()->getManager();
+
+        $object = $this->em->getRepository(InformeRecepcionOptica::class)
+            ->obtenerFacturaPendienteEconomico();
+
+        return $this->renderWithExtraParams($this->admin->getTemplate('lista_factura'), array(
             'object' => $object
         ));
     }

@@ -33,6 +33,12 @@ class Alamacen extends _BaseEntity_
      * @var int
      * @ORM\Column(type="integer")
      */
+    protected $cantidad_pendiente;
+
+    /**
+     * @var int
+     * @ORM\Column(type="integer")
+     */
     protected $cantidad_reservado;
 
     /**
@@ -45,6 +51,7 @@ class Alamacen extends _BaseEntity_
     {
         $this->created_at = new DateTime();
         $this->cantidad_reservado = 0;
+        $this->cantidad_existencia = 0;
     }
 
 
@@ -92,6 +99,18 @@ class Alamacen extends _BaseEntity_
     public function setProducto(?AppProducto $producto): self
     {
         $this->producto = $producto;
+
+        return $this;
+    }
+
+    public function getCantidadPendiente(): ?int
+    {
+        return $this->cantidad_pendiente;
+    }
+
+    public function setCantidadPendiente(int $cantidad_pendiente): self
+    {
+        $this->cantidad_pendiente = $cantidad_pendiente;
 
         return $this;
     }

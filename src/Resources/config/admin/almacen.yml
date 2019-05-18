@@ -6,4 +6,4 @@ services:
             - App\Entity\MovimientoAlmacen\Alamacen
             - App\Controller\AlmacenController
         tags:
-            - { name: sonata.admin, manager_type: orm, label: 'Informe de Recepción' }
+            - { name: sonata.admin, manager_type: orm, label: 'Recepción' }

@@ -30,6 +30,8 @@ class AlamacenAdmin extends _BaseAdmin_
         $collection->add('cancelar_factura', 'cancelar_factura/' . $this->getRouterIdParameter());
         $collection->add('lista_producto_factura', 'lista_producto_factura/' . $this->getRouterIdParameter());
 
+        $collection->add('lista_factura', 'economico/list');
+
     }
 
     public function configureActionButtons($action, $object = null)
@@ -53,6 +55,9 @@ class AlamacenAdmin extends _BaseAdmin_
         if ($name == "lista_producto_factura")
             return '::Admin\Almacen\view__lista_producto_factura.html.twig';
 
+        if ($name == "lista_factura")
+            return '::Admin\Almacen\view__lista_factura_economico.html.twig';
+
         return parent::getTemplate($name);
     }
 
@@ -68,6 +73,9 @@ class AlamacenAdmin extends _BaseAdmin_
             ->add('producto.precio', null, ['label' => 'Precio'])
             ->add('cantidad_existencia', null, [
                 'label' => 'Existencia'
+            ])
+            ->add('cantidad_pendiente', null, [
+                'label' => 'Pendiente'
             ])
             ->add('cantidad_reservado', null, [
                 'label' => 'Reservado'
