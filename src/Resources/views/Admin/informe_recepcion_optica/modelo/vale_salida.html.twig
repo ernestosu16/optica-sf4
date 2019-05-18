@@ -7,11 +7,11 @@
         <tr>
             <th style="width: 30%">ENTIDAD: {{ object.officeDestino }}</th>
             <th style="width: 30%">CÓDIGO: {{ object.officeDestino.number }}</th>
-            <th rowspan="2" style="width: 40%"><h3>VALE DE SALIDA</h3></th>
+            <th rowspan="2" style="width: 40%"><h3>FACTURA #{{ object.id }}</h3></th>
         </tr>
         <tr>
-            <th>ALMACÉN:</th>
-            <th>CÓDIGO:</th>
+            <th>ALMACÉN: {{ tipo_factura }}</th>
+            <th>CÓDIGO: {{ object.createdAt|date('Y-m-d') }}</th>
         </tr>
         </thead>
         <tbody>
@@ -34,6 +34,16 @@
                         <td style="width: 35%">Nombre y Apellidos: <strong>{{ object.usuarioConfirmado }}</strong></td>
                         <td style="width: 15%">Firma:</td>
                         <td style="width: 35%">Nombre y Apellidos: <strong>{{ object.usuarioCreador }}</strong></td>
+                        <td style="width: 15%">Firma:</td>
+                    </tr>
+                    <tr>
+                        <th colspan="2">Transportado por:</th>
+                        <th colspan="2">Autorizado por:</th>
+                    </tr>
+                    <tr>
+                        <td style="width: 35%">Nombre y Apellidos:</td>
+                        <td style="width: 15%">Firma:</td>
+                        <td style="width: 35%">Nombre y Apellidos:</td>
                         <td style="width: 15%">Firma:</td>
                     </tr>
                     </tbody>

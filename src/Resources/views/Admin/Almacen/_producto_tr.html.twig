@@ -1,9 +1,9 @@
 <tr>
-    <td>{{ value.producto.producto.codigo }}</td>
-    <td>{{ value.producto.producto.descripcion }}</td>
-    <td style="text-align: right">{{ value.cantidad }}</td>
-    <td style="text-align: right">$ {{ value.producto.producto.precioCosto | number_format(2, '.', ',') }}</td>
-    <td style="text-align: right">$ {{ value.producto.producto.precio | number_format(2, '.', ',') }}</td>
-    <td style="text-align: right">$ {{ (value.cantidad * value.producto.producto.precioCosto) | number_format(2, '.', ',') }}</td>
-    <td style="text-align: right">$ {{ (value.cantidad * value.producto.producto.precio) | number_format(2, '.', ',') }}</td>
+    <td style="text-align: center">{{ value.producto.producto.codigo }}</td>
+    <td style="text-align: center">{{ value.producto.producto.descripcion }}</td>
+    <td style="text-align: center">{{ value.cantidad }}</td>
+    <td style="text-align: center">$ {{ value.producto.producto.precioCosto | number_format(2, '.', ',') }}</td>
+    <td style="text-align: center">$ {{ value.producto.producto.precio | number_format(2, '.', ',') }}</td>
+    <td style="text-align: center">$ {{ (value.cantidad * value.producto.producto.precioCosto) | number_format(2, '.', ',') }}</td>
+    <td style="text-align: center">$ {{ (value.cantidad * value.producto.producto.precio) | number_format(2, '.', ',') }}</td>
 </tr>
