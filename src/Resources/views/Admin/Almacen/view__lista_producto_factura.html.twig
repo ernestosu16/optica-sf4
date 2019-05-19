@@ -50,9 +50,8 @@
     </tr>
     </tfoot>
 </table>
-<a href="{{ admin.generateUrl('save_confirmar_factura',{'id':object.id}) }}"
+<a href="{{ admin.generateUrl('save_confirmar_factura',{'id':object.id,'redirectTo':redirectTo}) }}"
    class="btn btn-sm btn-success" title="Confirmar">
     <i class="fa fa-plus-square" aria-hidden="true"></i>
     Confirmar
 </a>
-{#<button class="btn btn-sm btn-default" onclick="alert('En desarrollo')">Exportar PDF</button>#}

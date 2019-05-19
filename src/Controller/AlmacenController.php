@@ -41,11 +41,12 @@ class AlmacenController extends CRUDController
 
     /**
      * @param $id
+     * @param $redirectTo
      * @return RedirectResponse
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function saveConfirmarFacturaAction($id)
+    public function saveConfirmarFacturaAction($id, $redirectTo)
     {
         $this->user = $this->getUser();
         $this->em = $this->getDoctrine()->getManager();
@@ -68,7 +69,7 @@ class AlmacenController extends CRUDController
         if ($object) {
             $url = $this->admin->generateUrl('confirmar_factura');
         } else {
-            $url = $this->admin->generateUrl('list');
+            $url = $this->admin->generateUrl($redirectTo);
         }
 
         return new RedirectResponse($url);
@@ -180,7 +181,7 @@ class AlmacenController extends CRUDController
         ));
     }
 
-    public function listaProductoFacturaAction($id)
+    public function listaProductoFacturaAction($id, $redirectTo)
     {
         $object = null;
         $this->em = $this->getDoctrine()->getManager();
@@ -192,7 +193,8 @@ class AlmacenController extends CRUDController
         }
 
         return $this->renderWithExtraParams($this->admin->getTemplate('lista_producto_factura'), array(
-            'object' => $object
+            'object' => $object,
+            'redirectTo' => $redirectTo
         ));
     }
 

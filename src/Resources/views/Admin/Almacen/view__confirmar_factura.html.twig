@@ -104,7 +104,7 @@
                     $("#data").html('');
                     $("#loading").show();
                     $.ajax({
-                        url: "lista_producto_factura/" + this.dataset.value,
+                        url: "lista_producto_factura/" + this.dataset.value + "/list",
                         beforeSend: function () {
                         },
                         success: function (result) {
