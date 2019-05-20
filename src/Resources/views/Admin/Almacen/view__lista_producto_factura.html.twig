@@ -5,6 +5,7 @@
         <th>Código</th>
         <th>Descripción</th>
         <th>Cantidad</th>
+        <th>Existencia Final</th>
         <th>Precio de Costo</th>
         <th>Precio de Venta</th>
         <th>Importe de Costo</th>
@@ -12,34 +13,22 @@
     </tr>
     </thead>
     <tbody>
+    {% set productos = [
+        object.accesorios,
+        object.armaduras,
+        object.cristales,
+        object.tinteCristales,
+        object.lupas,
+    ] %}
+
     {% set importe_total_costo = 0 %}
     {% set importe_total_venta = 0 %}
-
-    {# @var \App\Entity\MovimientoAlmacen\InformeRecepcionOptica object    #}
-    {% for value in object.accesorios %}
-        {% include '::Admin/Almacen/_producto_tr.html.twig' %}
-        {% set importe_total_costo = importe_total_costo + (value.cantidad * value.producto.producto.precioCosto) %}
-        {% set importe_total_venta = importe_total_venta + (value.cantidad * value.producto.producto.precio) %}
-    {% endfor %}
-    {% for value in object.armaduras %}
-        {% include '::Admin/Almacen/_producto_tr.html.twig' %}
-        {% set importe_total_costo = importe_total_costo + (value.cantidad * value.producto.producto.precioCosto) %}
-        {% set importe_total_venta = importe_total_venta + (value.cantidad * value.producto.producto.precio) %}
-    {% endfor %}
-    {% for value in object.cristales %}
-        {% include '::Admin/Almacen/_producto_tr.html.twig' %}
-        {% set importe_total_costo = importe_total_costo + (value.cantidad * value.producto.producto.precioCosto) %}
-        {% set importe_total_venta = importe_total_venta + (value.cantidad * value.producto.producto.precio) %}
-    {% endfor %}
-    {% for value in object.lupas %}
-        {% include '::Admin/Almacen/_producto_tr.html.twig' %}
-        {% set importe_total_costo = importe_total_costo + (value.cantidad * value.producto.producto.precioCosto) %}
-        {% set importe_total_venta = importe_total_venta + (value.cantidad * value.producto.producto.precio) %}
-    {% endfor %}
-    {% for value in object.tinteCristales %}
-        {% include '::Admin/Almacen/_producto_tr.html.twig' %}
-        {% set importe_total_costo = importe_total_costo + (value.cantidad * value.producto.producto.precioCosto) %}
-        {% set importe_total_venta = importe_total_venta + (value.cantidad * value.producto.producto.precio) %}
+    {% for producto in productos %}
+        {% for value in producto %}
+            {% include '::Admin/Almacen/_producto_tr.html.twig' %}
+            {% set importe_total_costo = importe_total_costo + (value.cantidad * value.producto.producto.precioCosto) %}
+            {% set importe_total_venta = importe_total_venta + (value.cantidad * value.producto.producto.precio) %}
+        {% endfor %}
     {% endfor %}
     </tbody>
     <tfoot>

@@ -31,6 +31,15 @@ class AlamacenRepository extends ServiceEntityRepository
         return $this->findOneBy(['producto' => $producto, 'office' => $office]);
     }
 
+    /**
+     * @param SecurityOffice $office
+     * @return Alamacen[]
+     */
+    public function getAllProductoOficina(SecurityOffice $office)
+    {
+        return $this->findBy(['office' => $office]);
+    }
+
     public static function addProductoOficina(int $cantidad, AppProducto $producto, SecurityOffice $office)
     {
         $c = new Alamacen();

@@ -215,14 +215,18 @@ class AlmacenController extends CRUDController
         $this->em = $this->getDoctrine()->getManager();
 
         if ($id) {
-            /** @var InformeRecepcionOptica $factura */
+            /** @var InformeRecepcionOptica $object */
             $object = $this->em->getRepository(InformeRecepcionOptica::class)
                 ->find($id);
+
+            $almacen = $this->em->getRepository(Alamacen::class)
+                ->getAllProductoOficina($object->getOfficeDestino());
         }
 
         return $this->renderWithExtraParams($this->admin->getTemplate('lista_producto_factura'), array(
             'object' => $object,
-            'redirectTo' => $redirectTo
+            'redirectTo' => $redirectTo,
+            'almacen' => $almacen,
         ));
     }
 

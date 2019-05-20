@@ -1,9 +1,27 @@
+{% set producto_almacen = null %}
+{# @var producto \App\Entity\MovimientoAlmacen\Alamacen  #}
+{% for producto in almacen %}
+    {% if producto.producto.id == value.producto.producto.id %}
+        {% set producto_almacen = producto %}
+    {% endif %}
+{% endfor %}
+
 <tr>
     <td style="text-align: center">{{ value.producto.producto.codigo }}</td>
     <td style="text-align: center">{{ value.producto.producto.descripcion }}</td>
     <td style="text-align: center">{{ value.cantidad }}</td>
+    <td style="text-align: center">
+        {# @var producto_almacen \App\Entity\MovimientoAlmacen\Alamacen  #}
+        {% if producto_almacen %}
+            {{ producto_almacen.cantidadExistencia + value.cantidad }}
+        {% else %}
+            {{ value.cantidad }}
+        {% endif %}
+    </td>
     <td style="text-align: center">$ {{ value.producto.producto.precioCosto | number_format(2, '.', ',') }}</td>
     <td style="text-align: center">$ {{ value.producto.producto.precio | number_format(2, '.', ',') }}</td>
-    <td style="text-align: center">$ {{ (value.cantidad * value.producto.producto.precioCosto) | number_format(2, '.', ',') }}</td>
-    <td style="text-align: center">$ {{ (value.cantidad * value.producto.producto.precio) | number_format(2, '.', ',') }}</td>
+    <td style="text-align: center">
+        $ {{ (value.cantidad * value.producto.producto.precioCosto) | number_format(2, '.', ',') }}</td>
+    <td style="text-align: center">
+        $ {{ (value.cantidad * value.producto.producto.precio) | number_format(2, '.', ',') }}</td>
 </tr>
