@@ -27,7 +27,7 @@ class AlamacenAdmin extends _BaseAdmin_
 
         $collection->add('confirmar_factura', 'confirmar_factura');
         $collection->add('save_confirmar_factura', 'confirmar_factura/' . $this->getRouterIdParameter() . '/{redirectTo}/save');
-        $collection->add('cancelar_factura', 'cancelar_factura/' . $this->getRouterIdParameter());
+        $collection->add('cancelar_factura', 'cancelar_factura/' . $this->getRouterIdParameter() . "/{redirectTo}");
         $collection->add('lista_producto_factura', 'lista_producto_factura/' . $this->getRouterIdParameter() . "/{redirectTo}");
 
         $collection->add('lista_factura', 'economico/list');

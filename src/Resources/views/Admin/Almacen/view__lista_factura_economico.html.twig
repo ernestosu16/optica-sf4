@@ -61,7 +61,7 @@
                                                     data-target="#myModal" data-value="{{ value.id }}">
                                                 <i class="fa fa-plus-square" aria-hidden="true"></i> Confirmar
                                             </button>
-                                            <a href="{{ admin.generateUrl('cancelar_factura',{'id':value.id}) }}"
+                                            <a href="{{ admin.generateUrl('cancelar_factura',{'id':value.id,'redirectTo': "lista_factura"}) }}"
                                                class="btn btn-sm btn-warning" title="Cancelar">
                                                 <i class="fa fa-close" aria-hidden="true"></i>
                                                 Cancelar

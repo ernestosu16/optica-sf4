@@ -247,14 +247,14 @@ class InformeRecepcionOptiaAdmin extends _BaseAdmin_
      */
     public function Update($object)
     {
-        /** @var InformeRecepcionOpticaArmadura[] $armadura */
-        $armaduras = $this->getForm()->get('armaduras')->getData();
-
-        /** @var InformeRecepcionOpticaArmadura $item */
-        foreach ($armaduras as $item) {
-            $item->setInformeRecepcion($this->getSubject());
-
-        }
+//        /** @var InformeRecepcionOpticaArmadura[] $armadura */
+//        $armaduras = $this->getForm()->get('armaduras')->getData();
+//
+//        /** @var InformeRecepcionOpticaArmadura $item */
+//        foreach ($armaduras as $item) {
+//            $item->setInformeRecepcion($this->getSubject());
+//
+//        }
         $object->setDevuelto(false);
 
         parent::Update($object);

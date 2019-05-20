@@ -145,7 +145,7 @@ class AlmacenController extends CRUDController
         }
     }
 
-    public function cancelarFacturaAction($id)
+    public function cancelarFacturaAction($id, $redirectTo)
     {
         $this->user = $this->getUser();
         $this->em = $this->getDoctrine()->getManager();
@@ -160,15 +160,12 @@ class AlmacenController extends CRUDController
 
             if ($this->getRequest()->getMethod() === Request::METHOD_POST) {
                 $factura->setDevueltoDescripcion($this->getRequest()->request->get('descripcion'));
+                $factura->setPendiente(false);
                 $factura->setDevuelto(true);
                 $this->em->flush();
 
 
-                if ($object) {
-                    $url = $this->admin->generateUrl('confirmar_factura');
-                } else {
-                    $url = $this->admin->generateUrl('list');
-                }
+                $url = $this->admin->generateUrl($redirectTo);
 
                 return new RedirectResponse($url);
             }
@@ -177,7 +174,8 @@ class AlmacenController extends CRUDController
 
         $object = $this->em->getRepository(InformeRecepcionOptica::class)->find($id);
         return $this->renderWithExtraParams($this->admin->getTemplate('cancelar_factura'), array(
-            'object' => $object
+            'object' => $object,
+            'redirectTo' => $redirectTo,
         ));
     }
 
