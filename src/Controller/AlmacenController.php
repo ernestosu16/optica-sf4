@@ -159,9 +159,39 @@ class AlmacenController extends CRUDController
                 ->find($id);
 
             if ($this->getRequest()->getMethod() === Request::METHOD_POST) {
+
+
+                if ($factura->getPendiente()) {
+                    $productos = [
+                        $factura->getAccesorios(),
+                        $factura->getArmaduras(),
+                        $factura->getCristales(),
+                        $factura->getLupas(),
+                        $factura->getTinteCristales(),
+                    ];
+
+
+                    foreach ($productos as $producto) {
+                        foreach ($producto as $item) {
+                            /** @var $almacenEntity Alamacen */
+                            $almacenEntity = $this->em->getRepository(Alamacen::class)
+                                ->getProductoOficina(
+                                    $item->getProducto()->getProducto(),
+                                    $this->user->getOffice());
+
+                            $almacenEntity->setCantidadPendiente(
+                                $almacenEntity->getCantidadPendiente() - $item->getCantidad()
+                            );
+
+                        }
+                    }
+                }
+
+
                 $factura->setDevueltoDescripcion($this->getRequest()->request->get('descripcion'));
                 $factura->setPendiente(false);
                 $factura->setDevuelto(true);
+
                 $this->em->flush();
 
 
