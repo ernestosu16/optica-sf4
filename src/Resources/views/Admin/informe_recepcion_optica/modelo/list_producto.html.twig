@@ -24,7 +24,7 @@
     {% set importe_total_venta = 0 %}
     {% for producto in productos %}
         {% for value in producto %}
-            {% include '::Admin/Almacen/_producto_tr.html.twig' %}
+            {% include '::Admin/Almacen/_producto_tr_pdf.html.twig' %}
             {% set importe_total_costo = importe_total_costo + (value.cantidad * value.producto.producto.precioCosto) %}
             {% set importe_total_venta = importe_total_venta + (value.cantidad * value.producto.producto.precio) %}
         {% endfor %}
