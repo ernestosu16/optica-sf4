@@ -70,7 +70,10 @@ class AlamacenAdmin extends _BaseAdmin_
         $listMapper
             ->add('producto.codigo', null, ['label' => 'Código'])
             ->add('producto.descripcion', null, ['label' => 'Descripción'])
-            ->add('producto.precio', null, ['label' => 'Precio'])
+            ->add('producto.precio', null, [
+                'label' => 'Precio',
+                'template' => '::Admin\field__precio.html.twig']
+            )
             ->add('cantidad_existencia', null, [
                 'label' => 'Existencia'
             ])
