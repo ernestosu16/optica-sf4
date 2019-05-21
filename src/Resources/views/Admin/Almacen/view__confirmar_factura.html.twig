@@ -29,7 +29,7 @@
                                     {{ value.fecha|date('d/m/Y') }}</td>
                                 <td class="sonata-ba-list-field sonata-ba-list-field-text"
                                     objectid="{{ value.id }}">
-                                    {{ value.id }}</td>
+                                    {{ value.numeroFactura }}</td>
                                 <td class="sonata-ba-list-field sonata-ba-list-field-orm_one_to_many">
                                     {#  @var \App\Entity\MovimientoAlmacen\InformeRecepcionOptica object   #}
                                     {% for value in value.accesorios %}

@@ -25,6 +25,12 @@ class InformeRecepcionOptica extends _BaseEntity_
     protected $fecha;
 
     /**
+     * @var string
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $numero_factura;
+
+    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\SecurityUser")
      * @ORM\JoinColumn(name="usuario_creador_id", referencedColumnName="id", nullable=true)
      */
@@ -132,17 +138,17 @@ class InformeRecepcionOptica extends _BaseEntity_
         return $this;
     }
 
-//    public function getNumeroFactura(): ?string
-//    {
-//        return $this->numero_factura;
-//    }
-//
-//    public function setNumeroFactura(string $numero_factura): self
-//    {
-//        $this->numero_factura = $numero_factura;
-//
-//        return $this;
-//    }
+    public function getNumeroFactura(): ?string
+    {
+        return $this->numero_factura;
+    }
+
+    public function setNumeroFactura(string $numero_factura): self
+    {
+        $this->numero_factura = $numero_factura;
+
+        return $this;
+    }
 
     public function getDevuelto(): ?bool
     {

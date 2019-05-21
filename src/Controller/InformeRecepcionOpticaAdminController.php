@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Persistence\ObjectManager;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use ReflectionClass;
+use ReflectionException;
 use Sonata\AdminBundle\Controller\CRUDController;
 
 class InformeRecepcionOpticaAdminController extends CRUDController
@@ -19,6 +20,11 @@ class InformeRecepcionOpticaAdminController extends CRUDController
     private $em;
     private $user;
 
+    /**
+     * @param $id
+     * @return PdfResponse
+     * @throws ReflectionException
+     */
     public function exportPdfAction($id)
     {
         $this->user = $this->getUser();

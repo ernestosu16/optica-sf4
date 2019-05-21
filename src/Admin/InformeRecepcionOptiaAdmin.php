@@ -43,12 +43,6 @@ class InformeRecepcionOptiaAdmin extends _BaseAdmin_
         /** @var EntityManager $em */
         $em = $this->getConfigurationPool()->getContainer()->get('doctrine');
 
-        $lastRow = null;
-        if (!$object->getId()) {
-            $lastRow = $em->getRepository(InformeRecepcionOptica::class)->getLastRow();
-        }
-
-
         if (!$object->getId()) {
             $formMapper
                 ->with('Tipo de Factura', array('class' => 'col-md-3'))
@@ -73,10 +67,10 @@ class InformeRecepcionOptiaAdmin extends _BaseAdmin_
                 'required' => true,
                 'disabled' => $object->getId(),
             ))
-            ->add('id', null, array(
+            ->add('numero_factura', null, array(
                 'disabled' => true,
                 'label' => 'Número de la factura',
-                'data' => ($object->getId()) ? $object->getId() : ($object->getId() == null) ? 1 : ($lastRow->getId() + 1),
+                'data' => $this->getNuevoNumeroFactura($object),
             ))
             ->add('office_destino', null, [
                 'label' => 'Oficina destino',
@@ -194,7 +188,7 @@ class InformeRecepcionOptiaAdmin extends _BaseAdmin_
 
         $listMapper
             ->remove('batch')
-            ->add('id', null, ['label' => 'No.'])
+            ->add('numero_factura', null, ['label' => 'No.'])
             ->add('fecha', null, array(
                 'format' => 'd/m/Y',
             ))
@@ -238,6 +232,8 @@ class InformeRecepcionOptiaAdmin extends _BaseAdmin_
 
         }
 
+
+        $object->setNumeroFactura($this->getNuevoNumeroFactura($object));
         $object->setUsuarioCreador($user);
         $object->setOfficeOrigen($user->getOffice());
     }
@@ -258,5 +254,14 @@ class InformeRecepcionOptiaAdmin extends _BaseAdmin_
         $object->setDevuelto(false);
 
         parent::Update($object);
+    }
+
+    private function getNuevoNumeroFactura(InformeRecepcionOptica $object)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getConfigurationPool()->getContainer()->get('doctrine');
+        $lastRow = $em->getRepository(InformeRecepcionOptica::class)->getLastRow();
+
+        return ($object->getNumeroFactura()) ? $object->getNumeroFactura() : ($object->getNumeroFactura() == null) ? 1 : ($lastRow->getNumeroFactura() + 1);
     }
 }
