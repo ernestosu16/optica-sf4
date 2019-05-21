@@ -168,7 +168,7 @@ class UserAdmin extends AbstractAdmin
                         'translation_domain' => 'FOSUserBundle',
                         'attr' => [
                             'title' => 'Mayúscula, minúscula, numero y 8 o más caracteres',
-                            'pattern' => '/^\S*(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])(?=\S*[\W])\S*$/',
+                            'pattern' => '/^\S*(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$/',
                         ]
                     ),
                     'first_options' => array('label' => 'form.password'),
@@ -237,7 +237,7 @@ class UserAdmin extends AbstractAdmin
                 ->end();
 
             /** @var EntityManager $em */
-            $em = $this->getConfigurationPool()->getContainer()->get('doctrine.orm.entity_manager');
+            $em = $this->getConfigurationPool()->getContainer()->get('doctrine');
 
             $ci = $em->getRepository(SecurityUser::class)->findOneBy(
                 ['ci' => $object->getCi()]
