@@ -181,9 +181,6 @@ class InformeRecepcionOptiaAdmin extends _BaseAdmin_
 
     protected function configureListFields(ListMapper $listMapper)
     {
-
-        $object = $this->getSubject();
-
         unset($this->listModes['mosaic']);
 
         $listMapper
@@ -196,12 +193,13 @@ class InformeRecepcionOptiaAdmin extends _BaseAdmin_
                 'label' => 'Productos',
                 'template' => '::Admin\informe_recepcion_optica\producto__list.html.twig'
             ])
+            ->add('estado', null, ['template' => '::Admin\informe_recepcion_optica\tr__estado.html.twig'])
 //            ->add('accesorios')
 //            ->add('armaduras')
 //            ->add('cristales')
-            ->add('confirmado')
-            ->add('pendiente')
-            ->add('devuelto')
+//            ->add('confirmado')
+//            ->add('pendiente')
+//            ->add('devuelto')
             ->add('_action', null, array(
                 'label' => '',
                 'actions' => array(
@@ -258,10 +256,14 @@ class InformeRecepcionOptiaAdmin extends _BaseAdmin_
 
     private function getNuevoNumeroFactura(InformeRecepcionOptica $object)
     {
+        if ($object->getId()) {
+            return $object->getNumeroFactura();
+        }
+
         /** @var EntityManager $em */
         $em = $this->getConfigurationPool()->getContainer()->get('doctrine');
         $lastRow = $em->getRepository(InformeRecepcionOptica::class)->getLastRow();
 
-        return ($object->getNumeroFactura()) ? $object->getNumeroFactura() : ($object->getNumeroFactura() == null) ? 1 : ($lastRow->getNumeroFactura() + 1);
+        return (!$lastRow) ? 1 : $lastRow->getNumeroFactura() + 1;
     }
 }

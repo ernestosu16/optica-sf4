@@ -1,0 +1,13 @@
+{% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
+
+{% block field %}
+    {% if object.pendiente %}
+        <span class="label label-warning">Pendiente</span>
+    {% elseif object.confirmado %}
+        <span class="label label-success">Confirmado</span>
+    {% elseif object.devuelto %}
+        <span class="label label-danger">Devuelto</span>
+    {% else %}
+        <span class="label label-info">Asignado</span>
+    {% endif %}
+{% endblock %}
