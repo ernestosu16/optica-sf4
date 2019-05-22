@@ -26,7 +26,9 @@ class AlmacenController extends CRUDController
 
     public function confirmarFacturaAction()
     {
+        # Obtener el usuario autenticado
         $this->user = $this->getUser();
+        # Obtener el servicio del ORM de doctrine
         $this->em = $this->getDoctrine()->getManager();
         $object = null;
         if ($this->user->getOffice()) {
@@ -48,7 +50,9 @@ class AlmacenController extends CRUDController
      */
     public function saveConfirmarFacturaAction($id, $redirectTo)
     {
+        # Obtener el usuario autenticado
         $this->user = $this->getUser();
+        # Obtener el servicio del ORM de doctrine
         $this->em = $this->getDoctrine()->getManager();
         $object = null;
         $url = null;
@@ -246,20 +250,29 @@ class AlmacenController extends CRUDController
     }
 
     /**
+     * Obtener el numero que continua del informe de recepción
+     *
      * @return string
      */
     private function getNuevoNumeroInformeRecepcion()
     {
+        # Obtener el usuario autenticado
         $this->user = $this->getUser();
+        # Obtener el servicio del ORM de doctrine
         $this->em = $this->getDoctrine()->getManager();
 
-        /** @var $InformeRecepcion InformeRecepcionOptica */
+        /**
+         * Busco la ultima tupla de la columna
+         * @var $InformeRecepcion InformeRecepcionOptica
+         */
         $InformeRecepcion = $this->em->getRepository(InformeRecepcionOptica::class)->getOfficeLastRow(
             $this->user->getOffice()
         );
 
+        # Por si es nueva y no existe ninguna el valor iniciar es 1
         $NumeroInformeRecepcion = 1;
 
+        # compruebo que exista y si existe obtengo el numero y le sumo 1
         if ($InformeRecepcion) {
             $NumeroInformeRecepcion = $InformeRecepcion->getNumeroInformeRecepcion() + 1;
         }
@@ -268,6 +281,8 @@ class AlmacenController extends CRUDController
     }
 
     /**
+     * Obtener los datos del informe de recepción
+     *
      * @param $productos
      * @return array
      */
@@ -276,11 +291,13 @@ class AlmacenController extends CRUDController
         $data = [];
         foreach ($productos as $producto) {
             foreach ($producto as $item) {
+                # Buscar el producto en el almacén
                 $almacen = $this->em->getRepository(Alamacen::class)->findOneBy([
                     'producto' => $item->getProducto()->getProducto(),
                     'office' => $this->user->getOffice(),
                 ]);
 
+                # Si existe lo guardo en el arreglo
                 if ($almacen) {
                     $data['informe_recepcion'][] = [
                         'producto_id' => $almacen->getProducto()->getId(),
