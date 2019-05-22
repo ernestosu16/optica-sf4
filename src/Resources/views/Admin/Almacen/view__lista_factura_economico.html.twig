@@ -14,7 +14,8 @@
                             <thead>
                             <tr class="sonata-ba-list-field-header">
                                 <th class="sonata-ba-list-field-header-date">Fecha</th>
-                                <th class="sonata-ba-list-field-header-integer">Número Factura</th>
+                                <th class="sonata-ba-list-field-header-integer">No. Factura</th>
+                                <th class="sonata-ba-list-field-header-integer">No. Recepción</th>
                                 <th class="sonata-ba-list-field-header-text">Destino</th>
                                 <th class="sonata-ba-list-field-header-orm_one_to_many ">Productos</th>
                                 <th class="sonata-ba-list-field-header-string">Creado</th>
@@ -22,50 +23,63 @@
                             </tr>
                             </thead>
                             <tbody>
-                            {% for value in object %}
+                            {#  #}
+                            {% for object in object %}
                                 <tr>
                                     <td class="sonata-ba-list-field sonata-ba-list-field-date"
-                                        objectid="{{ value.id }}">
-                                        {{ value.fecha|date('d/m/Y') }}</td>
+                                        objectid="{{ object.id }}">
+                                        {{ object.fecha|date('d/m/Y') }}</td>
                                     <td class="sonata-ba-list-field sonata-ba-list-field-text"
-                                        objectid="{{ value.id }}">
-                                        {{ value.numeroFactura }}</td>
+                                        objectid="{{ object.id }}">
+                                        {{ object.numeroFactura }}</td>
                                     <td class="sonata-ba-list-field sonata-ba-list-field-text"
-                                        objectid="{{ value.id }}">
-                                        {{ value.officeDestino }}</td>
+                                        objectid="{{ object.id }}">
+                                        {{ object.numeroInformeRecepcion }}</td>
+                                    <td class="sonata-ba-list-field sonata-ba-list-field-text"
+                                        objectid="{{ object.id }}">
+                                        {{ object.officeDestino }}</td>
                                     <td class="sonata-ba-list-field sonata-ba-list-field-orm_one_to_many">
                                         {#  @var \App\Entity\MovimientoAlmacen\InformeRecepcionOptica object   #}
-                                        {% for value in value.accesorios %}
+                                        {% for value in object.accesorios %}
                                             {{ value }},
                                         {% endfor %}
-                                        {% for value in value.armaduras %}
+                                        {% for value in object.armaduras %}
                                             {{ value }},
                                         {% endfor %}
-                                        {% for value in value.cristales %}
+                                        {% for value in object.cristales %}
                                             {{ value }},
                                         {% endfor %}
-                                        {% for value in value.lupas %}
+                                        {% for value in object.lupas %}
                                             {{ value }},
                                         {% endfor %}
-                                        {% for value in value.tinteCristales %}
+                                        {% for value in object.tinteCristales %}
                                             {{ value }},
                                         {% endfor %}
                                     </td>
                                     <td class="sonata-ba-list-field sonata-ba-list-field-text"
-                                        objectid="{{ value.id }}">
-                                        {{ value.usuarioCreador }}</td>
+                                        objectid="{{ object.id }}">
+                                        {{ object.usuarioCreador }}</td>
                                     <td class="sonata-ba-list-field sonata-ba-list-field-text"
-                                        objectid="{{ value.id }}">
+                                        objectid="{{ object.id }}">
                                         <div class="btn-group">
-                                            <button class="btn btn-sm btn-success" data-toggle="modal"
-                                                    data-target="#myModal" data-value="{{ value.id }}">
-                                                <i class="fa fa-plus-square" aria-hidden="true"></i> Confirmar
-                                            </button>
-                                            <a href="{{ admin.generateUrl('cancelar_factura',{'id':value.id,'redirectTo': "lista_factura"}) }}"
-                                               class="btn btn-sm btn-warning" title="Cancelar">
-                                                <i class="fa fa-close" aria-hidden="true"></i>
-                                                Cancelar
-                                            </a>
+                                            {% if object.pendiente %}
+                                                <button class="btn btn-sm btn-success" data-toggle="modal"
+                                                        data-target="#myModal" data-value="{{ object.id }}">
+                                                    <i class="fa fa-plus-square" aria-hidden="true"></i> Confirmar
+                                                </button>
+                                                <a href="{{ admin.generateUrl('cancelar_factura',{'id':object.id,'redirectTo': "lista_factura"}) }}"
+                                                   class="btn btn-sm btn-warning" title="Cancelar">
+                                                    <i class="fa fa-close" aria-hidden="true"></i>
+                                                    Cancelar
+                                                </a>
+                                            {% else %}
+                                                <a href="{{ path('admin_app_movimientoalmacen_informerecepcionoptica_export_pdf',{"id":object.id}) }}"
+                                                   class="btn btn-sm btn-default view_link"
+                                                   title="Imprimir" target="_blank">
+                                                    <i class="fa fa-print" aria-hidden="true"></i>
+                                                    Exportar a PDF
+                                                </a>
+                                            {% endif %}
                                         </div>
                                     </td>
                                 </tr>
@@ -99,7 +113,7 @@
                     $("#data").html('');
                     $("#loading").show();
                     $.ajax({
-                        url: "../lista_producto_factura/" + this.dataset.value+"/lista_factura",
+                        url: "../lista_producto_factura/" + this.dataset.value + "/lista_factura",
                         beforeSend: function () {
                         },
                         success: function (result) {

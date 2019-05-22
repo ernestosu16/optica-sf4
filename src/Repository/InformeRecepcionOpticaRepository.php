@@ -5,6 +5,8 @@ namespace App\Repository;
 use App\Entity\MovimientoAlmacen\InformeRecepcionOptica;
 use App\Entity\SecurityOffice;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -64,12 +66,30 @@ class InformeRecepcionOpticaRepository extends ServiceEntityRepository
      */
     public function obtenerFacturaPendienteEconomico()
     {
-        return $this->findBy(['pendiente' => true, 'devuelto' => false]);
+        return $this->findAll();
     }
 
     public function getLastRow()
     {
         return $this->findOneBy([], ['id' => 'desc']);
 
+    }
+
+    /**
+     * @param SecurityOffice $office
+     * @return InformeRecepcionOptica|mixed|null
+     * @throws NonUniqueResultException
+     */
+    public function getOfficeLastRow(SecurityOffice $office)
+    {
+
+        return $this->createQueryBuilder('i')
+            ->where('i.office_destino = :office')
+            ->andWhere('i.numero_informe_recepcion is not null')
+            ->setParameter('office', $office)
+            ->orderBy('i.id', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 }

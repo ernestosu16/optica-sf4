@@ -31,6 +31,12 @@ class InformeRecepcionOptica extends _BaseEntity_
     protected $numero_factura;
 
     /**
+     * @var string
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $numero_informe_recepcion;
+
+    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\SecurityUser")
      * @ORM\JoinColumn(name="usuario_creador_id", referencedColumnName="id", nullable=true)
      */
@@ -409,6 +415,18 @@ class InformeRecepcionOptica extends _BaseEntity_
     public function setPendiente(bool $pendiente): self
     {
         $this->pendiente = $pendiente;
+
+        return $this;
+    }
+
+    public function getNumeroInformeRecepcion(): ?string
+    {
+        return $this->numero_informe_recepcion;
+    }
+
+    public function setNumeroInformeRecepcion(?string $numero_informe_recepcion): self
+    {
+        $this->numero_informe_recepcion = $numero_informe_recepcion;
 
         return $this;
     }

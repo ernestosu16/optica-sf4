@@ -100,6 +100,7 @@ class AlmacenController extends CRUDController
         $this->user = $this->getUser();
 
         $factura->setUsuarioConfirmado($this->user);
+        $factura->setNumeroInformeRecepcion($this->getNuevoNumeroInformeRecepcion());
 
         if ($factura->getPendiente()) {
             $factura->setConfirmado(true);
@@ -241,6 +242,28 @@ class AlmacenController extends CRUDController
         return $this->renderWithExtraParams($this->admin->getTemplate('lista_factura'), array(
             'object' => $object
         ));
+    }
+
+    /**
+     * @return string
+     */
+    private function getNuevoNumeroInformeRecepcion()
+    {
+        $this->user = $this->getUser();
+        $this->em = $this->getDoctrine()->getManager();
+
+        /** @var $InformeRecepcion InformeRecepcionOptica */
+        $InformeRecepcion = $this->em->getRepository(InformeRecepcionOptica::class)->getOfficeLastRow(
+            $this->user->getOffice()
+        );
+
+        $NumeroInformeRecepcion = 1;
+
+        if ($InformeRecepcion) {
+            $NumeroInformeRecepcion = $InformeRecepcion->getNumeroInformeRecepcion() + 1;
+        }
+
+        return $NumeroInformeRecepcion;
     }
 
 

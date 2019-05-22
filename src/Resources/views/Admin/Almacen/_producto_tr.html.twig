@@ -13,6 +13,14 @@
     <td style="text-align: center">
         {# @var producto_almacen \App\Entity\MovimientoAlmacen\Alamacen  #}
         {% if producto_almacen %}
+            {{ producto_almacen.cantidadExistencia }}
+        {% else %}
+            0
+        {% endif %}
+    </td>
+    <td style="text-align: center">
+        {# @var producto_almacen \App\Entity\MovimientoAlmacen\Alamacen  #}
+        {% if producto_almacen %}
             {{ producto_almacen.cantidadExistencia + value.cantidad }}
         {% else %}
             {{ value.cantidad }}
