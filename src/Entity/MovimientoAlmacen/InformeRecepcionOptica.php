@@ -54,6 +54,12 @@ class InformeRecepcionOptica extends _BaseEntity_
      */
     protected $usuario_confirmado;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\SecurityUser")
+     * @ORM\JoinColumn(name="usuario_economico_id", referencedColumnName="id", nullable=true)
+     */
+    protected $usuario_economico;
+
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\SecurityOffice")
@@ -446,6 +452,18 @@ class InformeRecepcionOptica extends _BaseEntity_
     public function setDatoExtra($dato_extra): self
     {
         $this->dato_extra = $dato_extra;
+
+        return $this;
+    }
+
+    public function getUsuarioEconomico(): ?SecurityUser
+    {
+        return $this->usuario_economico;
+    }
+
+    public function setUsuarioEconomico(?SecurityUser $usuario_economico): self
+    {
+        $this->usuario_economico = $usuario_economico;
 
         return $this;
     }
