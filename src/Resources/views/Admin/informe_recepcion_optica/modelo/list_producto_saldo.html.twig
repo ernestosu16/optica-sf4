@@ -1,0 +1,41 @@
+{#  @var \App\Entity\MovimientoAlmacen\InformeRecepcionOptica object   #}
+<table>
+    <thead>
+    <tr>
+        <th>CÓDIGO</th>
+        <th>DESCRIPCIÓN</th>
+        <th>CANTIDAD</th>
+        <th>PRECIO DE COSTO</th>
+        <th>PRECIO DE VENTA</th>
+        <th>IMPORTE DE COSTO</th>
+        <th>IMPORTE DE VENTA</th>
+        <th>SALDO</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% set productos = [
+        object.accesorios,
+        object.armaduras,
+        object.cristales,
+        object.tinteCristales,
+        object.lupas,
+    ] %}
+
+    {% set importe_total_costo = 0 %}
+    {% set importe_total_venta = 0 %}
+    {% for producto in productos %}
+        {% for value in producto %}
+            {% include '::Admin/Almacen/_producto_tr_pdf_saldo.html.twig' %}
+            {% set importe_total_costo = importe_total_costo + (value.cantidad * value.producto.producto.precioCosto) %}
+            {% set importe_total_venta = importe_total_venta + (value.cantidad * value.producto.producto.precio) %}
+        {% endfor %}
+    {% endfor %}
+    </tbody>
+    <tfoot>
+    <tr>
+        <th colspan="5" style="text-align: right">Total:</th>
+        <th style="text-align: right">$ {{ importe_total_costo|number_format(2, '.', ',') }}</th>
+        <th style="text-align: right">$ {{ importe_total_venta|number_format(2, '.', ',') }}</th>
+    </tr>
+    </tfoot>
+</table>

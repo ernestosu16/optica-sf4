@@ -17,7 +17,7 @@
         <tbody>
         <tr>
             <td colspan="3" style="padding: 0px">
-                {% include '::Admin/informe_recepcion_optica/modelo/list_producto.html.twig' %}
+                {% include '::Admin/informe_recepcion_optica/modelo/list_producto_saldo.html.twig' %}
             </td>
         </tr>
         </tbody>
@@ -28,13 +28,12 @@
                     <tbody>
                     <tr>
                         <th colspan="2">Recibido por:</th>
-                        <th colspan="2">Despachado por:</th>
+                        <th colspan="2">Autorizado por:</th>
                     </tr>
                     <tr>
                         <td style="width: 35%">Nombre y Apellidos: <strong>{{ object.usuarioConfirmado }}</strong></td>
                         <td style="width: 15%">Firma:</td>
-                        <td style="width: 35%">Nombre y Apellidos: <strong>
-                            </strong></td>
+                        <td style="width: 35%">Nombre y Apellidos: <strong>{{ object.usuarioEconomico }}</strong></td>
                         <td style="width: 15%">Firma:</td>
                     </tr>
                     </tbody>
