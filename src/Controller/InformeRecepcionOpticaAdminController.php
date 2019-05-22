@@ -108,25 +108,25 @@ class InformeRecepcionOpticaAdminController extends CRUDController
 
 
 
-        return $this->renderWithExtraParams(
-            '::Admin\informe_recepcion_optica\modelo\informe_recepcion.html.twig', array(
-                'object' => $object,
-                'tipo_factura' => $tipo_factura_string,
-            )
-        );
-
-
-//        $html = $this->renderView('::Admin\informe_recepcion_optica\modelo\informe_recepcion.html.twig', array(
-//            'object' => $object,
-//            'tipo_factura' => $tipo_factura_string,
-//        ));
-//
-//
-//
-//        return new PdfResponse(
-//            $this->get('knp_snappy.pdf')->getOutputFromHtml($html, array('orientation' => 'Landscape')),
-//            $object->getOfficeDestino() . '-' . $id . '.pdf'
+//        return $this->renderWithExtraParams(
+//            '::Admin\informe_recepcion_optica\modelo\informe_recepcion.html.twig', array(
+//                'object' => $object,
+//                'tipo_factura' => $tipo_factura_string,
+//            )
 //        );
+
+
+        $html = $this->renderView('::Admin\informe_recepcion_optica\modelo\informe_recepcion.html.twig', array(
+            'object' => $object,
+            'tipo_factura' => $tipo_factura_string,
+        ));
+
+
+
+        return new PdfResponse(
+            $this->get('knp_snappy.pdf')->getOutputFromHtml($html, array('orientation' => 'Landscape')),
+            "Informe-Recepcion-".$object->getOfficeDestino() . '-' . $id . '.pdf'
+        );
     }
 
 }
