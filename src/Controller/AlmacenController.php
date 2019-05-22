@@ -82,6 +82,9 @@ class AlmacenController extends CRUDController
      */
     private function confirmFactura(InformeRecepcionOptica $factura)
     {
+
+        /** @var SecurityUser user */
+        $this->user = $this->getUser();
         $productos = [
             $factura->getAccesorios(),
             $factura->getArmaduras(),
@@ -90,23 +93,21 @@ class AlmacenController extends CRUDController
             $factura->getTinteCristales(),
         ];
 
+        $factura->setUsuarioConfirmado($this->user);
+
+        if ($factura->getPendiente()) { # Cuando Confirmar el económico
+            $factura->setConfirmado(true);
+            $factura->setPendiente(false);
+            $factura->setDatoExtra($this->getExtraDataProducto($productos));
+        } else { # para cuando confirmar el almacén
+            $factura->setPendiente(true);
+            $factura->setNumeroInformeRecepcion($this->getNuevoNumeroInformeRecepcion());
+        }
+
         foreach ($productos as $producto) {
             foreach ($producto as $item) {
                 $this->save($item, $factura->getPendiente());
             }
-        }
-
-        /** @var SecurityUser user */
-        $this->user = $this->getUser();
-
-        $factura->setUsuarioConfirmado($this->user);
-        $factura->setNumeroInformeRecepcion($this->getNuevoNumeroInformeRecepcion());
-
-        if ($factura->getPendiente()) {
-            $factura->setConfirmado(true);
-            $factura->setPendiente(false);
-        } else {
-            $factura->setPendiente(true);
         }
 
         $this->em->persist($factura);
@@ -264,6 +265,33 @@ class AlmacenController extends CRUDController
         }
 
         return $NumeroInformeRecepcion;
+    }
+
+    /**
+     * @param $productos
+     * @return array
+     */
+    private function getExtraDataProducto($productos)
+    {
+        $data = [];
+        foreach ($productos as $producto) {
+            foreach ($producto as $item) {
+                $almacen = $this->em->getRepository(Alamacen::class)->findOneBy([
+                    'producto' => $item->getProducto()->getProducto(),
+                    'office' => $this->user->getOffice(),
+                ]);
+
+                if ($almacen) {
+                    $data['informe_recepcion'][] = [
+                        'producto_id' => $almacen->getProducto()->getId(),
+                        'existencia_inicial' => $almacen->getCantidadExistencia(),
+                        'existencia_final' => $almacen->getCantidadExistencia() + $item->getCantidad(),
+                    ];
+                }
+            }
+        }
+
+        return $data;
     }
 
 

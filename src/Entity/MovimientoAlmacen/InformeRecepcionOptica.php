@@ -37,6 +37,12 @@ class InformeRecepcionOptica extends _BaseEntity_
     protected $numero_informe_recepcion;
 
     /**
+     * @var string
+     * @ORM\Column(type="json_array", nullable=true)
+     */
+    protected $dato_extra;
+
+    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\SecurityUser")
      * @ORM\JoinColumn(name="usuario_creador_id", referencedColumnName="id", nullable=true)
      */
@@ -130,6 +136,7 @@ class InformeRecepcionOptica extends _BaseEntity_
         $this->cristales = new ArrayCollection();
         $this->lupas = new ArrayCollection();
         $this->tinte_cristales = new ArrayCollection();
+        $this->dato_extra = new ArrayCollection();
     }
 
     public function getFecha(): ?DateTimeInterface
@@ -427,6 +434,18 @@ class InformeRecepcionOptica extends _BaseEntity_
     public function setNumeroInformeRecepcion(?string $numero_informe_recepcion): self
     {
         $this->numero_informe_recepcion = $numero_informe_recepcion;
+
+        return $this;
+    }
+
+    public function getDatoExtra()
+    {
+        return $this->dato_extra;
+    }
+
+    public function setDatoExtra($dato_extra): self
+    {
+        $this->dato_extra = $dato_extra;
 
         return $this;
     }
