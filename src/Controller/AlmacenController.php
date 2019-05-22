@@ -103,6 +103,7 @@ class AlmacenController extends CRUDController
             $factura->setConfirmado(true);
             $factura->setPendiente(false);
             $factura->setDatoExtra($this->getExtraDataProducto($productos));
+            $factura->setUsuarioEconomico($this->user);
         } else { # para cuando confirmar el almacén
             $factura->setPendiente(true);
             $factura->setNumeroInformeRecepcion($this->getNuevoNumeroInformeRecepcion());

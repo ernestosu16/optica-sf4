@@ -1,0 +1,46 @@
+{% extends "base-print-layout.html.twig" %}
+{% block title %}Factura para {{ object.officeDestino }}{% endblock %}
+{% block body %}
+    {#  @var \App\Entity\MovimientoAlmacen\InformeRecepcionOptica object   #}
+    <table>
+        <thead>
+        <tr>
+            <th style="width: 30%">ENTIDAD: {{ object.officeDestino }}</th>
+            <th style="width: 30%">CÓDIGO: {{ object.officeDestino.number }}</th>
+            <th rowspan="2" style="width: 40%"><h3>Informe de Recepción #{{ object.numeroInformeRecepcion }}</h3></th>
+        </tr>
+        <tr>
+            <th>ALMACÉN: {{ tipo_factura }}</th>
+            <th>FECHA: {{ object.createdAt|date('Y-m-d') }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td colspan="3" style="padding: 0px">
+                {% include '::Admin/informe_recepcion_optica/modelo/list_producto.html.twig' %}
+            </td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="3" style="padding: 0px">
+                <table>
+                    <tbody>
+                    <tr>
+                        <th colspan="2">Recibido por:</th>
+                        <th colspan="2">Despachado por:</th>
+                    </tr>
+                    <tr>
+                        <td style="width: 35%">Nombre y Apellidos: <strong>{{ object.usuarioConfirmado }}</strong></td>
+                        <td style="width: 15%">Firma:</td>
+                        <td style="width: 35%">Nombre y Apellidos: <strong>
+                            </strong></td>
+                        <td style="width: 15%">Firma:</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        </tfoot>
+    </table>
+{% endblock %}

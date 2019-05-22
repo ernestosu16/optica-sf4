@@ -25,6 +25,8 @@ class InformeRecepcionOptiaAdmin extends _BaseAdmin_
         parent::configureRoutes($collection);
         $collection->remove('show');
         $collection->add('export_pdf', $this->getRouterIdParameter() . "/export");
+
+        $collection->add('informe_recepcion_pdf', $this->getRouterIdParameter() . "/informe_recepcion_pdf");
     }
 
     public function getTemplate($name)
