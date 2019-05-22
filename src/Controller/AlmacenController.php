@@ -102,8 +102,13 @@ class AlmacenController extends CRUDController
         if ($factura->getPendiente()) { # Cuando Confirmar el económico
             $factura->setConfirmado(true);
             $factura->setPendiente(false);
-            $factura->setDatoExtra($this->getExtraDataProducto($productos));
+//            $factura->setDatoExtra($this->getExtraDataProducto($productos));
             $factura->setUsuarioEconomico($this->user);
+            foreach ($productos as $producto) {
+                foreach ($producto as $item) {
+                    $this->actualizarSaldo($item, $factura->getPendiente());
+                }
+            }
         } else { # para cuando confirmar el almacén
             $factura->setPendiente(true);
             $factura->setNumeroInformeRecepcion($this->getNuevoNumeroInformeRecepcion());
@@ -282,35 +287,50 @@ class AlmacenController extends CRUDController
     }
 
     /**
-     * Obtener los datos del informe de recepción
-     *
-     * @param $productos
-     * @return array
+     * @param $item InformeRecepcionOpticaAccesorio
+     * @throws ORMException
      */
-    private function getExtraDataProducto($productos)
+    private function actualizarSaldo($item)
     {
-        $data = [];
-        foreach ($productos as $producto) {
-            foreach ($producto as $item) {
-                # Buscar el producto en el almacén
-                $almacen = $this->em->getRepository(Alamacen::class)->findOneBy([
-                    'producto' => $item->getProducto()->getProducto(),
-                    'office' => $this->user->getOffice(),
-                ]);
+        $producto = $this->em->getRepository(Alamacen::class)
+            ->getProductoOficina(
+                $item->getProducto()->getProducto(),
+                $this->user->getOffice());
 
-                # Si existe lo guardo en el arreglo
-                if ($almacen) {
-                    $data['informe_recepcion'][] = [
-                        'producto_id' => $almacen->getProducto()->getId(),
-                        'existencia_inicial' => $almacen->getCantidadExistencia(),
-                        'existencia_final' => $almacen->getCantidadExistencia() + $item->getCantidad(),
-                    ];
-                }
-            }
-        }
-
-        return $data;
+        $item->setSaldoFinal($producto->getCantidadExistencia() + $item->getCantidad());
+        $this->em->persist($item);
     }
+
+//    /**
+//     * Obtener los datos del informe de recepción
+//     *
+//     * @param $productos
+//     * @return array
+//     */
+//    private function getExtraDataProducto($productos)
+//    {
+//        $data = [];
+//        foreach ($productos as $producto) {
+//            foreach ($producto as $item) {
+//                # Buscar el producto en el almacén
+//                $almacen = $this->em->getRepository(Alamacen::class)->findOneBy([
+//                    'producto' => $item->getProducto()->getProducto(),
+//                    'office' => $this->user->getOffice(),
+//                ]);
+//
+//                # Si existe lo guardo en el arreglo
+//                if ($almacen) {
+//                    $data['informe_recepcion'][] = [
+//                        'producto_id' => $almacen->getProducto()->getId(),
+//                        'existencia_inicial' => $almacen->getCantidadExistencia(),
+//                        'existencia_final' => $almacen->getCantidadExistencia() + $item->getCantidad(),
+//                    ];
+//                }
+//            }
+//        }
+//
+//        return $data;
+//    }
 
 
 }
