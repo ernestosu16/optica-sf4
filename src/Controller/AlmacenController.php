@@ -99,6 +99,7 @@ class AlmacenController extends CRUDController
 
         $factura->setUsuarioConfirmado($this->user);
 
+        $estado = $factura->getPendiente();
         if ($factura->getPendiente()) { # Cuando Confirmar el económico
             $factura->setConfirmado(true);
             $factura->setPendiente(false);
@@ -106,7 +107,7 @@ class AlmacenController extends CRUDController
             $factura->setUsuarioEconomico($this->user);
             foreach ($productos as $producto) {
                 foreach ($producto as $item) {
-                    $this->actualizarSaldo($item, $factura->getPendiente());
+                    $this->actualizarSaldo($item);
                 }
             }
         } else { # para cuando confirmar el almacén
@@ -116,7 +117,7 @@ class AlmacenController extends CRUDController
 
         foreach ($productos as $producto) {
             foreach ($producto as $item) {
-                $this->save($item, $factura->getPendiente());
+                $this->save($item, $factura, $estado);
             }
         }
 
@@ -126,18 +127,19 @@ class AlmacenController extends CRUDController
 
     /**
      * @param $item InformeRecepcionOpticaAccesorio
-     * @param $pendiente bool
+     * @param $factura InformeRecepcionOptica
+     * @param bool $estado
      * @throws ORMException
      */
-    private function save($item, bool $pendiente)
+    private function save($item, InformeRecepcionOptica $factura, bool $estado)
     {
         $producto = $this->em->getRepository(Alamacen::class)
             ->getProductoOficina(
                 $item->getProducto()->getProducto(),
-                $this->user->getOffice());
+                $factura->getOfficeDestino());
 
         if ($producto) {
-            if ($pendiente) {
+            if ($estado) {
                 $cantidad_pendiente = $producto->getCantidadPendiente() - $item->getCantidad();
                 $cantidad_existencia = $producto->getCantidadExistencia() + $item->getCantidad();
             } else {
@@ -147,14 +149,15 @@ class AlmacenController extends CRUDController
 
             $producto->setCantidadPendiente($cantidad_pendiente);
             $producto->setCantidadExistencia($cantidad_existencia);
-            $this->em->persist($producto);
+
         } else {
-            $new = AlamacenRepository::addProductoOficinaPendiente(
+            $producto = AlamacenRepository::addProductoOficinaPendiente(
                 $item->getCantidad(),
                 $item->getProducto()->getProducto(),
                 $this->user->getOffice());
-            $this->em->persist($new);
         }
+
+        $this->em->persist($producto);
     }
 
     public function cancelarFacturaAction($id, $redirectTo)
