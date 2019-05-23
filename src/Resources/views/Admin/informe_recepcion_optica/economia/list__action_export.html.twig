@@ -1,0 +1,20 @@
+{#<a href="{{ admin.generateUrl('export_pdf',{"id":object.id}) }}" class="btn btn-sm btn-default view_link"#}
+{% if object.pendiente %}
+    <button class="btn btn-sm btn-success" data-toggle="modal"
+            data-target="#myModal" data-value="{{ object.id }}">
+        <i class="fa fa-plus-square" aria-hidden="true"></i> Confirmar
+    </button>
+    <a href="{{ path('admin_app_movimientoalmacen_alamacen_cancelar_factura',{'id':object.id,'redirectTo': "lista_factura"}) }}"
+       class="btn btn-sm btn-warning" title="Cancelar">
+        <i class="fa fa-close" aria-hidden="true"></i>
+        Cancelar
+    </a>
+{% endif %}
+{% if object.pendiente == false %}
+    <a href="{{ path('admin_app_movimientoalmacen_informerecepcionoptica_informe_recepcion_pdf',{"id":object.id}) }}"
+       class="btn btn-sm btn-default view_link"
+       title="Imprimir" target="_blank">
+        <i class="fa fa-print" aria-hidden="true"></i>
+        Exportar a PDF
+    </a>
+{% endif %}

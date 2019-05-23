@@ -20,6 +20,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class InformeRecepcionOptiaAdmin extends _BaseAdmin_
 {
+    protected $baseRoutePattern = 'informerecepcionoptica';
+
     protected function configureRoutes(RouteCollection $collection)
     {
         parent::configureRoutes($collection);

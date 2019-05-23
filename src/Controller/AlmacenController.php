@@ -244,15 +244,16 @@ class AlmacenController extends CRUDController
 
     public function listaFacturaAction()
     {
-        $object = null;
-        $this->em = $this->getDoctrine()->getManager();
-
-        $object = $this->em->getRepository(InformeRecepcionOptica::class)
-            ->obtenerFacturaPendienteEconomico();
-
-        return $this->renderWithExtraParams($this->admin->getTemplate('lista_factura'), array(
-            'object' => $object
-        ));
+        return $this->redirectToRoute('movimientoalmacen-alamacen-economico_list');
+//        $object = null;
+//        $this->em = $this->getDoctrine()->getManager();
+//
+//        $object = $this->em->getRepository(InformeRecepcionOptica::class)
+//            ->obtenerFacturaPendienteEconomico();
+//
+//        return $this->renderWithExtraParams($this->admin->getTemplate('lista_factura'), array(
+//            'object' => $object
+//        ));
     }
 
     /**

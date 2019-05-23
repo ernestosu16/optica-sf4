@@ -106,23 +106,5 @@
             </div>
         </div>
     </div>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('button').on('click', function () {
-                if (this.dataset.value) {
-                    $("#data").html('');
-                    $("#loading").show();
-                    $.ajax({
-                        url: "../lista_producto_factura/" + this.dataset.value + "/lista_factura",
-                        beforeSend: function () {
-                        },
-                        success: function (result) {
-                            $("#data").html(result);
-                            $("#loading").hide();
-                        }
-                    });
-                }
-            })
-        });
-    </script>
+
 {% endblock %}

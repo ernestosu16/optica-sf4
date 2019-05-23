@@ -12,6 +12,16 @@ services:
             - [setTemplate, ['edit', '::Admin/informe_recepcion_optica/edit.html.twig']]
             - [setTemplate, ['list', '::Admin/informe_recepcion_optica/list.html.twig']]
 
+    app.informe_recepcion_economico:
+        class: App\Admin\InformeRecepcionEconomicoAdmin
+        arguments:
+            - ~
+            - App\Entity\MovimientoAlmacen\InformeRecepcionOptica
+            - ~
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: 'Informe de Recepción' }
+        calls:
+            - [setTemplate, ['list', '::Admin/informe_recepcion_optica/economia/list.html.twig']]
 
     app.informe_recepcion_accesorio:
         class: App\Admin\InformeRecepcionOpticaProductoAdmin

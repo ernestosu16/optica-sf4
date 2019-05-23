@@ -47,9 +47,10 @@ sonata_admin:
             sonata.admin.dpto_economia:
                 label: "Dpto. Economía"
                 items:
-                    - route: admin_app_movimientoalmacen_alamacen_lista_factura
-                      label: Informe de Recepción
-                      roles: ['ROLE_ADMIN']
+                    - app.informe_recepcion_economico
+#                    - route: admin_app_movimientoalmacen_alamacen_lista_factura
+#                      label: Informe de Recepción
+#                      roles: ['ROLE_ADMIN']
 
             sonata.admin.dpto_comercial:
                 label: "Dpto. Comercial"

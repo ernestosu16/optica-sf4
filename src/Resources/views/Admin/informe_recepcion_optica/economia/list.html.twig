@@ -1,0 +1,34 @@
+{% extends "SonataAdminBundle:CRUD:base_list.html.twig" %}
+{% block list_footer %}
+    {{ parent() }}
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div id="loading"><img src="{{ asset('bundles/sonataadmin/ajax-loader.gif') }}"></div>
+                    <div id="data"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('button').on('click', function () {
+                if (this.dataset.value) {
+                    $("#data").html('');
+                    $("#loading").show();
+                    $.ajax({
+                        url: "../app/movimientoalmacen-alamacen/lista_producto_factura/" + this.dataset.value + "/lista_factura",
+                        beforeSend: function () {
+                        },
+                        success: function (result) {
+                            $("#data").html(result);
+                            $("#loading").hide();
+                        }
+                    });
+                }
+            })
+        });
+    </script>
+{% endblock %}
