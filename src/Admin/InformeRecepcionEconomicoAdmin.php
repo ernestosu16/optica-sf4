@@ -30,7 +30,8 @@ class InformeRecepcionEconomicoAdmin extends _BaseAdmin_
 
     protected function configureListFields(ListMapper $list)
     {
-        $list->remove('bash');
+
+        unset($this->listModes['mosaic']);
         $list
             ->add('fecha', null, ['label' => 'Fecha'])
             ->add('numero_factura', null, ['label' => 'No. Factura'])
