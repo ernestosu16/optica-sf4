@@ -47,29 +47,34 @@ class AppPacienteAdmin extends _BaseAdmin_
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
+            ->add('created_at', null, [
+                'label' => 'Creado',
+            ])
             ->addIdentifier('ci', TextType::class, [
                 'label' => 'app.ci',
             ])
             ->add('nombre', TextType::class, [
-                'label' => 'app.nombre',
+                'label' => 'Nombre y Apellidos',
             ])
             ->add('sexo', 'string', [
                 'label' => 'Sexo',
                 'template' => '::Admin/producto/list/sexo.html.twig',
             ])
-            ->add('telefono_contacto', TextType::class, [
-                'label' => 'app.telefono_contacto',
+            ->add('edad', 'string', [
+                'label' => 'Edad',
+                'template' => '::Admin/paciente/field__edad.html.twig',
             ])
-            ->add('correo_contacto', EmailType::class, [
-                'label' => 'app.correo_contacto',
+            ->add('direccion', TextType::class, [
+                'label' => 'Dirección',
+                'header_style' => 'width: 290px',
             ])
-            ->add('historia_clinica', TextType::class, [
-                'label' => 'app.historia_clinica',
+            ->add('update_at', null, [
+                'label' => 'Actualizado',
             ])
             ->add('_action', null, array(
-                'label' => 'Acciones',
+                'label' => '',
                 'row_align' => 'right',
-                'header_style' => 'width: 190px',
+                'header_style' => 'width: 90px',
                 'actions' => array(
                     'edit' => array(),
                     'delete' => array())));;

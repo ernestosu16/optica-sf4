@@ -51,7 +51,7 @@ abstract class _BaseEntity_ extends _Entity_
     /**
      * @return DateTime
      */
-    public function getUpdateAt(): DateTime
+    public function getUpdateAt(): ?DateTime
     {
         return $this->update_at;
     }
