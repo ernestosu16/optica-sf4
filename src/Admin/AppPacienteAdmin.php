@@ -12,7 +12,10 @@ namespace App\Admin;
 use App\Entity\AppClasificador;
 use App\Entity\AppPaciente;
 use App\Entity\SecurityOffice;
+use App\Entity\SecurityUser;
 use Doctrine\ORM\EntityManager;
+use Sonata\AdminBundle\Datagrid\DatagridMapper;
+use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\Form\Validator\ErrorElement;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -23,6 +26,15 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class AppPacienteAdmin extends _BaseAdmin_
 {
+    protected function configureRoutes(RouteCollection $collection)
+    {
+        $collection->remove('export');
+        $collection->remove('delete');
+//        $collection->remove('create');
+//        $collection->remove('edit');
+        $collection->remove('show');
+    }
+
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
@@ -46,10 +58,8 @@ class AppPacienteAdmin extends _BaseAdmin_
      */
     protected function configureListFields(ListMapper $listMapper)
     {
+        unset($this->listModes['mosaic']);
         $listMapper
-            ->add('created_at', null, [
-                'label' => 'Creado',
-            ])
             ->addIdentifier('ci', TextType::class, [
                 'label' => 'app.ci',
             ])
@@ -68,6 +78,9 @@ class AppPacienteAdmin extends _BaseAdmin_
                 'label' => 'Dirección',
                 'header_style' => 'width: 290px',
             ])
+            ->add('created_at', null, [
+                'label' => 'Creado',
+            ])
             ->add('update_at', null, [
                 'label' => 'Actualizado',
             ])
@@ -80,6 +93,13 @@ class AppPacienteAdmin extends _BaseAdmin_
                     'delete' => array())));;
     }
 
+    protected function configureDatagridFilters(DatagridMapper $datagridMapper)
+    {
+        $datagridMapper
+            ->add('ci')
+            ->add('nombre');
+    }
+
     /**
      * @param ErrorElement $errorElement
      * @param $object AppPaciente
@@ -87,17 +107,21 @@ class AppPacienteAdmin extends _BaseAdmin_
     public function validate(ErrorElement $errorElement, $object)
     {
 //        dump($object);exit;
+        /** @var SecurityUser $user */
+        $user = $this->getConfigurationPool()->getContainer()->get('security.token_storage')->getToken()->getUser();
         /** @var EntityManager $em */
         $em = $this->getConfigurationPool()
             ->getContainer()
-            ->get('doctrine.orm.entity_manager');
+            ->get('doctrine');
 
 //        $filters = $em->getFilters();
 //        $filters->disable('softdeleteable');
 
-        $paciente = $em->getRepository(AppPaciente::class)->findOneBy(['ci' => $object->getCi()]);
+        $paciente = $em->getRepository(AppPaciente::class)->findOneBy(
+            ['ci' => $object->getCi(), 'office' => $user->getOffice()]
+        );
 
-        if ($paciente) {
+        if ($paciente && $paciente->getCi() === $object->getCi() && $paciente != $object) {
             $errorElement
                 ->with('ci')
                 ->addViolation('Ya existe el CI de este paciente')
@@ -129,6 +153,28 @@ class AppPacienteAdmin extends _BaseAdmin_
             ->assertLength(['min' => 8, 'max' => 8])
             ->end();
 
+    }
+
+    /**
+     * @param $object AppPaciente
+     */
+    public function prePersist($object)
+    {
+        /** @var SecurityUser $user */
+        $user = $this->getConfigurationPool()->getContainer()->get('security.token_storage')->getToken()->getUser();
+
+        $object->setUsuarioCreador($user);
+        $object->setOffice($user->getOffice());
+    }
+
+    /**
+     * @param $object AppPaciente
+     */
+    public function Update($object)
+    {
+        $object->setOffice(false);
+
+        parent::Update($object);
     }
 
 }

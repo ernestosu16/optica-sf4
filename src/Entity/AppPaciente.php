@@ -52,6 +52,18 @@ class AppPaciente extends _BaseEntity_
      */
     protected $historia_clinica;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\SecurityUser")
+     * @ORM\JoinColumn(name="usuario_creador_id", referencedColumnName="id", nullable=true)
+     */
+    protected $usuario_creador;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\SecurityOffice")
+     * @ORM\JoinColumn(name="office", referencedColumnName="id")
+     */
+    protected $office;
+
     public function __toString()
     {
         return (string)$this->nombre;
@@ -125,6 +137,30 @@ class AppPaciente extends _BaseEntity_
     public function setHistoriaClinica(string $historia_clinica): self
     {
         $this->historia_clinica = $historia_clinica;
+
+        return $this;
+    }
+
+    public function getUsuarioCreador(): ?SecurityUser
+    {
+        return $this->usuario_creador;
+    }
+
+    public function setUsuarioCreador(?SecurityUser $usuario_creador): ?self
+    {
+        $this->usuario_creador = $usuario_creador;
+
+        return $this;
+    }
+
+    public function getOffice(): ?SecurityOffice
+    {
+        return $this->office;
+    }
+
+    public function setOffice(?SecurityOffice $office): ?self
+    {
+        $this->office = $office;
 
         return $this;
     }
