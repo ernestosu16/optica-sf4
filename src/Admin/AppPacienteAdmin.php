@@ -86,11 +86,11 @@ class AppPacienteAdmin extends _BaseAdmin_
             ])
             ->add('_action', null, array(
                 'label' => '',
-                'row_align' => 'right',
-                'header_style' => 'width: 90px',
                 'actions' => array(
-                    'edit' => array(),
-                    'delete' => array())));;
+                    'edit' => ['label' => ''],
+                    'others' => ['template' => '::Admin\paciente\buttons__others.html.twig'],
+                )
+            ));
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
