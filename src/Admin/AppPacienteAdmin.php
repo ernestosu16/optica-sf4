@@ -33,6 +33,8 @@ class AppPacienteAdmin extends _BaseAdmin_
 //        $collection->remove('create');
 //        $collection->remove('edit');
         $collection->remove('show');
+
+        $collection->add('crear_receta', $this->getRouterIdParameter() . '/receta');
     }
 
     protected function configureFormFields(FormMapper $formMapper)
