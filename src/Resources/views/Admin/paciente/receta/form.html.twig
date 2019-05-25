@@ -1,16 +1,30 @@
 {% extends base_template %}
-{% import 'SonataAdminBundle:CRUD:base_show_macro.html.twig' as show_helper %}
+{% use '@SonataAdmin/CRUD/base_edit_form.html.twig' with form as parentForm %}
 
-{% block show %}
-    <section class="content">
-        <div class="row">
-            <div class="box box-primary">
-                <div class="box-header">
-                    <h4 class="box-title">
-                        Crear Receta
-                    </h4>
-                </div>
-            </div>
-        </div>
-    </section>
+{% block form %}
+    {{ block('parentForm') }}
 {% endblock %}
+
+
+{#{% extends base_template %}#}
+{#{% use '@SonataAdmin/CRUD/base_edit_form.html.twig' with form as parentForm %}#}
+{#{% block form %}#}
+{#{{ form(form) }}#}
+{#{% endblock %}#}
+
+{#{% extends base_template %}#}
+{#{% import 'SonataAdminBundle:CRUD:base_show_macro.html.twig' as show_helper %}#}
+
+{#{% block show %}#}
+{#    <section class="content">#}
+{#        <div class="row">#}
+{#            <div class="box box-primary">#}
+{#                <div class="box-header">#}
+{#                    <h4 class="box-title">#}
+{#                        Crear Receta#}
+{#                    </h4>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </section>#}
+{#{% endblock %}#}

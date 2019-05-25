@@ -45,7 +45,7 @@ services:
             - [setTemplate, ['edit', '::Admin/orden/edit.html.twig']]
     sonata.admin.app.receta:
         class: App\Admin\AppRecetaAdmin
-        arguments: [~, App\Entity\AppReceta, ~]
+        arguments: [~, App\Entity\AppReceta, App\Controller\RecetaAdminController]
         tags:
             - { name: sonata.admin, manager_type: orm, label: app.receta }
         calls:

@@ -3,10 +3,19 @@
     {{ parent() }}
     <script type="text/javascript">
         $(document).ready(function () {
-            $('#sonata-ba-field-container-{{ admin.uniqid }}_numero').addClass('col-md-2').css({
-                'padding-left': '0px',
-                'padding-rigth': '0px'
-            });
+            $('#sonata-ba-field-container-{{ admin.uniqid }}_numero').addClass('col-md-2');
+            $('#sonata-ba-field-container-{{ admin.uniqid }}_fecha').addClass('col-md-2');
+            $('#sonata-ba-field-container-{{ admin.uniqid }}_dp').addClass('col-md-2');
+            $('#sonata-ba-field-container-{{ admin.uniqid }}_add').addClass('col-md-2');
+            let input_ojo = ["eje_od", "a_visual_od", "cristal_od","eje_oi", "a_visual_oi", "cristal_oi"];
+
+            for (let i = 0; i < input_ojo.length; i++) {
+                $('#sonata-ba-field-container-{{ admin.uniqid }}_'+input_ojo[i]).addClass('col-md-4');
+            }
+
+            {#$('#sonata-ba-field-container-{{ admin.uniqid }}_eje_od').addClass('col-md-2');#}
+            {#$('#sonata-ba-field-container-{{ admin.uniqid }}_eje_od').addClass('col-md-2');#}
+            {#$('#sonata-ba-field-container-{{ admin.uniqid }}_eje_od').addClass('col-md-2');#}
 
         });
     </script>
