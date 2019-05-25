@@ -4,6 +4,7 @@
 namespace App\Controller;
 
 
+use App\Entity\AppPaciente;
 use App\Entity\AppReceta;
 use Sonata\AdminBundle\Controller\CRUDController;
 use Sonata\AdminBundle\Form\FormMapper;
@@ -23,10 +24,14 @@ class RecetaAdminController extends CRUDController
 
         $this->admin->setSubject($object);
 
+        /** @var AppPaciente $paciente */
+        $paciente = $this->getDoctrine()->getRepository(AppPaciente::class)->find($id);
+
         return $this->renderWithExtraParams('::Admin/receta/create_receta_paciente.html.twig', array(
             'id' => $id,
             'object' => $object,
-            'form' => $this->admin->getFormBuilder()->getForm()->createView(),
+            'paciente' => $paciente,
+            'form' => $this->admin->getForm()->createView(),
         ));
     }
 

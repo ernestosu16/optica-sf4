@@ -30,18 +30,24 @@
             {{ block('sonata_tab_content') }}
             {{ block('sonata_post_fieldsets') }}
             {{ form_rest(form) }}
-            {{ block('formactions') }}
+            <div class="sonata-ba-form-actions well well-small form-actions">
+                <button type="submit" class="btn btn-success" name="btn_create">
+                    <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                    Crear Receta
+                </button>
+            </div>
         </form>
     {% endif %}
 
     {{ sonata_block_render_event('sonata.admin.edit.form.bottom', { 'admin': admin, 'object': object }) }}
 
 {% endblock %}
-
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript">
         $(document).ready(function () {
+            $('.box-title')[0].append('para {{ paciente.nombre }}');
+
             $('#{{ admin.uniqid }}_numero').parent().addClass('col-md-2');
             $('#{{ admin.uniqid }}_fecha').parent().parent().parent().addClass('col-md-2');
             $('#{{ admin.uniqid }}_dp').parent().addClass('col-md-2');
