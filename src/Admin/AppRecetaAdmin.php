@@ -5,6 +5,7 @@ namespace App\Admin;
 
 
 use App\Entity\AppReceta;
+use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelListType;
@@ -25,6 +26,7 @@ class AppRecetaAdmin extends _BaseAdmin_
         $collection->remove('export');
 
         $collection->add('crear_receta_paciente', 'crear_receta/{id}');
+        $collection->add('lista_receta_paciente', 'lista_receta/{id}');
     }
 
     protected function configureFormFields(FormMapper $formMapper)
@@ -84,11 +86,23 @@ class AppRecetaAdmin extends _BaseAdmin_
 
     }
 
+    /**
+     * @param DatagridMapper $datagridMapper
+     */
+    protected function configureDatagridFilters(DatagridMapper $datagridMapper)
+    {
+        $datagridMapper
+            ->add('numero');
+    }
+
     protected function configureListFields(ListMapper $list)
     {
         $list
             ->add('numero')
-            ->add('fecha');
+            ->add('fecha_refraccion')
+            ->add('paciente')
+            ->add('usuario_creador')
+        ;
     }
 
 }

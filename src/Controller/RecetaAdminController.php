@@ -14,8 +14,15 @@ use App\Entity\Nomenclador\NcEje;
 use App\Entity\SecurityUser;
 use DateTime;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
+use Doctrine\ORM\TransactionRequiredException;
 use Exception;
+use Sonata\AdminBundle\Admin\FieldDescriptionCollection;
 use Sonata\AdminBundle\Controller\CRUDController;
+use Sonata\AdminBundle\Datagrid\ListMapper;
+use Sonata\AdminBundle\Filter\FilterInterface;
+use Sonata\DoctrineORMAdminBundle\Filter\ModelFilter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -109,6 +116,46 @@ class RecetaAdminController extends CRUDController
             'object' => $object,
             'paciente' => $paciente,
             'form' => $this->admin->getForm()->createView(),
+        ));
+    }
+
+    /**
+     * @param $id
+     * @throws Exception
+     */
+    public function listaRecetaPacienteAction($id)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+        /** @var AppReceta $object */
+        $object = null;
+
+        /** @var AppPaciente $paciente */
+        $paciente = $em->find(AppPaciente::class, $id);
+        $object = $em->getRepository(AppReceta::class)->findBy(['paciente' => $paciente], ['created_at' => 'DESC']);
+
+        $form = $this->admin->getDatagrid()->getForm();
+
+        dump($this->admin->getDatagrid()->getFilters());
+//        exit;
+//        $filter =  new ModelFilter();
+//        $filter->isActive();
+//        dump($this->admin->getDatagrid()->addFilter($filter));
+//        $object = $em->getRepository(AppReceta::class)->findBy(['paciente' => $paciente], ['created_at' => 'DESC']);
+
+//        $list = $this->admin->getListBuilder()->getBaseList();
+
+//        $list = $this->get('sonata.admin.app.receta')->getListBuilder();
+//dump($list);exit;
+
+//        $listMapper = new ListMapper($this->admin->getListBuilder(), $this->admin->getListBuilder()->getBaseList(), $this->admin);
+
+//        return $this->admin->getTemplate('select');
+//        dump($listMapper);exit;
+//
+        return $this->renderWithExtraParams('::Admin/receta/lista_receta_paciente.html.twig', array(
+            'id' => $id,
+            'form' => $form->createView(),
         ));
     }
 
