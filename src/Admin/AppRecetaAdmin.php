@@ -32,12 +32,13 @@ class AppRecetaAdmin extends _BaseAdmin_
         $object = $this->getSubject();
 
         $formMapper
-            ->with('Receta', ['class' => 'col-md-12'])
+            ->with('Datos receta', ['class' => 'col-md-12'])
             # Datos general de la receta
             ->add('numero', null, [
                 'disabled' => $object->getId(),
+                'required' => true,
             ])
-            ->add('fecha', DateTimePickerType::class, [
+            ->add('fecha_refraccion', DateTimePickerType::class, [
                 'disabled' => $object->getId(),
                 'required' => false,
                 'label' => 'Fecha de Refracción'
@@ -50,34 +51,34 @@ class AppRecetaAdmin extends _BaseAdmin_
                 'disabled' => $object->getId(),
             ])
             ->end()
-            ->with('Graduación', ['class' => 'col-md-12'])
             # Ojo derecho
+            ->with('Graduación del ojo derecho', ['class' => 'col-md-12'])
+            ->add('cristal_od', null, array(
+                'disabled' => $object->getId(),
+                'label' => 'Cristal'
+            ))
             ->add('eje_od', null, array(
                 'disabled' => $object->getId(),
-                'label' => 'OD Eje'
+                'label' => 'Eje',
             ))
             ->add('a_visual_od', null, array(
                 'disabled' => $object->getId(),
                 'label' => 'Agudeza Visual'
             ))
-            ->add('cristal_od', null, array(
+            ->end()
+            # Ojo izquierdo
+            ->with('Graduación  del ojo izquierdo', ['class' => 'col-md-12'])
+            ->add('cristal_oi', null, array(
                 'disabled' => $object->getId(),
                 'label' => 'Cristal'
             ))
-//            ->end()
-//            ->with('Ojo Izquierdo', ['class' => 'col-md-12'])
-            # Ojo izquierdo
             ->add('eje_oi', null, array(
                 'disabled' => $object->getId(),
-                'label' => 'OI Eje'
+                'label' => 'Eje'
             ))
             ->add('a_visual_oi', null, array(
                 'disabled' => $object->getId(),
                 'label' => 'Agudeza Visual'
-            ))
-            ->add('cristal_oi', null, array(
-                'disabled' => $object->getId(),
-                'label' => 'Cristal'
             ))
             ->end();
 
