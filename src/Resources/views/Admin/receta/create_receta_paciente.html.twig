@@ -30,31 +30,44 @@
             {{ block('sonata_tab_content') }}
             {{ block('sonata_post_fieldsets') }}
             {{ form_rest(form) }}
-            {{ block('formactions') }}
+            <div class="sonata-ba-form-actions well well-small form-actions">
+                <button type="submit" class="btn btn-success" name="btn_create">
+                    <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                    Crear Receta
+                </button>
+            </div>
         </form>
     {% endif %}
 
     {{ sonata_block_render_event('sonata.admin.edit.form.bottom', { 'admin': admin, 'object': object }) }}
 
 {% endblock %}
-
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript">
         $(document).ready(function () {
+            $('.box-title')[0].append('para {{ paciente.nombre }}');
+
             $('#{{ admin.uniqid }}_numero').parent().addClass('col-md-2');
-            $('#{{ admin.uniqid }}_fecha').parent().parent().parent().addClass('col-md-2');
+            $('#{{ admin.uniqid }}_fecha_refraccion').parent().parent().parent().addClass('col-md-2');
             $('#{{ admin.uniqid }}_dp').parent().addClass('col-md-2');
             $('#{{ admin.uniqid }}_add').parent().addClass('col-md-2');
-            let input_ojo = ["eje_od", "a_visual_od", "cristal_od", "eje_oi", "a_visual_oi", "cristal_oi"];
+            let input_ojo = {
+                "eje_od": {'class': 'col-md-2'},
+                "a_visual_od": {'class': 'col-md-2'},
+                "cristal_od": {'class': 'col-md-4'},
 
-            for (let i = 0; i < input_ojo.length; i++) {
-                $('#{{ admin.uniqid }}_' + input_ojo[i]).parent().addClass('col-md-4');
+                "eje_oi": {'class': 'col-md-2'},
+                "a_visual_oi": {'class': 'col-md-2'},
+                "cristal_oi": {'class': 'col-md-4'}
+            };
+
+            for (var k in input_ojo) {
+                console.log(k);
+                $('#{{ admin.uniqid }}_' + k).parent().addClass(input_ojo[k].class);
+
             }
 
-            {#$('#{{ admin.uniqid }}_eje_od').addClass('col-md-2');#}
-            {#$('#{{ admin.uniqid }}_eje_od').addClass('col-md-2');#}
-            {#$('#{{ admin.uniqid }}_eje_od').addClass('col-md-2');#}
 
         });
     </script>

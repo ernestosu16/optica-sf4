@@ -134,7 +134,10 @@ class AppPacienteAdmin extends _BaseAdmin_
                 ->end();
         }
 
-        if ($object->getHistoriaClinica()) {
+        $paciente = $em->getRepository(AppPaciente::class)->findOneBy(
+            ['historia_clinica' => $object->getHistoriaClinica(), 'office' => $user->getOffice()]
+        );
+        if ($paciente && $paciente->getHistoriaClinica() === $object->getHistoriaClinica() && $paciente != $object) {
             $paciente = $em->getRepository(AppPaciente::class)->findOneBy(
                 ['historia_clinica' => $object->getHistoriaClinica()]);
 
@@ -173,14 +176,14 @@ class AppPacienteAdmin extends _BaseAdmin_
         $object->setOffice($user->getOffice());
     }
 
-    /**
-     * @param $object AppPaciente
-     */
-    public function Update($object)
-    {
-        $object->setOffice(false);
-
-        parent::Update($object);
-    }
+//    /**
+//     * @param $object AppPaciente
+//     */
+//    public function Update($object)
+//    {
+//        $object->setOffice(false);
+//
+//        parent::Update($object);
+//    }
 
 }

@@ -4,12 +4,7 @@
 namespace App\Controller;
 
 
-use App\Entity\AppReceta;
 use Sonata\AdminBundle\Controller\CRUDController;
-use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\DoctrineORMAdminBundle\Builder\FormContractor;
-use Sonata\Form\Type\DateTimePickerType;
-use Symfony\Component\Form\Forms;
 
 class PacienteAdminController extends CRUDController
 {

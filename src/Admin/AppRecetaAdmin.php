@@ -5,6 +5,8 @@ namespace App\Admin;
 
 
 use App\Entity\AppReceta;
+use Doctrine\ORM\QueryBuilder;
+use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelListType;
@@ -25,6 +27,7 @@ class AppRecetaAdmin extends _BaseAdmin_
         $collection->remove('export');
 
         $collection->add('crear_receta_paciente', 'crear_receta/{id}');
+        $collection->add('lista_receta_paciente', 'lista_receta/{id}');
     }
 
     protected function configureFormFields(FormMapper $formMapper)
@@ -32,13 +35,15 @@ class AppRecetaAdmin extends _BaseAdmin_
         $object = $this->getSubject();
 
         $formMapper
-            ->with('Receta', ['class' => 'col-md-12'])
+            ->with('Datos receta', ['class' => 'col-md-12'])
             # Datos general de la receta
             ->add('numero', null, [
                 'disabled' => $object->getId(),
+
                 'label' => 'Número'
+       'required' => true,
             ])
-            ->add('fecha', DateTimePickerType::class, [
+            ->add('fecha_refraccion', DateTimePickerType::class, [
                 'disabled' => $object->getId(),
                 'required' => false,
                 'label' => 'Fecha de Refracción'
@@ -51,8 +56,8 @@ class AppRecetaAdmin extends _BaseAdmin_
                 'disabled' => $object->getId(),
             ])
             ->end()
-            ->with('Graduación', ['class' => 'col-md-12'])
             # Ojo derecho
+
             ->add('cristal_od', null, array(
                 'disabled' => $object->getId(),
                 'label' => 'OD Cristal'
@@ -60,11 +65,22 @@ class AppRecetaAdmin extends _BaseAdmin_
             ->add('eje_od', null, array(
                 'disabled' => $object->getId(),
                 'label' => 'Eje'
+
+            ->with('Graduación del ojo derecho', ['class' => 'col-md-12'])
+            ->add('cristal_od', null, array(
+                'disabled' => $object->getId(),
+                'label' => 'Cristal'
+            ))
+            ->add('eje_od', null, array(
+                'disabled' => $object->getId(),
+                'label' => 'Eje',
+
             ))
             ->add('a_visual_od', null, array(
                 'disabled' => $object->getId(),
                 'label' => 'Agudeza Visual'
             ))
+
 
 //            ->end()
 //            ->with('Ojo Izquierdo', ['class' => 'col-md-12'])
@@ -72,6 +88,13 @@ class AppRecetaAdmin extends _BaseAdmin_
             ->add('cristal_oi', null, array(
                 'disabled' => $object->getId(),
                 'label' => 'OI Cristal'
+
+            ->end()
+            # Ojo izquierdo
+            ->with('Graduación  del ojo izquierdo', ['class' => 'col-md-12'])
+            ->add('cristal_oi', null, array(
+                'disabled' => $object->getId(),
+                'label' => 'Cristal'
             ))
             ->add('eje_oi', null, array(
                 'disabled' => $object->getId(),
@@ -86,11 +109,22 @@ class AppRecetaAdmin extends _BaseAdmin_
 
     }
 
+    /**
+     * @param DatagridMapper $datagridMapper
+     */
+    protected function configureDatagridFilters(DatagridMapper $datagridMapper)
+    {
+        $datagridMapper
+            ->add('numero');
+    }
+
     protected function configureListFields(ListMapper $list)
     {
         $list
             ->add('numero')
-            ->add('fecha');
+            ->add('fecha_refraccion')
+            ->add('paciente')
+            ->add('usuario_creador');
     }
 
 }

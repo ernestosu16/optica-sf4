@@ -28,6 +28,18 @@ use Doctrine\ORM\Mapping as ORM;
 class AppReceta extends _BaseEntity_
 {
     /**
+     * @var DateTime
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    protected $fecha_refraccion;
+
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\AppPaciente")
+     */
+    protected $paciente;
+
+    /**
      * @var string
      * @ORM\Column(type="string", length=15, nullable=true)
      */
@@ -42,7 +54,6 @@ class AppReceta extends _BaseEntity_
      * @ORM\ManyToOne(targetEntity="App\Entity\Nomenclador\NcDp")
      */
     protected $dp;
-
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\AppCristal")
@@ -75,20 +86,16 @@ class AppReceta extends _BaseEntity_
     protected $a_visual_oi;
 
     /**
-     * @var DateTime
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\ManyToOne(targetEntity="App\Entity\SecurityUser")
+     * @ORM\JoinColumn(name="usuario_creador_id", referencedColumnName="id", nullable=true)
      */
-    protected $fecha;
+    protected $usuario_creador;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\AppRecetaTrabajador")
+     * @ORM\ManyToOne(targetEntity="App\Entity\SecurityOffice")
+     * @ORM\JoinColumn(referencedColumnName="id")
      */
-    protected $receta_trabajador;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\AppRecetaLugar")
-     */
-    protected $receta_lugar;
+    protected $office_creacion;
 
     public function __construct()
     {
@@ -202,40 +209,51 @@ class AppReceta extends _BaseEntity_
         return $this;
     }
 
-    public function getFecha(): ?\DateTimeInterface
+    public function getFechaRefraccion(): ?\DateTimeInterface
     {
-        return $this->fecha;
+        return $this->fecha_refraccion;
     }
 
-    public function setFecha(?\DateTimeInterface $fecha): self
+    public function setFechaRefraccion(?\DateTimeInterface $fecha_refraccion): self
     {
-        $this->fecha = $fecha;
+        $this->fecha_refraccion = $fecha_refraccion;
 
         return $this;
     }
 
-    public function getRecetaTrabajador(): ?AppRecetaTrabajador
+    public function getUsuarioCreador(): ?SecurityUser
     {
-        return $this->receta_trabajador;
+        return $this->usuario_creador;
     }
 
-    public function setRecetaTrabajador(?AppRecetaTrabajador $receta_trabajador): self
+    public function setUsuarioCreador(?SecurityUser $usuario_creador): self
     {
-        $this->receta_trabajador = $receta_trabajador;
+        $this->usuario_creador = $usuario_creador;
 
         return $this;
     }
 
-    public function getRecetaLugar(): ?AppRecetaLugar
+    public function getOfficeCreacion(): ?SecurityOffice
     {
-        return $this->receta_lugar;
+        return $this->office_creacion;
     }
 
-    public function setRecetaLugar(?AppRecetaLugar $receta_lugar): self
+    public function setOfficeCreacion(?SecurityOffice $office_creacion): self
     {
-        $this->receta_lugar = $receta_lugar;
+        $this->office_creacion = $office_creacion;
 
         return $this;
     }
 
+    public function getPaciente(): ?AppPaciente
+    {
+        return $this->paciente;
+    }
+
+    public function setPaciente(?AppPaciente $paciente): self
+    {
+        $this->paciente = $paciente;
+
+        return $this;
+    }
 }
