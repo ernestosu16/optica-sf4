@@ -23,8 +23,10 @@ use Sonata\AdminBundle\Controller\CRUDController;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Filter\FilterInterface;
 use Sonata\DoctrineORMAdminBundle\Filter\ModelFilter;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Bridge\Twig\Extension\FormExtension;
 
 class RecetaAdminController extends CRUDController
 {
@@ -121,38 +123,22 @@ class RecetaAdminController extends CRUDController
 
     /**
      * @param $id
+     * @return Response
      * @throws Exception
      */
     public function listaRecetaPacienteAction($id)
     {
-        /** @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
-        /** @var AppReceta $object */
-        $object = null;
+        $datagrid = $this->admin->getDatagrid();
+        $form = $datagrid->getForm();
 
-        /** @var AppPaciente $paciente */
-        $paciente = $em->find(AppPaciente::class, $id);
-        $object = $em->getRepository(AppReceta::class)->findBy(['paciente' => $paciente], ['created_at' => 'DESC']);
+        $query = $this->admin->getDatagrid()->getQuery();
 
-        $form = $this->admin->getDatagrid()->getForm();
+        foreach ($this->admin->getExtensions() as $extension) {
+            $extension->configureQuery($this->admin, $query, 'list');
+        }
+        $query->where("{$query->getRootAliases()[0]}.usuario_creador = '{$this->getUser()->getId()}'");
 
-        dump($this->admin->getDatagrid()->getFilters());
-//        exit;
-//        $filter =  new ModelFilter();
-//        $filter->isActive();
-//        dump($this->admin->getDatagrid()->addFilter($filter));
-//        $object = $em->getRepository(AppReceta::class)->findBy(['paciente' => $paciente], ['created_at' => 'DESC']);
 
-//        $list = $this->admin->getListBuilder()->getBaseList();
-
-//        $list = $this->get('sonata.admin.app.receta')->getListBuilder();
-//dump($list);exit;
-
-//        $listMapper = new ListMapper($this->admin->getListBuilder(), $this->admin->getListBuilder()->getBaseList(), $this->admin);
-
-//        return $this->admin->getTemplate('select');
-//        dump($listMapper);exit;
-//
         return $this->renderWithExtraParams('::Admin/receta/lista_receta_paciente.html.twig', array(
             'id' => $id,
             'form' => $form->createView(),
