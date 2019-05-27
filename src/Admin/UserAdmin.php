@@ -232,9 +232,9 @@ class UserAdmin extends AbstractAdmin
     public function validate(ErrorElement $errorElement, $object)
     {
         if ($object->getId() === null) {
-            $errorElement->with('password')
-                ->addViolation('Debe introducir una "Contraseña" por primera vez')
-                ->end();
+//            $errorElement->with('password')
+//                ->addViolation('Debe introducir una "Contraseña" por primera vez')
+//                ->end();
 
             /** @var EntityManager $em */
             $em = $this->getConfigurationPool()->getContainer()->get('doctrine');
