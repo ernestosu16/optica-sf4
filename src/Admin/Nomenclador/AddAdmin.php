@@ -56,11 +56,12 @@ class AddAdmin extends _BaseAdmin_
 
         $listMapper
             ->remove('batch')
-            ->add('id', null, array(
+           /** ->add('id', null, array(
                 'label' => 'No.'
-            ))
+            ))*/
             ->add('valor')
             ->add('_action', null, array(
+                'label'=> 'Acciones',
                 'row_align' => 'right',
                 'header_style' => 'width: 190px',
                 'actions' => array(
@@ -78,12 +79,12 @@ class AddAdmin extends _BaseAdmin_
     {
         $formMapper
             //->add('id')
-            ->with('Indique valor del Add', array(
+            ->with('Indique el valor de la adición', array(
                 'class' => 'col-md-3'
             ))
             ->add('valor', null, [
                 'attr' => [
-                    'title' => 'El campo solo puedo contener número',
+                    'title' => 'El campo solo puedo contener números ',
                     'pattern' => '^[\d]*$',
                 ]
             ])

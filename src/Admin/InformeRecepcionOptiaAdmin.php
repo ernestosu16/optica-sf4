@@ -65,7 +65,7 @@ class InformeRecepcionOptiaAdmin extends _BaseAdmin_
                 ])
                 ->end();
         }
-        $formMapper->with('Datos de la Recepcion', array('class' => 'col-md-3'))
+        $formMapper->with('Datos de la Recepción', array('class' => 'col-md-3'))
             ->add('fecha', DatePickerType::class, array(
                 'format' => 'dd/MM/yyyy',
                 'required' => true,
@@ -197,6 +197,7 @@ class InformeRecepcionOptiaAdmin extends _BaseAdmin_
                 'label' => 'Productos',
                 'template' => '::Admin\informe_recepcion_optica\producto__list.html.twig'
             ])
+            ->add('office_destino', null, ['label' => 'Destino'])
             ->add('estado', null, ['template' => '::Admin\informe_recepcion_optica\tr__estado.html.twig'])
 //            ->add('accesorios')
 //            ->add('armaduras')
@@ -205,7 +206,7 @@ class InformeRecepcionOptiaAdmin extends _BaseAdmin_
 //            ->add('pendiente')
 //            ->add('devuelto')
             ->add('_action', null, array(
-                'label' => '',
+                'label' => 'Acciones',
                 'actions' => array(
                     'show' => array(),
                     'edit' => array(),

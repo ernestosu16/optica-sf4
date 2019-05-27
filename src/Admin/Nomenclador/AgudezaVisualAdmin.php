@@ -40,7 +40,7 @@ class AgudezaVisualAdmin extends _BaseAdmin_
         $datagridMapper
             //->add('id')
             ->add('valor', null, array(
-                'label' => 'Valor de la Agudeza'
+                'label' => 'Valor de la Agudeza Visual'
             ));
     }
 
@@ -53,17 +53,19 @@ class AgudezaVisualAdmin extends _BaseAdmin_
 
         $listMapper
             ->remove('batch')
-            ->add('id', null, array(
+            /**->add('id', null, array(
                 'label' => 'No.'
-            ))
+            ))*/
             ->add('valor')
             ->add('_action', null, array(
+                'label'=> 'Acciones',
                 'row_align' => 'right',
                 'header_style' => 'width: 190px',
                 'actions' => array(
                     'show' => array(),
                     'edit' => array(),
                     'delete' => array(),
+
                 ),
             ));
     }
@@ -75,7 +77,7 @@ class AgudezaVisualAdmin extends _BaseAdmin_
     {
         $formMapper
             //->add('id')
-            ->with('Indique valor de la Agudeza Visual', array(
+            ->with('Indique el valor de la agudeza visual', array(
                 'class' => 'col-md-4'
             ))
             ->add('valor', null, [

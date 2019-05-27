@@ -22,7 +22,7 @@ abstract class _NcBase_ extends _BaseEntity_
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=15)
+     * @ORM\Column(type="string", length=25)
      */
     protected $valor;
 

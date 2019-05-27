@@ -22,7 +22,7 @@ class ProductoType extends AbstractType
             ->add('codigo')
             ->add('descripcion')
             ->add('precio', MoneyType::class, array(
-                'currency' => 'USD',
+                'currency' => 'CUP',
                 'attr' => array(
                     'placeholder' => 'x.xx',
                 ),
@@ -31,7 +31,7 @@ class ProductoType extends AbstractType
                 ),
             ))
             ->add('precio_costo', MoneyType::class, array(
-                'currency' => 'USD',
+                'currency' => 'CUP',
                 'attr' => array(
                     'placeholder' => 'x.xx',
                 ),

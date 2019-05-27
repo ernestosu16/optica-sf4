@@ -36,6 +36,7 @@ class AppRecetaAdmin extends _BaseAdmin_
             # Datos general de la receta
             ->add('numero', null, [
                 'disabled' => $object->getId(),
+                'label' => 'Número'
             ])
             ->add('fecha', DateTimePickerType::class, [
                 'disabled' => $object->getId(),
@@ -52,33 +53,35 @@ class AppRecetaAdmin extends _BaseAdmin_
             ->end()
             ->with('Graduación', ['class' => 'col-md-12'])
             # Ojo derecho
+            ->add('cristal_od', null, array(
+                'disabled' => $object->getId(),
+                'label' => 'OD Cristal'
+            ))
             ->add('eje_od', null, array(
                 'disabled' => $object->getId(),
-                'label' => 'OD Eje'
+                'label' => 'Eje'
             ))
             ->add('a_visual_od', null, array(
                 'disabled' => $object->getId(),
                 'label' => 'Agudeza Visual'
             ))
-            ->add('cristal_od', null, array(
-                'disabled' => $object->getId(),
-                'label' => 'Cristal'
-            ))
+
 //            ->end()
 //            ->with('Ojo Izquierdo', ['class' => 'col-md-12'])
             # Ojo izquierdo
+            ->add('cristal_oi', null, array(
+                'disabled' => $object->getId(),
+                'label' => 'OI Cristal'
+            ))
             ->add('eje_oi', null, array(
                 'disabled' => $object->getId(),
-                'label' => 'OI Eje'
+                'label' => 'Eje'
             ))
             ->add('a_visual_oi', null, array(
                 'disabled' => $object->getId(),
                 'label' => 'Agudeza Visual'
             ))
-            ->add('cristal_oi', null, array(
-                'disabled' => $object->getId(),
-                'label' => 'Cristal'
-            ))
+
             ->end();
 
     }

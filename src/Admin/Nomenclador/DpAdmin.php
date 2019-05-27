@@ -52,13 +52,14 @@ class DpAdmin extends _BaseAdmin_
 
         $listMapper
             ->remove('batch')
-            ->add('id', null, array(
+            /**->add('id', null, array(
                 'label' => 'No.'
-            ))
+            ))*/
             ->add('cerca')
             ->add('lejos')
             ->add('_action', null, array(
-                'row_align' => 'right',
+                'label'=> 'Acciones',
+                'row_align' => 'center',
                 'header_style' => 'width: 190px',
                 'actions' => array(
                     'show' => array(),
@@ -75,7 +76,7 @@ class DpAdmin extends _BaseAdmin_
     {
         $formMapper
             //->add('id')
-            ->with('Indique valores', array(
+            ->with('Indique los valores de las distancias pupilares', array(
                 'class' => 'col-md-3'
             ))
             ->add('cerca', null, [

@@ -45,7 +45,7 @@ class AppPacienteAdmin extends _BaseAdmin_
             ->add('nombre')
             ->add('historia_clinica')
             ->end()
-            ->with('Datos de Contacto', array('class' => 'col-md-6'))
+            ->with('Datos del Contacto', array('class' => 'col-md-6'))
             ->add('direccion')
             ->add('telefono_contacto')
             ->add('correo_contacto', EmailType::class, array(
@@ -68,17 +68,20 @@ class AppPacienteAdmin extends _BaseAdmin_
             ->add('nombre', TextType::class, [
                 'label' => 'Nombre y Apellidos',
             ])
-            ->add('sexo', 'string', [
+          /**  ->add('sexo', 'string', [
                 'label' => 'Sexo',
                 'template' => '::Admin/producto/list/sexo.html.twig',
             ])
             ->add('edad', 'string', [
                 'label' => 'Edad',
                 'template' => '::Admin/paciente/field__edad.html.twig',
-            ])
+            ])*/
             ->add('direccion', TextType::class, [
                 'label' => 'Dirección',
                 'header_style' => 'width: 290px',
+            ])
+            ->add('telefono_contacto', 'string', [
+                'label' => 'Contacto',
             ])
             ->add('created_at', null, [
                 'label' => 'Creado',
@@ -99,7 +102,8 @@ class AppPacienteAdmin extends _BaseAdmin_
     {
         $datagridMapper
             ->add('ci')
-            ->add('nombre');
+            ->add('nombre')
+            ->add('telefono_contacto');
     }
 
     /**
@@ -149,7 +153,7 @@ class AppPacienteAdmin extends _BaseAdmin_
             ->assertLength(['min' => 11])
             ->end()
             ->with('direccion')
-            ->assertLength(['min' => 10])
+            ->assertLength(['min' => 5])
             ->end()
             ->with('telefono_contacto')
             ->assertLength(['min' => 8, 'max' => 8])

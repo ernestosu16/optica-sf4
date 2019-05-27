@@ -20,6 +20,18 @@ class ColorAdmin extends _BaseAdmin_
 
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->add('valor');
+        unset($this->listModes['mosaic']);
+
+        $listMapper
+            ->remove('batch')
+            ->add('valor')
+            ->add('_action', null, array(
+                'label'=> 'Acciones',
+                'row_align' => 'center',
+                'header_style' => 'width: 190px',
+                'actions' => array(
+                    'edit' => array(),
+                ),
+            ));
     }
 }

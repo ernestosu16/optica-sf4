@@ -41,7 +41,11 @@ class PacienteAdminController extends CRUDController
 //            ->add('add', null, [
 //                'disabled' => $object->getId(),
 //            ])
-//            # Ojo derecho
+//            # Ojo derecho//
+//            ->add('cristal_od', null, array(
+//                'disabled' => $object->getId(),
+//                'label' => 'Cristal'
+//            ))
 //            ->add('eje_od', null, array(
 //                'disabled' => $object->getId(),
 //                'label' => 'Eje'
@@ -50,11 +54,11 @@ class PacienteAdminController extends CRUDController
 //                'disabled' => $object->getId(),
 //                'label' => 'Agudeza Visual'
 //            ))
-//            ->add('cristal_od', null, array(
+//            # Ojo izquierdo
+//            ->add('cristal_oi', null, array(
 //                'disabled' => $object->getId(),
 //                'label' => 'Cristal'
 //            ))
-//            # Ojo izquierdo
 //            ->add('eje_oi', null, array(
 //                'disabled' => $object->getId(),
 //                'label' => 'Eje'
@@ -62,10 +66,6 @@ class PacienteAdminController extends CRUDController
 //            ->add('a_visual_oi', null, array(
 //                'disabled' => $object->getId(),
 //                'label' => 'Agudeza Visual'
-//            ))
-//            ->add('cristal_oi', null, array(
-//                'disabled' => $object->getId(),
-//                'label' => 'Cristal'
 //            ))
 //            ->add('receta_trabajador')
 //            ->add('receta_lugar')

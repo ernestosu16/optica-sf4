@@ -53,12 +53,13 @@ class EjeAdmin extends _BaseAdmin_
 
         $listMapper
             ->remove('batch')
-            ->add('id', null, array(
+            /**->add('id', null, array(
                 'label' => 'No.'
-            ))
+            ))*/
             ->add('valor')
             ->add('_action', null, array(
-                'row_align' => 'right',
+                'label'=> 'Acciones',
+                'row_align' => 'center',
                 'header_style' => 'width: 190px',
                 'actions' => array(
                     'show' => array(),
@@ -75,7 +76,7 @@ class EjeAdmin extends _BaseAdmin_
     {
         $formMapper
             //->add('id')
-            ->with('Indique valor del eje', array(
+            ->with('Indique el valor del eje', array(
                 'class' => 'col-md-3'
             ))
             ->add('valor', null, [
