@@ -16,12 +16,14 @@ use DateTime;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\TransactionRequiredException;
 use Exception;
 use Sonata\AdminBundle\Admin\FieldDescriptionCollection;
 use Sonata\AdminBundle\Controller\CRUDController;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Filter\FilterInterface;
+use Sonata\DoctrineORMAdminBundle\Datagrid\ProxyQuery;
 use Sonata\DoctrineORMAdminBundle\Filter\ModelFilter;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Request;
@@ -131,12 +133,13 @@ class RecetaAdminController extends CRUDController
         $datagrid = $this->admin->getDatagrid();
         $form = $datagrid->getForm();
 
+        /** @var ProxyQuery|QueryBuilder $query */
         $query = $this->admin->getDatagrid()->getQuery();
 
         foreach ($this->admin->getExtensions() as $extension) {
             $extension->configureQuery($this->admin, $query, 'list');
         }
-        $query->where("{$query->getRootAliases()[0]}.usuario_creador = '{$this->getUser()->getId()}'");
+        $query->where("{$query->getRootAliases()[0]}.paciente = '$id'");
 
 
         return $this->renderWithExtraParams('::Admin/receta/lista_receta_paciente.html.twig', array(

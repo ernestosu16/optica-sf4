@@ -11,8 +11,11 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelListType;
 use Sonata\AdminBundle\Route\RouteCollection;
+use Sonata\Form\Type\DatePickerType;
 use Sonata\Form\Type\DateTimePickerType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 class AppRecetaAdmin extends _BaseAdmin_
 {
@@ -42,9 +45,10 @@ class AppRecetaAdmin extends _BaseAdmin_
                 'required' => true,
                 'label' => 'Número',
             ])
-            ->add('fecha_refraccion', DateTimePickerType::class, [
+            ->add('fecha_refraccion', DatePickerType::class, [
                 'disabled' => $object->getId(),
                 'required' => false,
+                'format' => DateType::HTML5_FORMAT,
                 'label' => 'Fecha de Refracción'
             ])
             ->add('dp', null, [
@@ -53,6 +57,18 @@ class AppRecetaAdmin extends _BaseAdmin_
             ])
             ->add('add', null, [
                 'disabled' => $object->getId(),
+            ])
+            ->add('lista_espejuelo', ChoiceType::class, [
+                'expanded' => true,
+                'label' => false,
+                'multiple' => true,
+                'choices' => [
+                    'Lejos' => 'lejos',
+                    'Cerca' => 'cerca',
+                    'Intermedia' => 'intermedia',
+                    'Bifocal' => 'bifocal',
+                    'Progresivos' => 'progresivos',
+                ]
             ])
             ->end()
             # Ojo derecho

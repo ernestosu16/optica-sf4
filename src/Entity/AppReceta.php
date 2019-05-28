@@ -46,6 +46,12 @@ class AppReceta extends _BaseEntity_
     protected $numero;
 
     /**
+     * @var ArrayCollection
+     * @ORM\Column(type="json")
+     */
+    protected $lista_espejuelo;
+
+    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Nomenclador\NcAdd")
      */
     protected $add;
@@ -99,6 +105,7 @@ class AppReceta extends _BaseEntity_
 
     public function __construct()
     {
+        $this->lista_espejuelo = new ArrayCollection();
     }
 
     public function getNumero(): ?string
@@ -253,6 +260,18 @@ class AppReceta extends _BaseEntity_
     public function setPaciente(?AppPaciente $paciente): self
     {
         $this->paciente = $paciente;
+
+        return $this;
+    }
+
+    public function getListaEspejuelo(): ?ArrayCollection
+    {
+        return $this->lista_espejuelo;
+    }
+
+    public function setListaEspejuelo($lista_espejuelo): self
+    {
+        $this->lista_espejuelo = $lista_espejuelo;
 
         return $this;
     }
