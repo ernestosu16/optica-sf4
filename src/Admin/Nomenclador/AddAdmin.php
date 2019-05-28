@@ -84,8 +84,8 @@ class AddAdmin extends _BaseAdmin_
             ))
             ->add('valor', null, [
                 'attr' => [
-                    'title' => 'El campo solo puedo contener números ',
-                    'pattern' => '^[\d]*$',
+                    'title' => 'El campo solo puedo contener número entre 0.5 y 3.5',
+                    'pattern' => '^([0-2].[5-9]([0-9])?|([3].[0-5]([0-9])?))$',
                 ]
             ])
             ->end();

@@ -82,8 +82,8 @@ class AgudezaVisualAdmin extends _BaseAdmin_
             ))
             ->add('valor', null, [
                 'attr' => [
-                    'title' => 'El campo solo puedo contener número',
-                    'pattern' => '^[\d]*$',
+                    'title' => 'El campo solo puedo contener número entre 0 y 1',
+                    'pattern' => '^(0(\.\d+)?|1(\.0+)?)$',
                 ]
             ])
             ->end();
