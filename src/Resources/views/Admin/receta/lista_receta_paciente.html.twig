@@ -95,3 +95,13 @@
         </div>
     {% endif %}
 {% endblock %}
+{% block list_footer %}
+     {{ parent() }}
+
+    <div class="sonata-ba-form-actions well well-small form-actions">
+        <a href="{{ path('admin_app_apppaciente_list') }}" class="btn btn-default" title="Cancelar">
+            <i class="fa fa-backward" aria-hidden="true"></i>
+            Regresar
+        </a>
+    </div>
+{% endblock %}
