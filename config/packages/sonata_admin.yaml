@@ -6,15 +6,11 @@ sonata_admin:
     dashboard:
         groups:
             sonata.admin.group.administration:
-                label:           sonata_administration
-                label_catalogue: SonataAdminBundle
+                label: 'Seguridad'
                 icon: '<i class="glyphicon glyphicon-user"></i>'
                 items:
                     - sonata.user.admin.user
                     - sonata.user.admin.group
-                    - sonata.user.admin.office
-                    - sonata.admin.app.clasificador
-                    - sonata.admin.app.trabajador
                     - app_auditoria.admin.auditoria_log
 #            sonata.admin.group.content:
 #                label:           sonata_media
@@ -23,6 +19,14 @@ sonata_admin:
 #                items:
 #                    - sonata.media.admin.media
 #                    - sonata.media.admin.gallery
+            sonata.admin.empresa:
+                icon:  '<i class="fa fa-gears"></i>'
+                label: 'Empresa'
+                items:
+                    - sonata.user.admin.office
+                    - sonata.admin.app.clasificador
+                    - sonata.admin.app.trabajador
+
             sonata.admin.nomenclador:
                 label_catalogue: app
                 icon:  '<i class="fa fa-gears"></i>'

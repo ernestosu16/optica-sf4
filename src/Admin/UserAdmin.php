@@ -167,7 +167,7 @@ class UserAdmin extends AbstractAdmin
                     'options' => array(
                         'translation_domain' => 'FOSUserBundle',
                         'attr' => [
-                            'title' => 'Mayúscula, minúscula, numero y 8 o más caracteres',
+                            'title' => 'Mayúscula, minúscula, número y 8 o más caracteres',
                             'pattern' => '^\S*(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$',
                         ]
                     ),

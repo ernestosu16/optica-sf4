@@ -48,18 +48,19 @@
         $(document).ready(function () {
             $('.box-title')[0].append('para {{ paciente.nombre }}');
 
-            $('#{{ admin.uniqid }}_numero').parent().addClass('col-md-2');
-            $('#{{ admin.uniqid }}_fecha_refraccion').parent().parent().parent().addClass('col-md-2');
-            $('#{{ admin.uniqid }}_dp').parent().addClass('col-md-2');
-            $('#{{ admin.uniqid }}_add').parent().addClass('col-md-2');
+            $('#{{ admin.uniqid }}_numero').parent().addClass('col-md-6');
+            $('#{{ admin.uniqid }}_fecha_refraccion').parent().parent().parent().addClass('col-md-6');
+            $('#{{ admin.uniqid }}_dp').parent().addClass('col-md-6');
+            $('#{{ admin.uniqid }}_add').parent().addClass('col-md-6');
+            $('#{{ admin.uniqid }}_lista_espejuelo').parent().addClass('col-md-12');
             let input_ojo = {
-                "eje_od": {'class': 'col-md-2'},
-                "a_visual_od": {'class': 'col-md-2'},
-                "cristal_od": {'class': 'col-md-4'},
+                "eje_od": {'class': 'col-md-3'},
+                "a_visual_od": {'class': 'col-md-3'},
+                "cristal_od": {'class': 'col-md-6'},
 
-                "eje_oi": {'class': 'col-md-2'},
-                "a_visual_oi": {'class': 'col-md-2'},
-                "cristal_oi": {'class': 'col-md-4'}
+                "eje_oi": {'class': 'col-md-3'},
+                "a_visual_oi": {'class': 'col-md-3'},
+                "cristal_oi": {'class': 'col-md-6'}
             };
 
             for (var k in input_ojo) {

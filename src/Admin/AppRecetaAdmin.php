@@ -38,7 +38,7 @@ class AppRecetaAdmin extends _BaseAdmin_
         $object = $this->getSubject();
 
         $formMapper
-            ->with('Datos receta', ['class' => 'col-md-12'])
+            ->with('Datos receta', ['class' => 'col-md-5'])
             # Datos general de la receta
             ->add('numero', null, [
                 'disabled' => $object->getId(),
@@ -60,8 +60,9 @@ class AppRecetaAdmin extends _BaseAdmin_
             ])
             ->add('lista_espejuelo', ChoiceType::class, [
                 'expanded' => true,
-                'label' => false,
+                'label' => 'Tipo de espejuelo',
                 'multiple' => true,
+                'required' => true,
                 'choices' => [
                     'Lejos' => 'lejos',
                     'Cerca' => 'cerca',
@@ -72,10 +73,11 @@ class AppRecetaAdmin extends _BaseAdmin_
             ])
             ->end()
             # Ojo derecho
-            ->with('Graduación del ojo derecho', ['class' => 'col-md-12'])
+            ->with('Graduación del ojo derecho', ['class' => 'col-md-7'])
             ->add('cristal_od', null, array(
                 'disabled' => $object->getId(),
-                'label' => 'Cristal'
+                'label' => 'Cristal',
+                'required' => true,
             ))
             ->add('eje_od', null, array(
                 'disabled' => $object->getId(),
@@ -83,14 +85,16 @@ class AppRecetaAdmin extends _BaseAdmin_
             ))
             ->add('a_visual_od', null, array(
                 'disabled' => $object->getId(),
-                'label' => 'Agudeza Visual'
+                'label' => 'Agudeza Visual',
+                'empty_data' => false,
             ))
             ->end()
             # Ojo izquierdo
-            ->with('Graduación  del ojo izquierdo', ['class' => 'col-md-12'])
+            ->with('Graduación  del ojo izquierdo', ['class' => 'col-md-7'])
             ->add('cristal_oi', null, array(
                 'disabled' => $object->getId(),
-                'label' => 'Cristal'
+                'label' => 'Cristal',
+                'required' => true,
             ))
             ->add('eje_oi', null, array(
                 'disabled' => $object->getId(),
@@ -98,7 +102,7 @@ class AppRecetaAdmin extends _BaseAdmin_
             ))
             ->add('a_visual_oi', null, array(
                 'disabled' => $object->getId(),
-                'label' => 'Agudeza Visual'
+                'label' => 'Agudeza Visual',
             ))
             ->end();
 
