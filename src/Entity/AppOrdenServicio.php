@@ -25,11 +25,6 @@ class AppOrdenServicio extends _BaseEntity_
     protected $paciente;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\AppTrabajador")
-     */
-    protected $trabajador;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\AppArmadura")
      */
     protected $armadura;
@@ -132,18 +127,6 @@ class AppOrdenServicio extends _BaseEntity_
     public function setPaciente(?AppPaciente $paciente): self
     {
         $this->paciente = $paciente;
-
-        return $this;
-    }
-
-    public function getTrabajador(): ?AppTrabajador
-    {
-        return $this->trabajador;
-    }
-
-    public function setTrabajador(?AppTrabajador $trabajador): self
-    {
-        $this->trabajador = $trabajador;
 
         return $this;
     }

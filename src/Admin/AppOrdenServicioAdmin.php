@@ -104,8 +104,6 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
                         'disabled' => $object->getId(),
                         'label' => 'Cristal'
                     ))
-                    ->add('receta_trabajador')
-                    ->add('receta_lugar')
             )
             ->end()
             ->end();

@@ -22,7 +22,7 @@ services:
             - [setTranslationDomain,['NomencladorBundle']]
     sonata.admin.app.trabajador:
         class: App\Admin\AppTrabajadorAdmin
-        arguments: [~, App\Entity\AppTrabajador, ~]
+        arguments: [~, App\Entity\SecurityUser, ~]
         tags:
             - { name: sonata.admin, manager_type: orm, label: app.trabajadores }
         calls:
