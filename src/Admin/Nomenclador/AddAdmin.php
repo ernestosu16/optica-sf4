@@ -56,12 +56,11 @@ class AddAdmin extends _BaseAdmin_
 
         $listMapper
             ->remove('batch')
-           /** ->add('id', null, array(
-                'label' => 'No.'
-            ))*/
-            ->add('valor')
+            ->add('valor', null, [
+                'template' => '::Admin/Nc/field__adds.html.twig'
+            ])
             ->add('_action', null, array(
-                'label'=> 'Acciones',
+                'label' => 'Acciones',
                 'row_align' => 'right',
                 'header_style' => 'width: 190px',
                 'actions' => array(
@@ -85,7 +84,7 @@ class AddAdmin extends _BaseAdmin_
             ->add('valor', null, [
                 'attr' => [
                     'title' => 'El campo solo puedo contener número entre 0.5 y 3.5',
-                    'pattern' => '^([0-2].[5-9]([0-9])?|([3].[0-5]([0-9])?))$',
+                    'pattern' => '^(0.[5-9]\d?|[1-2](.\d\d?)?|3(.[0-5]\d?)?)$',
                 ]
             ])
             ->end();

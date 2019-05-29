@@ -12,5 +12,19 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class NcAdd extends _NcBase_
 {
+    public function __toString()
+    {
+        return (string)"+ " . $this->valor;
+    }
+
+    public function getValor(): ?string
+    {
+        return (double)$this->valor;
+    }
+
+    public function setValor(string $valor): _NcBase_
+    {
+        return parent::setValor((double)$valor);
+    }
 
 }
