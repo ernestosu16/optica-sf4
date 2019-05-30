@@ -1,0 +1,30 @@
+{% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
+{% block field %}
+    {# @var object \App\Entity\AppReceta #}
+    <div>
+        <table class="table table-striped table-hover" style="margin: 0;padding: 0;">
+            <thead>
+            <tr>
+                <th></th>
+                <th>Cristal</th>
+                <th>Eje</th>
+                <th>Agudeza Visual</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>OD:</td>
+                <td>{{ object.cristalOd }}</td>
+                <td>{{ object.ejeOd }}</td>
+                <td>{{ object.aVisualOd }}</td>
+            </tr>
+            <tr>
+                <td>OI</td>
+                <td>{{ object.cristalOi }}</td>
+                <td>{{ object.ejeOi }}</td>
+                <td>{{ object.aVisualOi }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

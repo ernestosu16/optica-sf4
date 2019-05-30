@@ -5,10 +5,12 @@ namespace App\Admin;
 
 
 use App\Entity\AppReceta;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\QueryBuilder;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Form\Type\CollectionType;
 use Sonata\AdminBundle\Form\Type\ModelListType;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\Form\Type\DatePickerType;
@@ -31,6 +33,7 @@ class AppRecetaAdmin extends _BaseAdmin_
 
         $collection->add('crear_receta_paciente', 'crear_receta/{id}');
         $collection->add('lista_receta_paciente', 'lista_receta/{id}');
+        $collection->add('lista_receta', 'lista_receta');
     }
 
     protected function configureFormFields(FormMapper $formMapper)
@@ -120,10 +123,36 @@ class AppRecetaAdmin extends _BaseAdmin_
     protected function configureListFields(ListMapper $list)
     {
         $list
-            ->add('numero')
-            ->add('fecha_refraccion')
-            ->add('paciente')
-            ->add('usuario_creador');
+            ->add('fecha_refraccion', null, [
+                'label' => 'Fecha Refracción',
+                'format' => 'Y-m-d',
+            ])
+            ->add('numero', null, [
+                'label' => 'Número',
+            ])
+            ->add('paciente', null, [
+                'label' => 'Paciente',
+                'editable' => false,
+                'row_align' => 'center',
+            ])
+            ->add('add', null, ['label' => 'ADD'])
+            ->add('dp', null, ['label' => 'DP'])
+            ->add('espejuelo', null, [
+                'template' => '::Admin\receta\field__espejuelo.html.twig',
+                'label' => 'Espejuelo'
+            ])
+            ->add('espejuelo_tipo', null, [
+                'template' => '::Admin\receta\field__espejuelo_tipo.html.twig',
+                'label' => 'Tipo',
+            ])
+            ->add('_action', null, array(
+                'label' => '',
+                'row_align' => 'right',
+                'header_style' => 'width: 70px',
+                'actions' => array(
+                    'others' => ['template' => '::Admin\receta\buttons__others.html.twig'],
+                )
+            ));
     }
 
 }

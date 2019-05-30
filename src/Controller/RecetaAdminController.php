@@ -148,4 +148,15 @@ class RecetaAdminController extends CRUDController
         ));
     }
 
+    public function listaRecetaAction()
+    {
+        $datagrid = $this->admin->getDatagrid();
+        $form = $datagrid->getForm();
+
+
+        return $this->renderWithExtraParams('::Admin/receta/lista_receta.html.twig', array(
+            'form' => $form->createView(),
+        ));
+    }
+
 }

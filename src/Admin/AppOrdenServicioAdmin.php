@@ -10,6 +10,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelListType;
 use Sonata\AdminBundle\Form\Type\ModelType;
+use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\Form\Type\DateTimePickerType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -18,19 +19,18 @@ use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 
 class AppOrdenServicioAdmin extends _BaseAdmin_
 {
-//    protected function configureBatchActions($actions)
-//    {
-//        if (
-//            $this->hasRoute('edit') && $this->hasAccess('edit') &&
-//            $this->hasRoute('delete') && $this->hasAccess('delete')
-//        ) {
-//            $actions['merge'] = [
-//                'ask_confirmation' => true
-//            ];
-//        }
-//
-//        return $actions;
-//    }
+    public function configureActionButtons($action, $object = null)
+    {
+        $list['button__lista_receta']['template'] = '::Admin\OrdenServicio\button__lista_receta.html.twig';
+//        $list['button__crear_receta']['template'] = '::Admin\OrdenServicio\button__crear_receta.html.twig';
+
+        return $list;
+    }
+
+    protected function configureRoutes(RouteCollection $collection)
+    {
+        return $collection->clearExcept(array('list'));
+    }
 
     /**
      * @param FormMapper $formMapper
@@ -50,10 +50,6 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
                     'readonly' => true
                 ]
             ])
-            ->add('paciente', $object->getId() ? null : ModelType::class, array(
-                'required' => true,
-                'disabled' => $object->getId(),
-            ))
             ->end();
 
         # Receta

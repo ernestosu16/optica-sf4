@@ -13,9 +13,7 @@ use App\Entity\Nomenclador\NcAgudezaVisual;
 use App\Entity\Nomenclador\NcDp;
 use App\Entity\Nomenclador\NcEje;
 use DateTime;
-use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -266,7 +264,7 @@ class AppReceta extends _BaseEntity_
 
     public function getListaEspejuelo(): ?ArrayCollection
     {
-        return $this->lista_espejuelo;
+        return new ArrayCollection($this->lista_espejuelo);
     }
 
     public function setListaEspejuelo($lista_espejuelo): self

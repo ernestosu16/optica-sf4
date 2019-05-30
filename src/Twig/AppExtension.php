@@ -3,6 +3,7 @@
 namespace App\Twig;
 
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
@@ -13,6 +14,7 @@ class AppExtension extends AbstractExtension
     {
         return [
             new TwigFilter('getAge', [$this, 'getAgeCi']),
+            new TwigFilter('ArrayToList', [$this, 'ArrayToList']),
         ];
     }
 
@@ -26,5 +28,9 @@ class AppExtension extends AbstractExtension
         return DateTime::createFromFormat('y-m-d', "$year-$month-$day")
             ->diff(new DateTime('now'))
             ->y;
+    }
+
+    public function ArrayToList(array $array){
+        return ucwords(implode(", ", $array));
     }
 }
