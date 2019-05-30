@@ -24,6 +24,8 @@ use Symfony\Component\Form\FormTypeInterface;
 
 class UserAdmin extends AbstractAdmin
 {
+    protected $baseRoutePattern = 'appusuario';
+    protected $baseRouteName = 'appusuario';
     /**
      * @var UserManagerInterface
      */

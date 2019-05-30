@@ -64,7 +64,6 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
                     'label' => false, 'by_reference' => true, 'data_class' => AppReceta::class))
                     # Datos general de la receta
                     ->add('numero', null, [
-                        //'disabled' => true,
                     ])
                     ->add('fecha_refraccion', DateTimePickerType::class, [
                         //'disabled' => true,
@@ -77,9 +76,14 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
                         'label' => 'DP'
                     ])
                     ->add('add', null, [
-                        //'disabled' => true,
+                    ])
+                    ->add('lista_espejuelo', null, [
                     ])
                     # Ojo derecho
+                    ->add('cristal_od', null, array(
+                        //'disabled' => true,
+                        'label' => 'Cristal'
+                    ))
                     ->add('eje_od', null, array(
                         //'disabled' => true,
                         'label' => 'Eje'
@@ -88,11 +92,11 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
                         //'disabled' => true,
                         'label' => 'Agudeza Visual'
                     ))
-                    ->add('cristal_od', null, array(
+                    # Ojo izquierdo
+                    ->add('cristal_oi', null, array(
                         //'disabled' => true,
                         'label' => 'Cristal'
                     ))
-                    # Ojo izquierdo
                     ->add('eje_oi', null, array(
                         //'disabled' => true,
                         'label' => 'Eje'
@@ -100,10 +104,6 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
                     ->add('a_visual_oi', null, array(
                         //'disabled' => true,
                         'label' => 'Agudeza Visual'
-                    ))
-                    ->add('cristal_oi', null, array(
-                        //'disabled' => true,
-                        'label' => 'Cristal'
                     ))
             )
             ->end()

@@ -21,6 +21,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 class AppTrabajadorAdmin extends _BaseAdmin_
 {
     protected $baseRoutePattern = 'apptrabajador';
+    protected $baseRouteName = 'apptrabajador';
 
     protected function configureRoutes(RouteCollection $collection)
     {

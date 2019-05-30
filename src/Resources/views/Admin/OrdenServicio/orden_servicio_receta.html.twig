@@ -44,4 +44,51 @@
 
     {{ sonata_block_render_event('sonata.admin.edit.form.bottom', { 'admin': admin, 'object': object }) }}
 
+    <script type="text/javascript">
+        $(document).ready(function () {
+            {#$('.box-title')[0].append('para {{  }}');#}
+
+            $('[for="{{ admin.uniqid }}_receta_numero"]').parent().addClass('col-md-3');
+            $('[for="{{ admin.uniqid }}_receta_fecha_refraccion"]').parent().addClass('col-md-3');
+            $('[for="{{ admin.uniqid }}_receta_dp"]').parent().addClass('col-md-3');
+            $('[for="{{ admin.uniqid }}_receta_add"]').parent().addClass('col-md-3');
+            $('#{{ admin.uniqid }}_lista_espejuelo').parent().addClass('col-md-12');
+
+            let input_ojo = {
+                "receta_eje_od": {'class': 'col-md-3'},
+                "receta_a_visual_od": {'class': 'col-md-3'},
+                "receta_cristal_od": {'class': 'col-md-6'},
+
+                "receta_eje_oi": {'class': 'col-md-3'},
+                "receta_a_visual_oi": {'class': 'col-md-3'},
+                "receta_cristal_oi": {'class': 'col-md-6'}
+            };
+
+            for (var k in input_ojo) {
+                $('[for="{{ admin.uniqid }}_' + k + '"]').parent().addClass(input_ojo[k].class);
+
+            }
+
+
+            function checkbox() {
+                let limit = 2; //change according to your need
+                let checkboxes = $("input:checkbox");//get all the checkbox
+                if (checkboxes.filter(":checked").length >= limit) {
+                    //if limit is reached disbaled all except checked and #man7
+                    //else put an alert here instead of below lines.
+                    checkboxes.not(":checked,#man7").iCheck('disable');
+                } else {
+                    //else enable it all
+                    checkboxes.not(":checked").iCheck('enable');
+                }
+            }
+
+            $('input[name="{{ admin.uniqid }}[lista_espejuelo][]"]').on("ifChanged", function () {
+                checkbox();
+            });
+
+            checkbox();
+
+        });
+    </script>
 {% endblock %}
