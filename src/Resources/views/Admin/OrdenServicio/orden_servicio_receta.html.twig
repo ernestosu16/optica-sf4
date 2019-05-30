@@ -57,6 +57,8 @@
             $('[class="form-check"]').addClass('row col-md-3');
 
             $('#{{ admin.uniqid }}_precio').parent().parent().addClass('col-md-6 row');
+            $('[for="{{ admin.uniqid }}_armadura"]').parent().addClass('col-md-12 row');
+            $('[for="{{ admin.uniqid }}_accesorios"]').parent().addClass('col-md-12 row');
             $('#{{ admin.uniqid }}_receta').find('input').attr('readonly', 'readonly');
             $('#{{ admin.uniqid }}_receta').find('select').select2("readonly", true);
 

@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use DateTime;
 use DateTimeInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -35,6 +37,11 @@ class AppOrdenServicio extends _BaseEntity_
     protected $armadura;
 
     /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\AppAccesorio")
+     */
+    protected $accesorios;
+
+    /**
      * @var string
      * @ORM\Column(type="string", length=15, nullable=true)
      */
@@ -63,6 +70,11 @@ class AppOrdenServicio extends _BaseEntity_
      * @ORM\Column(type="datetime", nullable=true)
      */
     protected $fecha_recogida;
+
+    public function __construct()
+    {
+        $this->accesorios = new ArrayCollection();
+    }
 
     public function getNumero(): ?string
     {
@@ -168,6 +180,32 @@ class AppOrdenServicio extends _BaseEntity_
     public function setArmadura(?AppArmadura $armadura): self
     {
         $this->armadura = $armadura;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|AppAccesorio[]
+     */
+    public function getAccesorios(): Collection
+    {
+        return $this->accesorios;
+    }
+
+    public function addAccesorio(AppAccesorio $accesorio): self
+    {
+        if (!$this->accesorios->contains($accesorio)) {
+            $this->accesorios[] = $accesorio;
+        }
+
+        return $this;
+    }
+
+    public function removeAccesorio(AppAccesorio $accesorio): self
+    {
+        if ($this->accesorios->contains($accesorio)) {
+            $this->accesorios->removeElement($accesorio);
+        }
 
         return $this;
     }
