@@ -77,25 +77,27 @@
 
             }
 
+            $('[class="icheckbox_square-blue"]').iCheck('disable');
+            $('[class="icheckbox_square-blue checked"]').iCheck('disable');
 
-            function checkbox() {
-                let limit = 2; //change according to your need
-                let checkboxes = $("input:checkbox");//get all the checkbox
-                if (checkboxes.filter(":checked").length >= limit) {
-                    //if limit is reached disbaled all except checked and #man7
-                    //else put an alert here instead of below lines.
-                    checkboxes.not(":checked,#man7").iCheck('disable');
-                } else {
-                    //else enable it all
-                    checkboxes.not(":checked").iCheck('enable');
-                }
-            }
+            {#function checkbox() {#}
+            {#    let limit = 2; //change according to your need#}
+            {#    let checkboxes = $("input:checkbox");//get all the checkbox#}
+            {#    if (checkboxes.filter(":checked").length >= limit) {#}
+            {#        //if limit is reached disbaled all except checked and #man7#}
+            {#        //else put an alert here instead of below lines.#}
+            {#        checkboxes.not(":checked,#man7").iCheck('disable');#}
+            {#    } else {#}
+            {#        //else enable it all#}
+            {#        checkboxes.not(":checked").iCheck('enable');#}
+            {#    }#}
+            {#}#}
 
-            $('input[name="{{ admin.uniqid }}[lista_espejuelo][]"]').on("ifChanged", function () {
-                checkbox();
-            });
+            {#$('input[name="{{ admin.uniqid }}[lista_espejuelo][]"]').on("ifChanged", function () {#}
+            {#    checkbox();#}
+            {#});#}
 
-            checkbox();
+            {#checkbox();#}
 
         });
     </script>
