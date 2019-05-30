@@ -14,6 +14,7 @@ use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\Form\Type\DateTimePickerType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 
@@ -47,12 +48,10 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
         $formMapper
             ->tab('General')
             ->with('Datos de la Orden', ['class' => 'col-md-4'])
-            ->add('numero', null, ['label' => 'Número', 'required' => true])
+//            ->add('numero', null, ['label' => 'Número', 'required' => true])
             ->add('precio', MoneyType::class, [
-//                'currency' => 'USD',
-//                'attr' => [
-//                    'readonly' => true
-//                ]
+                'currency' => 'CUP',
+                'attr' => ['readonly' => true]
             ])
             ->end();
 
@@ -62,6 +61,19 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
             ->add(
                 $formMapper->create('receta', FormType::class, array(
                     'label' => false, 'by_reference' => true, 'data_class' => AppReceta::class))
+                    ->add('lista_espejuelo', ChoiceType::class, [
+                        'expanded' => true,
+                        'label' => 'Tipo de espejuelo',
+                        'multiple' => true,
+                        'required' => true,
+                        'choices' => [
+                            'Lejos' => 'lejos',
+                            'Cerca' => 'cerca',
+                            'Intermedia' => 'intermedia',
+                            'Bifocal' => 'bifocal',
+                            'Progresivos' => 'progresivos',
+                        ]
+                    ])
                     # Datos general de la receta
                     ->add('numero', null, [
                     ])
@@ -76,8 +88,6 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
                         'label' => 'DP'
                     ])
                     ->add('add', null, [
-                    ])
-                    ->add('lista_espejuelo', null, [
                     ])
                     # Ojo derecho
                     ->add('cristal_od', null, array(

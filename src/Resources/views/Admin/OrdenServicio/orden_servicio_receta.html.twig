@@ -52,7 +52,13 @@
             $('[for="{{ admin.uniqid }}_receta_fecha_refraccion"]').parent().addClass('col-md-3');
             $('[for="{{ admin.uniqid }}_receta_dp"]').parent().addClass('col-md-3');
             $('[for="{{ admin.uniqid }}_receta_add"]').parent().addClass('col-md-3');
-            $('#{{ admin.uniqid }}_lista_espejuelo').parent().addClass('col-md-12');
+            $('#{{ admin.uniqid }}_receta_lista_espejuelo').parent().addClass('col-md-12');
+
+            $('[class="form-check"]').addClass('row col-md-3');
+
+            $('#{{ admin.uniqid }}_precio').parent().parent().addClass('col-md-6 row');
+            $('#{{ admin.uniqid }}_receta').find('input').attr('readonly', 'readonly');
+            $('#{{ admin.uniqid }}_receta').find('select').select2("readonly", true);
 
             let input_ojo = {
                 "receta_eje_od": {'class': 'col-md-3'},

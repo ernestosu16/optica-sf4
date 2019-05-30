@@ -44,7 +44,7 @@ class AppReceta extends _BaseEntity_
     protected $numero;
 
     /**
-     * @var ArrayCollection
+     * @var array
      * @ORM\Column(type="json")
      */
     protected $lista_espejuelo;
@@ -103,7 +103,7 @@ class AppReceta extends _BaseEntity_
 
     public function __construct()
     {
-        $this->lista_espejuelo = new ArrayCollection();
+        $this->lista_espejuelo = array();
     }
 
     public function getNumero(): ?string
@@ -262,9 +262,9 @@ class AppReceta extends _BaseEntity_
         return $this;
     }
 
-    public function getListaEspejuelo(): ?ArrayCollection
+    public function getListaEspejuelo()
     {
-        return new ArrayCollection($this->lista_espejuelo);
+        return $this->lista_espejuelo;
     }
 
     public function setListaEspejuelo($lista_espejuelo): self
