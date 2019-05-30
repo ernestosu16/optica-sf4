@@ -29,7 +29,11 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
 
     protected function configureRoutes(RouteCollection $collection)
     {
-        return $collection->clearExcept(array('list'));
+        $collection->clearExcept(array('list', 'create'));
+
+        $collection->add('orden_servicio_receta', 'orden_servicio_receta/{receta_id}');
+
+        return $collection;
     }
 
     /**
@@ -45,10 +49,10 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
             ->with('Datos de la Orden', ['class' => 'col-md-4'])
             ->add('numero', null, ['label' => 'Número', 'required' => true])
             ->add('precio', MoneyType::class, [
-                'currency' => 'USD',
-                'attr' => [
-                    'readonly' => true
-                ]
+//                'currency' => 'USD',
+//                'attr' => [
+//                    'readonly' => true
+//                ]
             ])
             ->end();
 
@@ -60,44 +64,45 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
                     'label' => false, 'by_reference' => true, 'data_class' => AppReceta::class))
                     # Datos general de la receta
                     ->add('numero', null, [
-                        'disabled' => $object->getId(),
+                        //'disabled' => true,
                     ])
-                    ->add('fecha', DateTimePickerType::class, [
-                        'disabled' => $object->getId(),
+                    ->add('fecha_refraccion', DateTimePickerType::class, [
+                        //'disabled' => true,
                         'required' => false,
-                        'label' => 'Fecha de Refracción'
+                        'label' => 'Fecha de Refracción',
+                        'format' => 'yyyy-MM-dd'
                     ])
                     ->add('dp', null, [
-                        'disabled' => $object->getId(),
+                        //'disabled' => true,
                         'label' => 'DP'
                     ])
                     ->add('add', null, [
-                        'disabled' => $object->getId(),
+                        //'disabled' => true,
                     ])
                     # Ojo derecho
                     ->add('eje_od', null, array(
-                        'disabled' => $object->getId(),
+                        //'disabled' => true,
                         'label' => 'Eje'
                     ))
                     ->add('a_visual_od', null, array(
-                        'disabled' => $object->getId(),
+                        //'disabled' => true,
                         'label' => 'Agudeza Visual'
                     ))
                     ->add('cristal_od', null, array(
-                        'disabled' => $object->getId(),
+                        //'disabled' => true,
                         'label' => 'Cristal'
                     ))
                     # Ojo izquierdo
                     ->add('eje_oi', null, array(
-                        'disabled' => $object->getId(),
+                        //'disabled' => true,
                         'label' => 'Eje'
                     ))
                     ->add('a_visual_oi', null, array(
-                        'disabled' => $object->getId(),
+                        //'disabled' => true,
                         'label' => 'Agudeza Visual'
                     ))
                     ->add('cristal_oi', null, array(
-                        'disabled' => $object->getId(),
+                        //'disabled' => true,
                         'label' => 'Cristal'
                     ))
             )
@@ -141,5 +146,12 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
                     'delete' => array(),
                 ),
             ));
+    }
+
+    /**
+     * @param $object AppOrdenServicio
+     */
+    public function prePersist($object)
+    {
     }
 }

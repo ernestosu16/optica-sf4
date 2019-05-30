@@ -37,7 +37,7 @@ services:
             - [setTemplate, ['edit', '::Admin/paciente/edit.html.twig']]
     sonata.admin.app.orden_servicio:
         class: App\Admin\AppOrdenServicioAdmin
-        arguments: [~, App\Entity\AppOrdenServicio, ~]
+        arguments: [~, App\Entity\AppOrdenServicio, App\Controller\OrdenServicioControllerAdmin]
         tags:
             - { name: sonata.admin, manager_type: orm, label: app.orden_servicio }
         calls:
