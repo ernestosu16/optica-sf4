@@ -85,7 +85,7 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
                     # Ojo derecho
                     ->add('cristal_od', null, array(
                         //'disabled' => true,
-                        'label' => 'Cristal'
+                        'label' => 'OD Cristal'
                     ))
                     ->add('eje_od', null, array(
                         //'disabled' => true,
@@ -98,7 +98,7 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
                     # Ojo izquierdo
                     ->add('cristal_oi', null, array(
                         //'disabled' => true,
-                        'label' => 'Cristal'
+                        'label' => 'OI Cristal'
                     ))
                     ->add('eje_oi', null, array(
                         //'disabled' => true,

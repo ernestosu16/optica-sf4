@@ -34,7 +34,7 @@
                     <i class="fa fa-plus-circle" aria-hidden="true"></i>
                     Crear Receta
                 </button>
-                <a href="{{ path('admin_app_apppaciente_list') }}" class="btn btn-default" title="Cancelar">
+                <a href="{{ path('admin_app_appreceta_lista_receta') }}" class="btn btn-default" title="Cancelar">
                     <i class="fa fa-backward" aria-hidden="true"></i>
                     Regresar
                 </a>
@@ -80,24 +80,99 @@
             $('[class="icheckbox_square-blue"]').iCheck('disable');
             $('[class="icheckbox_square-blue checked"]').iCheck('disable');
 
-            {#function checkbox() {#}
-            {#    let limit = 2; //change according to your need#}
-            {#    let checkboxes = $("input:checkbox");//get all the checkbox#}
-            {#    if (checkboxes.filter(":checked").length >= limit) {#}
-            {#        //if limit is reached disbaled all except checked and #man7#}
-            {#        //else put an alert here instead of below lines.#}
-            {#        checkboxes.not(":checked,#man7").iCheck('disable');#}
-            {#    } else {#}
-            {#        //else enable it all#}
-            {#        checkboxes.not(":checked").iCheck('enable');#}
-            {#    }#}
-            {#}#}
+            var oferta = {
+                'input_pecio': $("#{{ admin.uniqid }}_precio"),
+                'precio_inicial': 2.00,
+                'select_precio': [
+                    'receta_cristal_od',
+                    'receta_cristal_oi',
+                    'armadura',
+                    'accesorios'
+                ],
+                /**
+                 * @return {void}
+                 */
+                evento: function () {
+                    oferta.select_precio.forEach(function (item, index, array) {
+                        $("#{{ admin.uniqid }}_" + item).on('change', function () {
+                            oferta.calcularOden();
+                        });
+                    });
+                },
 
-            {#$('input[name="{{ admin.uniqid }}[lista_espejuelo][]"]').on("ifChanged", function () {#}
-            {#    checkbox();#}
-            {#});#}
+                calcularOden: function () {
+                    var importe_total = 0;
 
-            {#checkbox();#}
+                    $('select  option:selected').each(function (key, item) {
+                        importe_total += oferta.getSelectPrecio(item.text);
+                    });
+
+                    importe_total += oferta.precio_inicial;
+
+                    oferta.setInputPrecio(importe_total);
+
+                },
+
+                /**
+                 * Ejemplo:
+                 *   text = (+6.9,+11.5) - $1.20, devuelve = 1.2
+                 *
+                 * @return {number}
+                 */
+                getSelectPrecio: function (text) {
+                    if (!text && text === '') {
+                        return 0
+                    }
+
+                    var precio_string = text.match(/[$]\d+\.\d+/);
+                    if (!precio_string) {
+                        return 0;
+                    }
+
+                    return parseFloat(precio_string.pop().match(/\d+\.\d+/).pop());
+                },
+
+                /**
+                 * @return {void}
+                 */
+                setInputPrecio: function (v) {
+                    oferta.input_pecio.val(
+                        oferta.NumberFormat(v, 2)
+                    )
+                },
+
+                /**
+                 * @return {string}
+                 */
+                NumberFormat: function (x, f) {
+                    return oferta.CambiarPuntoPorComa(
+                        Number.parseFloat(x).toFixed(f)
+                    );
+                },
+
+                /**
+                 * @return {string}
+                 */
+                CambiarPuntoPorComa: function (text) {
+                    return text.toString().replace(/\./g, ',');
+                },
+
+                formValidate: function () {
+                    // $('form').submit(function (event) {
+                    //
+                    //     event.preventDefault();
+                    // });
+                },
+
+                init: function () {
+                    this.setInputPrecio(this.precio_inicial);
+                    this.evento();
+                    this.calcularOden();
+                    this.formValidate();
+                }
+            };
+
+            oferta.init();
 
         });
     </script>
