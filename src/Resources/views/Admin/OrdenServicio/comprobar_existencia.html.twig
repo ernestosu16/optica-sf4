@@ -11,9 +11,9 @@
 
     <tbody>
     {# @var object \App\Entity\MovimientoAlmacen\Alamacen #}
-    {% for object in almacen %}
+    {% for key, object in almacen %}
         <tr>
-            <th>OD</th>
+            <th>{{ key }}</th>
             <td class="sonata-ba-list-field sonata-ba-list-field-text"
                 objectid="{{ object.id }}">{{ object.producto.codigo }}</td>
             <td class="sonata-ba-list-field sonata-ba-list-field-text"
