@@ -57,9 +57,9 @@ class RecetaAdminController extends CRUDController
 
         if ($this->getRestMethod() === Request::METHOD_POST) {
 
-            $resquest = $this->getRequest()->request->get($this->admin->getUniqid());
+            $request = $this->getRequest()->request->get($this->admin->getUniqid());
 
-            foreach ($resquest as $key => $item) {
+            foreach ($request as $key => $item) {
 
                 # Cambiando el caracter _ por un espacio
                 $string = preg_replace('(_)', ' ', $key);

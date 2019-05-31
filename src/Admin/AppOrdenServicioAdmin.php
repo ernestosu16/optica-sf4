@@ -17,6 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class AppOrdenServicioAdmin extends _BaseAdmin_
 {
@@ -33,6 +34,7 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
         $collection->clearExcept(array('list', 'create'));
 
         $collection->add('orden_servicio_receta', 'orden_servicio_receta/{receta_id}');
+        $collection->add('datos_orden_servicio', 'datos_orden_servicio/{id}');
 
         return $collection;
     }
@@ -59,6 +61,7 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
             ->add('accesorios', null, [
                 'disabled' => $object->getId(),
             ])
+            ->add('observaciones', TextareaType::class)
             ->end();
 
         # Receta

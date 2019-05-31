@@ -1,0 +1,18 @@
+{% extends base_template %}
+{% import 'SonataAdminBundle:CRUD:base_show_macro.html.twig' as show_helper %}
+
+{% block show %}
+    <div class="row">
+        <div class="col-xs-12 col-md-12">
+            <div class="box box-primary" style="margin-bottom: 100px;">
+                <div class="box-body table-responsive no-padding">
+                    <a href="{{ path('admin_app_appreceta_lista_receta') }}"
+                       class="btn btn-sm btn-success" title="Cancelar">
+                        <i class="fa fa-close" aria-hidden="true"></i>
+                        Terminar
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
