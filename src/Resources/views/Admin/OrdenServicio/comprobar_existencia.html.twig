@@ -21,7 +21,10 @@
             <td class="sonata-ba-list-field sonata-ba-list-field-number"
                 objectid="{{ object.id }}">$ {{ object.producto.precio|money }}</td>
             <td class="sonata-ba-list-field sonata-ba-list-field-integer"
-                objectid="{{ object.id }}">{{ object.cantidadExistencia - object.cantidadReservado }}</td>
+                objectid="{{ object.id }}">
+                {% set existencia  = object.cantidadExistencia - object.cantidadReservado %}
+                {% if existencia < 0 %} 0 {% else %} {{ existencia }} {% endif %}
+            </td>
         </tr>
     {% endfor %}
     </tbody>
