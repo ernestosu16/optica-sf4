@@ -35,6 +35,8 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
 
         $collection->add('orden_servicio_receta', 'orden_servicio_receta/{receta_id}');
         $collection->add('datos_orden_servicio', 'datos_orden_servicio/{id}');
+        # Ruta para comprobar la existencia de los productos
+        $collection->add('comprobar_exitencia', 'comprobar_exitencia/{receta_id}');
 
         return $collection;
     }
@@ -48,25 +50,27 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
         $object = $this->getSubject();
 
         $formMapper
-            ->tab('Orden de Servicio')
             ->with('Datos de la Orden', ['class' => 'col-md-4'])
-//            ->add('numero', null, ['label' => 'Número', 'required' => true])
             ->add('precio', MoneyType::class, [
                 'currency' => 'CUP',
                 'attr' => ['readonly' => true]
             ])
             ->add('armadura', null, [
                 'disabled' => $object->getId(),
+                'placeholder' => 'Propia',
             ])
             ->add('accesorios', null, [
                 'disabled' => $object->getId(),
+                'attr' => ['placeholder' => 'Ningún',],
             ])
-            ->add('observaciones', TextareaType::class)
+            ->add('observaciones', TextareaType::class, [
+                'required' => false,
+            ])
             ->end();
 
         # Receta
         $formMapper
-            ->with('Receta', ['class' => 'col-md-8'])
+            ->with('Receta', ['class' => 'col-md-8', 'label' => 'Receta: ' . $object->getReceta()->getPaciente()])
             ->add(
                 $formMapper->create('receta', FormType::class, array(
                     'label' => false, 'by_reference' => true, 'data_class' => AppReceta::class))
@@ -111,7 +115,6 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
                         //'disabled' => true,
                         'label' => 'Agudeza Visual'
                     ))
-
                     ->add('lista_espejuelo', ChoiceType::class, [
                         'expanded' => true,
                         'label' => 'Tipo de espejuelo',
@@ -126,23 +129,7 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
                         ]
                     ])
             )
-            ->end()
             ->end();
-
-//        # Armadura y Accesorios
-//        $formMapper
-//            ->tab('Armadura y Accesorios', array('class' => 'col-md-5'))
-//            ->with('Armadura', ['class' => 'col-md-6'])
-//            ->add('armadura', null, [
-//                'disabled' => $object->getId(),
-//            ])
-//            ->end();
-//
-//        # Accesorios
-//        $formMapper
-//            ->with('Accesorios', ['class' => 'col-md-6'])
-//            ->end()
-//            ->end();
     }
 
     protected function configureListFields(ListMapper $listMapper)

@@ -34,17 +34,51 @@
                     <i class="fa fa-plus-circle" aria-hidden="true"></i>
                     Crear Receta
                 </button>
+                <button type="button" class="btn btn-success" name="btn_comprobar_existencia"
+                        data-toggle="modal" data-target="#myModal" onclick="comprobarExistencia()">
+                    <i class="fa fa-list" aria-hidden="true"></i>
+                    Comprobar existencia
+                </button>
                 <a href="{{ path('admin_app_appreceta_lista_receta') }}" class="btn btn-default" title="Cancelar">
                     <i class="fa fa-backward" aria-hidden="true"></i>
                     Regresar
                 </a>
             </div>
         </form>
+        <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    {#                <div class="modal-header">#}
+                    {#                    <button type="button" class="close" data-dismiss="modal">&times;</button>#}
+                    {#                    <h4>Datos de La Factura</h4>#}
+                    {#                </div>#}
+                    <div class="modal-body">
+                        <div id="loading"><img src="{{ asset('bundles/sonataadmin/ajax-loader.gif') }}"></div>
+                        <div id="data"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
     {% endif %}
 
     {{ sonata_block_render_event('sonata.admin.edit.form.bottom', { 'admin': admin, 'object': object }) }}
 
     <script type="text/javascript">
+
+        function comprobarExistencia() {
+            $("#data").html('');
+            $("#loading").show();
+            $.ajax({
+                url: "../comprobar_exitencia/" + {{ object.receta.id }},
+                beforeSend: function () {
+                },
+                success: function (result) {
+                    $("#data").html(result);
+                    $("#loading").hide();
+                }
+            });
+        }
+
         $(document).ready(function () {
             {#$('.box-title')[0].append('para {{  }}');#}
 
@@ -104,11 +138,15 @@
                 calcularOden: function () {
                     var importe_total = 0;
 
+                    if ($('#{{ admin.uniqid }}_armadura option:selected').text() === ""
+                        || $('#{{ admin.uniqid }}_accesorio option:selected').text() === "") {
+                        importe_total += oferta.precio_inicial;
+                    }
+
                     $('select  option:selected').each(function (key, item) {
                         importe_total += oferta.getSelectPrecio(item.text);
                     });
 
-                    importe_total += oferta.precio_inicial;
 
                     oferta.setInputPrecio(importe_total);
 

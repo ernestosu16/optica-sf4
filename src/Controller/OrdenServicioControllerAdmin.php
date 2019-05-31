@@ -6,6 +6,8 @@ namespace App\Controller;
 
 use App\Entity\AppOrdenServicio;
 use App\Entity\AppReceta;
+use App\Entity\MovimientoAlmacen\Alamacen;
+use App\Entity\SecurityUser;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\ORMException;
 use Sonata\AdminBundle\Controller\CRUDController;
@@ -63,6 +65,33 @@ class OrdenServicioControllerAdmin extends CRUDController
     {
         return $this->renderWithExtraParams('::Admin\OrdenServicio\datos_orden_servicio.html.twig ', [
 
+        ]);
+    }
+
+    /**
+     * @param $receta_id
+     * @return Response
+     * @throws ORMException
+     */
+    public function comprobarExitenciaAction($receta_id)
+    {
+        /** @var SecurityUser $user */
+        $user = $this->getUser();
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        /** @var AppReceta $recetaEntity */
+        $recetaEntity = $em->getReference(AppReceta::class,$receta_id);
+        $almacen = [];
+        $almacen['OD'] = $em->getRepository(Alamacen::class)
+            ->getProductoOficina($recetaEntity->getCristalOd()->getProducto(),$user->getOffice());
+        $almacen['OI'] = $em->getRepository(Alamacen::class)
+            ->getProductoOficina($recetaEntity->getCristalOi()->getProducto(),$user->getOffice());
+
+
+
+        return $this->renderWithExtraParams('::Admin\OrdenServicio\comprobar_existencia.html.twig', [
+            'almacen' =>$almacen
         ]);
     }
 }

@@ -15,6 +15,7 @@ class AppExtension extends AbstractExtension
         return [
             new TwigFilter('getAge', [$this, 'getAgeCi']),
             new TwigFilter('ArrayToList', [$this, 'ArrayToList']),
+            new TwigFilter('money', [$this, 'money']),
         ];
     }
 
@@ -30,7 +31,14 @@ class AppExtension extends AbstractExtension
             ->y;
     }
 
-    public function ArrayToList(array $array){
+    public function ArrayToList(array $array)
+    {
         return ucwords(implode(", ", $array));
+    }
+
+    public function money($precio)
+    {
+        return number_format($precio, 2, '.', ' ');
+
     }
 }

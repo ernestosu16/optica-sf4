@@ -1,0 +1,29 @@
+<table class="table table-bordered table-striped table-hover sonata-ba-list">
+    <thead>
+    <tr class="sonata-ba-list-field-header">
+        <th></th>
+        <th class="sonata-ba-list-field-header-text  sonata-ba-list-field-header-order-asc ">Código</th>
+        <th class="sonata-ba-list-field-header-text  sonata-ba-list-field-header-order-asc ">Descripción</th>
+        <th class="sonata-ba-list-field-header-number  sonata-ba-list-field-header-order-asc ">Precio</th>
+        <th class="sonata-ba-list-field-header-integer  sonata-ba-list-field-header-order-asc ">Existencia</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    {# @var object \App\Entity\MovimientoAlmacen\Alamacen #}
+    {% for object in almacen %}
+        <tr>
+            <th>OD</th>
+            <td class="sonata-ba-list-field sonata-ba-list-field-text"
+                objectid="{{ object.id }}">{{ object.producto.codigo }}</td>
+            <td class="sonata-ba-list-field sonata-ba-list-field-text"
+                objectid="{{ object.id }}">{{ object.producto.descripcion }}</td>
+            <td class="sonata-ba-list-field sonata-ba-list-field-number"
+                objectid="{{ object.id }}">$ {{ object.producto.precio|money }}</td>
+            <td class="sonata-ba-list-field sonata-ba-list-field-integer"
+                objectid="{{ object.id }}">{{ object.cantidadExistencia - object.cantidadReservado }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+
+</table>
