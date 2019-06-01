@@ -3,7 +3,9 @@
 namespace App\Admin;
 
 
+use App\Entity\AppAccesorio;
 use App\Entity\AppOrdenServicio;
+use App\Entity\AppProducto;
 use App\Entity\AppReceta;
 use App\Entity\AppRecetaLugar;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -49,6 +51,20 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
         /** @var AppOrdenServicio $object */
         $object = $this->getSubject();
 
+//        $entity = new AppProducto();
+//        $query = $this->modelManager->getEntityManager($entity)->createQuery('SELECT s FROM MyCompany\MyProjectBundle\Entity\Seria s ORDER BY s.nameASC');
+
+        $query_armadura = $this->modelManager
+            ->getEntityManager(AppProducto::class)
+            ->createQueryBuilder()
+            ->add('select', 'p')
+            ->add('from', '\App\Entity\AppProducto p')
+            ->innerJoin('p.accesorios','a')
+            ->add('orderBy', 'p.descripcion ASC');
+
+//        $formMapper->add('title', null, array('required' => true))
+//            ->add('user', null, array('required' => true, 'query_builder' => $query_user));
+
         $formMapper
             ->with('Datos de la Orden', ['class' => 'col-md-4'])
             ->add('precio', MoneyType::class, [
@@ -58,6 +74,7 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
             ->add('armadura', null, [
                 'disabled' => $object->getId(),
                 'placeholder' => 'Propia',
+//                'query_builder' => $query_armadura,
             ])
             ->add('accesorios', null, [
                 'disabled' => $object->getId(),
