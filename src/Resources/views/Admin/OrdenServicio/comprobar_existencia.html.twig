@@ -12,20 +12,27 @@
     <tbody>
     {# @var object \App\Entity\MovimientoAlmacen\Alamacen #}
     {% for key, object in almacen %}
-        <tr>
-            <th>{{ key }}</th>
-            <td class="sonata-ba-list-field sonata-ba-list-field-text"
-                objectid="{{ object.id }}">{{ object.producto.codigo }}</td>
-            <td class="sonata-ba-list-field sonata-ba-list-field-text"
-                objectid="{{ object.id }}">{{ object.producto.descripcion }}</td>
-            <td class="sonata-ba-list-field sonata-ba-list-field-number"
-                objectid="{{ object.id }}">$ {{ object.producto.precio|money }}</td>
-            <td class="sonata-ba-list-field sonata-ba-list-field-integer"
-                objectid="{{ object.id }}">
-                {% set existencia  = object.cantidadExistencia - object.cantidadReservado %}
-                {% if existencia < 0 %} 0 {% else %} {{ existencia }} {% endif %}
-            </td>
-        </tr>
+        {% if object %}
+            <tr>
+                <th>{{ key }}</th>
+                <td class="sonata-ba-list-field sonata-ba-list-field-text"
+                    objectid="{{ object.id }}">{{ object.producto.codigo }}</td>
+                <td class="sonata-ba-list-field sonata-ba-list-field-text"
+                    objectid="{{ object.id }}">{{ object.producto.descripcion }}</td>
+                <td class="sonata-ba-list-field sonata-ba-list-field-number"
+                    objectid="{{ object.id }}">$ {{ object.producto.precio|money }}</td>
+                <td class="sonata-ba-list-field sonata-ba-list-field-integer"
+                    objectid="{{ object.id }}">
+                    {% set existencia  = object.cantidadExistencia - object.cantidadReservado %}
+                    {% if existencia < 0 %} 0 {% else %} {{ existencia }} {% endif %}
+                </td>
+            </tr>
+            {% else %}
+                <tr>
+                    <th>{{ key }}</th>
+                    <th colspan="4">No existe este tipo de cristal en el almacén.</th>
+                </tr>
+        {% endif %}
     {% endfor %}
     </tbody>
 
