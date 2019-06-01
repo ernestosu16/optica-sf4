@@ -131,6 +131,8 @@ class RecetaAdminController extends CRUDController
     public function listaRecetaPacienteAction($id)
     {
         $datagrid = $this->admin->getDatagrid();
+        # Quitando la columna de action porq aqui no es necesario
+        $datagrid->getColumns()->remove('_action');
         $form = $datagrid->getForm();
 
         /** @var ProxyQuery|QueryBuilder $query */

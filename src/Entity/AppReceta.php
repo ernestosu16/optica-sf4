@@ -101,6 +101,12 @@ class AppReceta extends _BaseEntity_
      */
     protected $office_creacion;
 
+    /**
+     * @var
+     * @ORM\OneToOne(targetEntity="App\Entity\AppOrdenServicio", mappedBy="receta")
+     */
+    protected $orden_servicio;
+
     public function __construct()
     {
         $this->lista_espejuelo = array();
@@ -270,6 +276,24 @@ class AppReceta extends _BaseEntity_
     public function setListaEspejuelo($lista_espejuelo): self
     {
         $this->lista_espejuelo = $lista_espejuelo;
+
+        return $this;
+    }
+
+    public function getOrdenServicio(): ?AppOrdenServicio
+    {
+        return $this->orden_servicio;
+    }
+
+    public function setOrdenServicio(?AppOrdenServicio $orden_servicio): self
+    {
+        $this->orden_servicio = $orden_servicio;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newReceta = $orden_servicio === null ? null : $this;
+        if ($newReceta !== $orden_servicio->getReceta()) {
+            $orden_servicio->setReceta($newReceta);
+        }
 
         return $this;
     }

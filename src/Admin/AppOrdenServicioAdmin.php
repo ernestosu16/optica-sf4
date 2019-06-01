@@ -161,15 +161,15 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
             ->add('created_at', null, ['label' => 'Fecha'])
             ->add('numero')
             ->add('precio')
-            ->add('paciente')
+            ->add('receta.paciente')
             ->add('fecha_entrega')
-            ->add('_action', null, array(
+            /*->add('_action', null, array(
                 'actions' => array(
                     'show' => array(),
                     'edit' => array(),
                     'delete' => array(),
                 ),
-            ));
+            ))*/;
     }
 
     /**

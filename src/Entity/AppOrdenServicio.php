@@ -27,7 +27,7 @@ class AppOrdenServicio extends _BaseEntity_
     protected $office;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\AppReceta", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="App\Entity\AppReceta", cascade={"persist"}, inversedBy="orden_servicio")
      */
     protected $receta;
 
