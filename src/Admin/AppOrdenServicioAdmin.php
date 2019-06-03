@@ -8,6 +8,7 @@ use App\Entity\AppOrdenServicio;
 use App\Entity\AppProducto;
 use App\Entity\AppReceta;
 use App\Entity\AppRecetaLugar;
+use Doctrine\ORM\EntityManager;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelListType;
@@ -180,5 +181,18 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
      */
     public function prePersist($object)
     {
+    }
+
+    private function getNuevoNumeroFactura(AppOrdenServicio $object)
+    {
+        if ($object->getId()) {
+            return $object->getNumero();
+        }
+
+        /** @var EntityManager $em */
+        $em = $this->getConfigurationPool()->getContainer()->get('doctrine');
+        $lastRow = $em->getRepository(AppOrdenServicio::class)->getLastRow();
+
+        return (!$lastRow) ? 1 : $lastRow->getNumero() + 1;
     }
 }

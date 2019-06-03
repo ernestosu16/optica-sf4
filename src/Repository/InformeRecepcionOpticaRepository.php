@@ -15,11 +15,14 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  * @method InformeRecepcionOptica[]    findAll()
  * @method InformeRecepcionOptica[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class InformeRecepcionOpticaRepository extends ServiceEntityRepository
+class InformeRecepcionOpticaRepository extends _ServiceEntityRepository_
 {
-    public function __construct(RegistryInterface $registry)
+    /**
+     * @inheritDoc
+     */
+    protected static function getEntity()
     {
-        parent::__construct($registry, InformeRecepcionOptica::class);
+        return InformeRecepcionOptica::class;
     }
 
     // /**
@@ -67,12 +70,6 @@ class InformeRecepcionOpticaRepository extends ServiceEntityRepository
     public function obtenerFacturaPendienteEconomico()
     {
         return $this->findAll();
-    }
-
-    public function getLastRow()
-    {
-        return $this->findOneBy([], ['id' => 'desc']);
-
     }
 
     /**

@@ -18,6 +18,37 @@ use Symfony\Component\HttpFoundation\Response;
 
 class OrdenServicioControllerAdmin extends CRUDController
 {
+    private function getNuevoNumeroFactura(AppOrdenServicio $object)
+    {
+        if ($object->getId()) {
+            return $object->getNumero();
+        }
+        /** @var SecurityUser $user */
+        $user = $this->getUser();
+
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+        $lastRow = $em->getRepository(AppOrdenServicio::class)->getLastRowForOffice($user->getOffice());
+
+        return (!$lastRow) ? 1 : $lastRow->getNumero() + 1;
+    }
+
+    /**
+     * @param $object AppOrdenServicio
+     * @return AppOrdenServicio
+     */
+    private function setOrdenServicio($object)
+    {
+        /** @var SecurityUser $user */
+        $user = $this->getUser();
+
+        $object->setNumero($this->getNuevoNumeroFactura($object));
+        $object->setOffice($user->getOffice());
+        $object->setUsuarioCreador($user);
+
+        return $object;
+    }
+
     /**
      * @param $receta_id
      * @return Response
@@ -44,6 +75,7 @@ class OrdenServicioControllerAdmin extends CRUDController
         if ($this->getRequest()->getMethod() === Request::METHOD_POST) {
             $request = $this->getRequest()->request->get($this->admin->getUniqid());
             $object->setPrecio((double)$request['precio']);
+            $object = $this->setOrdenServicio($object);
 
             $em->persist($object);
             $em->flush();
@@ -81,17 +113,16 @@ class OrdenServicioControllerAdmin extends CRUDController
         $em = $this->getDoctrine()->getManager();
 
         /** @var AppReceta $recetaEntity */
-        $recetaEntity = $em->getReference(AppReceta::class,$receta_id);
+        $recetaEntity = $em->getReference(AppReceta::class, $receta_id);
         $almacen = [];
         $almacen['OD'] = $em->getRepository(Alamacen::class)
-            ->getProductoOficina($recetaEntity->getCristalOd()->getProducto(),$user->getOffice());
+            ->getProductoOficina($recetaEntity->getCristalOd()->getProducto(), $user->getOffice());
         $almacen['OI'] = $em->getRepository(Alamacen::class)
-            ->getProductoOficina($recetaEntity->getCristalOi()->getProducto(),$user->getOffice());
-
+            ->getProductoOficina($recetaEntity->getCristalOi()->getProducto(), $user->getOffice());
 
 
         return $this->renderWithExtraParams('::Admin\OrdenServicio\comprobar_existencia.html.twig', [
-            'almacen' =>$almacen
+            'almacen' => $almacen
         ]);
     }
 }

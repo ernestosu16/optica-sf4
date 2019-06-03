@@ -14,7 +14,7 @@ class NcAdd extends _NcBase_
 {
     public function __toString()
     {
-        return (string)"+ " . $this->valor;
+        return (string)"+" . $this->valor;
     }
 
     public function getValor(): ?string
