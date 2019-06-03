@@ -76,6 +76,12 @@ class AppOrdenServicio extends _BaseEntity_
         $this->accesorios = new ArrayCollection();
     }
 
+    public function __toString()
+    {
+        return (string) $this->numero;
+    }
+
+
     public function getNumero(): ?string
     {
         return $this->numero;

@@ -98,4 +98,19 @@ class AppCristal extends _Entity_
 
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function getPorUnidad()
+    {
+        if ($producto = $this->getProducto()) {
+            return (string)$producto->getCodigo() . ' - ' . $producto->getDescripcion() .
+                ' (' . ($this->esfera > 0 ? '+' : '') .
+                $this->esfera . ',' . ($this->cilindro > 0 ? '+' : '') .
+                $this->cilindro . ') - $' . number_format(($producto->getPrecio()/2), 2);
+        }
+
+        return '';
+    }
 }

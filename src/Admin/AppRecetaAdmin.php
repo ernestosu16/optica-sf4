@@ -81,6 +81,7 @@ class AppRecetaAdmin extends _BaseAdmin_
                 'disabled' => $object->getId(),
                 'label' => 'Cristal',
                 'required' => true,
+                'choice_label' => 'getPorUnidad',
             ))
             ->add('eje_od', null, array(
                 'disabled' => $object->getId(),
@@ -98,6 +99,7 @@ class AppRecetaAdmin extends _BaseAdmin_
                 'disabled' => $object->getId(),
                 'label' => 'Cristal',
                 'required' => true,
+                'choice_label' => 'getPorUnidad',
             ))
             ->add('eje_oi', null, array(
                 'disabled' => $object->getId(),
