@@ -27,7 +27,7 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
     public function configureActionButtons($action, $object = null)
     {
         $list['button__lista_receta']['template'] = '::Admin\OrdenServicio\button__lista_receta.html.twig';
-//        $list['button__crear_receta']['template'] = '::Admin\OrdenServicio\button__crear_receta.html.twig';
+        $list['button__crear_receta']['template'] = '::Admin\OrdenServicio\button__crear_receta.html.twig';
 
         return $list;
     }
@@ -36,6 +36,7 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
     {
         $collection->clearExcept(array('list', 'create'));
 
+        $collection->add('orden_servicio_sin_recta', 'orden_servicio_sin_receta');
         $collection->add('orden_servicio_receta', 'orden_servicio_receta/{receta_id}');
         $collection->add('datos_orden_servicio', 'datos_orden_servicio/{id}');
         # Ruta para comprobar la existencia de los productos
@@ -88,7 +89,7 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
 
         # Receta
         $formMapper
-            ->with('Receta', ['class' => 'col-md-8', 'label' => 'Receta: ' . $object->getReceta()->getPaciente()])
+            ->with('Receta', ['class' => 'col-md-8', 'label' => 'Receta: ' . ($object->getReceta()? $object->getReceta()->getPaciente() : null)])
             ->add(
                 $formMapper->create('receta', FormType::class, array(
                     'label' => false, 'by_reference' => true, 'data_class' => AppReceta::class))
@@ -112,6 +113,8 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
                         //'disabled' => true,
                         'label' => 'OD Cristal',
                         'choice_label' => 'getPorUnidad',
+                        'required' => true,
+                        'placeholder' => '--Seleccione el Cristal OD--',
 
                     ))
                     ->add('eje_od', null, array(
@@ -127,6 +130,8 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
                         //'disabled' => true,
                         'label' => 'OI Cristal',
                         'choice_label' => 'getPorUnidad',
+                        'required' => true,
+                        'placeholder' => '--Seleccione el Cristal OI--',
                     ))
                     ->add('eje_oi', null, array(
                         //'disabled' => true,

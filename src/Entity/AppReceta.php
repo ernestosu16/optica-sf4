@@ -112,6 +112,11 @@ class AppReceta extends _BaseEntity_
         $this->lista_espejuelo = array();
     }
 
+    public function __toString()
+    {
+        return (string)$this->numero;
+    }
+
     public function getNumero(): ?string
     {
         return (string)$this->numero;

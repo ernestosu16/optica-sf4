@@ -1,0 +1,219 @@
+{% extends base_template %}
+{% use '@SonataAdmin/CRUD/base_edit_form.html.twig' with form as parentForm %}
+{% block form %}
+    {% import "@SonataAdmin/CRUD/base_edit_form_macro.html.twig" as form_helper %}
+    {{ sonata_block_render_event('sonata.admin.edit.form.top', { 'admin': admin, 'object': object }) }}
+
+    {# NEXT_MAJOR: remove default filter #}
+    {% set url = 'orden_servicio_sin_recta' %}
+
+    {% if not admin.hasRoute(url) %}
+        <div>
+            {{ "form_not_available"|trans({}, "SonataAdminBundle") }}
+        </div>
+    {% else %}
+        <form
+                {% if sonata_admin.adminPool.getOption('form_type') == 'horizontal' %}class="form-horizontal"{% endif %}
+                role="form"
+                {# NEXT_MAJOR: remove default filter #}
+                action="{% block sonata_form_action_url %}{{ admin.generateUrl(url) }}{% endblock %}"
+                {% if form.vars.multipart %} enctype="multipart/form-data"{% endif %}
+                method="POST"
+                {% if not sonata_admin.adminPool.getOption('html5_validate') %}novalidate="novalidate"{% endif %}
+                {% block sonata_form_attributes %}{% endblock %}>
+
+            {{ include('@SonataAdmin/Helper/render_form_dismissable_errors.html.twig') }}
+
+            {{ block('sonata_pre_fieldsets') }}
+            {{ block('sonata_tab_content') }}
+            {{ block('sonata_post_fieldsets') }}
+            {{ form_rest(form) }}
+            <div class="sonata-ba-form-actions well well-small form-actions">
+                <button type="submit" class="btn btn-success" name="btn_create">
+                    <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                    Crear Orden
+                </button>
+                <button type="button" class="btn btn-warning" name="btn_comprobar_existencia"
+                        data-toggle="modal" data-target="#myModal" onclick="comprobarExistencia()">
+                    <i class="fa fa-list" aria-hidden="true"></i>
+                    Comprobar existencia
+                </button>
+                <a href="{{ path('admin_app_appreceta_lista_receta') }}" class="btn btn-default" title="Cancelar">
+                    <i class="fa fa-backward" aria-hidden="true"></i>
+                    Regresar
+                </a>
+            </div>
+        </form>
+        <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    {#                <div class="modal-header">#}
+                    {#                    <button type="button" class="close" data-dismiss="modal">&times;</button>#}
+                    {#                    <h4>Datos de La Factura</h4>#}
+                    {#                </div>#}
+                    <div class="modal-body">
+                        <div id="loading"><img src="{{ asset('bundles/sonataadmin/ajax-loader.gif') }}"></div>
+                        <div id="data"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    {{ sonata_block_render_event('sonata.admin.edit.form.bottom', { 'admin': admin, 'object': object }) }}
+
+    <script type="text/javascript">
+
+        {#function comprobarExistencia() {#}
+        {#    $("#data").html('');#}
+        {#    $("#loading").show();#}
+        {#    $.ajax({#}
+        {#        url: "../comprobar_exitencia/" + {{ object.receta.id }},#}
+        {#        beforeSend: function () {#}
+        {#        },#}
+        {#        success: function (result) {#}
+        {#            $("#data").html(result);#}
+        {#            $("#loading").hide();#}
+        {#        }#}
+        {#    });#}
+        {#}#}
+
+        $(document).ready(function () {
+            {#$('.box-title')[0].append('para {{  }}');#}
+
+            $('[for="{{ admin.uniqid }}_receta_numero"]').parent().addClass('col-md-3');
+            $('[for="{{ admin.uniqid }}_receta_fecha_refraccion"]').parent().addClass('col-md-3');
+            $('[for="{{ admin.uniqid }}_receta_dp"]').parent().addClass('col-md-3');
+            $('[for="{{ admin.uniqid }}_receta_add"]').parent().addClass('col-md-3');
+            $('#{{ admin.uniqid }}_receta_lista_espejuelo').parent().addClass('col-md-12');
+
+            $('[class="form-check"]').addClass('row col-md-3');
+
+            $('#{{ admin.uniqid }}_precio').parent().parent().addClass('col-md-6 row');
+            $('[for="{{ admin.uniqid }}_armadura"]').parent().addClass('col-md-12 row');
+            $('[for="{{ admin.uniqid }}_accesorios"]').parent().addClass('col-md-12 row');
+            $('[for="{{ admin.uniqid }}_observaciones"]').parent().addClass('col-md-12 row');
+            {#$('#{{ admin.uniqid }}_receta').find('input').attr('readonly', 'readonly');#}
+            {#$('#{{ admin.uniqid }}_receta').find('select').select2("readonly", true);#}
+
+            let input_ojo = {
+                "receta_eje_od": {'class': 'col-md-3'},
+                "receta_a_visual_od": {'class': 'col-md-3'},
+                "receta_cristal_od": {'class': 'col-md-6'},
+
+                "receta_eje_oi": {'class': 'col-md-3'},
+                "receta_a_visual_oi": {'class': 'col-md-3'},
+                "receta_cristal_oi": {'class': 'col-md-6'}
+            };
+
+            for (let k in input_ojo) {
+                $('[for="{{ admin.uniqid }}_' + k + '"]').parent().addClass(input_ojo[k].class);
+
+            }
+
+            // $('[class="icheckbox_square-blue"]').iCheck('disable');
+            // $('[class="icheckbox_square-blue checked"]').iCheck('disable');
+
+            var oferta = {
+                'input_pecio': $("#{{ admin.uniqid }}_precio"),
+                'precio_inicial': 2.00,
+                'select_precio': [
+                    'receta_cristal_od',
+                    'receta_cristal_oi',
+                    'armadura',
+                    'accesorios'
+                ],
+                /**
+                 * @return {void}
+                 */
+                evento: function () {
+                    oferta.select_precio.forEach(function (item, index, array) {
+                        $("#{{ admin.uniqid }}_" + item).on('change', function () {
+                            oferta.calcularOden();
+                        });
+                    });
+                },
+
+                calcularOden: function () {
+                    var importe_total = 0;
+
+                    if ($('#{{ admin.uniqid }}_armadura option:selected').text() === ""
+                        || $('#{{ admin.uniqid }}_accesorio option:selected').text() === "") {
+                        importe_total += oferta.precio_inicial;
+                    }
+
+                    $('select  option:selected').each(function (key, item) {
+                        importe_total += oferta.getSelectPrecio(item.text);
+                    });
+
+
+                    oferta.setInputPrecio(importe_total);
+
+                },
+
+                /**
+                 * Ejemplo:
+                 *   text = (+6.9,+11.5) - $1.20, devuelve = 1.2
+                 *
+                 * @return {number}
+                 */
+                getSelectPrecio: function (text) {
+                    if (!text && text === '') {
+                        return 0
+                    }
+
+                    var precio_string = text.match(/[$]\d+\.\d+/);
+                    if (!precio_string) {
+                        return 0;
+                    }
+
+                    return parseFloat(precio_string.pop().match(/\d+\.\d+/).pop());
+                },
+
+                /**
+                 * @return {void}
+                 */
+                setInputPrecio: function (v) {
+                    oferta.input_pecio.val(
+                        oferta.NumberFormat(v, 2)
+                    )
+                },
+
+                /**
+                 * @return {string}
+                 */
+                NumberFormat: function (x, f) {
+                    return oferta.CambiarPuntoPorComa(
+                        Number.parseFloat(x).toFixed(f)
+                    );
+                },
+
+                /**
+                 * @return {string}
+                 */
+                CambiarPuntoPorComa: function (text) {
+                    return text.toString()
+                        // .replace(/\./g, ',')
+                        ;
+                },
+
+                formValidate: function () {
+                    // $('form').submit(function (event) {
+                    //
+                    //     event.preventDefault();
+                    // });
+                },
+
+                init: function () {
+                    this.setInputPrecio(this.precio_inicial);
+                    this.evento();
+                    this.calcularOden();
+                    this.formValidate();
+                }
+            };
+
+            oferta.init();
+
+        });
+    </script>
+{% endblock %}

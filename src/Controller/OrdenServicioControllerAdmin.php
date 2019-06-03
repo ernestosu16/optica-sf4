@@ -125,4 +125,27 @@ class OrdenServicioControllerAdmin extends CRUDController
             'almacen' => $almacen
         ]);
     }
+
+    public function ordenServicioSinRectaAction()
+    {
+        $class = $this->admin->getClass();
+        /** @var AppOrdenServicio $object */
+        $object = new $class();
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        $this->admin->setSubject($object);
+
+//        dump($this->admin);exit;
+
+        /** @var Form $form */
+        $form = $this->admin->getForm();
+        $object->setReceta(new AppReceta());
+
+        return $this->renderWithExtraParams('::Admin\OrdenServicio\orden_servicio_sin_receta.html.twig ', array(
+            'object' => $object,
+            'form' => $form->createView(),
+            'action' => ''
+        ));
+    }
 }
