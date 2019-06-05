@@ -36,8 +36,8 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
 
     public function configureActionButtons($action, $object = null)
     {
-        $list['button__lista_receta']['template'] = '::Admin\OrdenServicio\button__lista_receta.html.twig';
         $list['button__crear_receta']['template'] = '::Admin\OrdenServicio\button__crear_receta.html.twig';
+        $list['button__lista_receta']['template'] = '::Admin\OrdenServicio\button__lista_receta.html.twig';
 
         return $list;
     }

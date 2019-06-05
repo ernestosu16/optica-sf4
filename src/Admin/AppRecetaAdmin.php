@@ -42,7 +42,7 @@ class AppRecetaAdmin extends _BaseAdmin_
 
         $formMapper
             ->with('Datos receta', ['class' => 'col-md-5'])
-            ->add('paciente', ModelListType::class)
+//            ->add('paciente', ModelListType::class)
             # Datos general de la receta
             ->add('numero', null, [
                 'disabled' => $object->getId(),
