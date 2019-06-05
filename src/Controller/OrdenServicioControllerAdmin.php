@@ -16,6 +16,10 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Class OrdenServicioControllerAdmin
+ * @package App\Controller
+ */
 class OrdenServicioControllerAdmin extends CRUDController
 {
     private function getNuevoNumeroFactura(AppOrdenServicio $object)
@@ -75,6 +79,7 @@ class OrdenServicioControllerAdmin extends CRUDController
         if ($this->getRequest()->getMethod() === Request::METHOD_POST) {
             $request = $this->getRequest()->request->get($this->admin->getUniqid());
             $object->setPrecio((double)$request['precio']);
+            $object->setPaciente($object->getReceta()->getPaciente());
             $object = $this->setOrdenServicio($object);
 
             $em->persist($object);
@@ -126,6 +131,9 @@ class OrdenServicioControllerAdmin extends CRUDController
         ]);
     }
 
+    /**
+     * @return Response
+     */
     public function ordenServicioSinRectaAction()
     {
         $class = $this->admin->getClass();
@@ -136,12 +144,30 @@ class OrdenServicioControllerAdmin extends CRUDController
 
         $this->admin->setSubject($object);
 
-//        dump($this->admin);exit;
+        $this->admin->formPaciente = true;
+
+////        $field = new FieldDescription();
+////        $field->setName('paciente');
+////
+////        $this->admin->setParentFieldDescription($field);
+//        $this->admin->getFormBuilder()
+//            ->add('paciente');
+////        $FormBuilder->add('paciente');
+//        dump($FormBuilder->all());
+////
+//        $formField = $this->admin->getFormFieldDescriptions();
+//        dump($formField);
+//        exit;
 
         /** @var Form $form */
         $form = $this->admin->getForm();
         $object->setReceta(new AppReceta());
 
+        return $this->render('::Admin\OrdenServicio\orden_servicio_sin_receta.html.twig ', array(
+            'object' => $object,
+            'form' => $form->createView(),
+            'action' => ''
+        ));
         return $this->renderWithExtraParams('::Admin\OrdenServicio\orden_servicio_sin_receta.html.twig ', array(
             'object' => $object,
             'form' => $form->createView(),

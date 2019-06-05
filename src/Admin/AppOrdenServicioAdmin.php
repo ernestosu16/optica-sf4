@@ -3,11 +3,11 @@
 namespace App\Admin;
 
 
-use App\Entity\AppAccesorio;
 use App\Entity\AppOrdenServicio;
 use App\Entity\AppProducto;
 use App\Entity\AppReceta;
 use App\Entity\AppRecetaLugar;
+use App\Entity\SecurityUser;
 use Doctrine\ORM\EntityManager;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
@@ -15,15 +15,25 @@ use Sonata\AdminBundle\Form\Type\ModelListType;
 use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\Form\Type\DateTimePickerType;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\FormBuilder;
 
 class AppOrdenServicioAdmin extends _BaseAdmin_
 {
+    public $formPaciente = false;
+
+//    public function getTemplate($name)
+//    {
+////        if ($name == "create")
+////            return '::Admin\Almacen\view__confirmar_factura.html.twig';
+//
+//        return $this->getTemplateRegistry()->getTemplate($name);
+//    }
+
     public function configureActionButtons($action, $object = null)
     {
         $list['button__lista_receta']['template'] = '::Admin\OrdenServicio\button__lista_receta.html.twig';
@@ -53,29 +63,32 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
         /** @var AppOrdenServicio $object */
         $object = $this->getSubject();
 
-//        $entity = new AppProducto();
-//        $query = $this->modelManager->getEntityManager($entity)->createQuery('SELECT s FROM MyCompany\MyProjectBundle\Entity\Seria s ORDER BY s.nameASC');
+        if ($this->isCurrentRoute('create')) {
+            $this->formPaciente = true;
+        }
 
         $query_armadura = $this->modelManager
             ->getEntityManager(AppProducto::class)
             ->createQueryBuilder()
             ->add('select', 'p')
             ->add('from', '\App\Entity\AppProducto p')
-            ->innerJoin('p.accesorios','a')
+            ->innerJoin('p.accesorios', 'a')
             ->add('orderBy', 'p.descripcion ASC');
 
-//        $formMapper->add('title', null, array('required' => true))
-//            ->add('user', null, array('required' => true, 'query_builder' => $query_user));
-
         $formMapper
-            ->with('Datos de la Orden', ['class' => 'col-md-4'])
-            ->add('precio', MoneyType::class, [
-                'currency' => 'CUP',
-                'attr' => ['readonly' => true]
-            ])
-            ->add('armadura', null, [
+            ->with('Datos de la Orden', ['class' => 'col-md-4']);
+        if ($this->formPaciente) {
+            $formMapper->add('paciente', ModelListType::class);
+        }
+        $formMapper->add('precio', MoneyType::class, [
+            'currency' => 'CUP',
+            'attr' => ['readonly' => true]
+        ])
+            ->add('armadura', ModelType::class, [
                 'disabled' => $object->getId(),
                 'placeholder' => 'Propia',
+                'btn_add' => '',
+                'required' => false,
 //                'query_builder' => $query_armadura,
             ])
             ->add('accesorios', null, [
@@ -89,72 +102,8 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
 
         # Receta
         $formMapper
-            ->with('Receta', ['class' => 'col-md-8', 'label' => 'Receta: ' . ($object->getReceta()? $object->getReceta()->getPaciente() : null)])
-            ->add(
-                $formMapper->create('receta', FormType::class, array(
-                    'label' => false, 'by_reference' => true, 'data_class' => AppReceta::class))
-                    # Datos general de la receta
-                    ->add('numero', null, [
-                    ])
-                    ->add('fecha_refraccion', DateTimePickerType::class, [
-                        //'disabled' => true,
-                        'required' => false,
-                        'label' => 'Fecha de Refracción',
-                        'format' => 'yyyy-MM-dd'
-                    ])
-                    ->add('dp', null, [
-                        //'disabled' => true,
-                        'label' => 'DP'
-                    ])
-                    ->add('add', null, [
-                    ])
-                    # Ojo derecho
-                    ->add('cristal_od', null, array(
-                        //'disabled' => true,
-                        'label' => 'OD Cristal',
-                        'choice_label' => 'getPorUnidad',
-                        'required' => true,
-                        'placeholder' => '--Seleccione el Cristal OD--',
-
-                    ))
-                    ->add('eje_od', null, array(
-                        //'disabled' => true,
-                        'label' => 'Eje'
-                    ))
-                    ->add('a_visual_od', null, array(
-                        //'disabled' => true,
-                        'label' => 'Agudeza Visual'
-                    ))
-                    # Ojo izquierdo
-                    ->add('cristal_oi', null, array(
-                        //'disabled' => true,
-                        'label' => 'OI Cristal',
-                        'choice_label' => 'getPorUnidad',
-                        'required' => true,
-                        'placeholder' => '--Seleccione el Cristal OI--',
-                    ))
-                    ->add('eje_oi', null, array(
-                        //'disabled' => true,
-                        'label' => 'Eje'
-                    ))
-                    ->add('a_visual_oi', null, array(
-                        //'disabled' => true,
-                        'label' => 'Agudeza Visual'
-                    ))
-                    ->add('lista_espejuelo', ChoiceType::class, [
-                        'expanded' => true,
-                        'label' => 'Tipo de espejuelo',
-                        'multiple' => true,
-                        'required' => true,
-                        'choices' => [
-                            'Lejos' => 'lejos',
-                            'Cerca' => 'cerca',
-                            'Intermedia' => 'intermedia',
-                            'Bifocal' => 'bifocal',
-                            'Progresivos' => 'progresivos',
-                        ]
-                    ])
-            )
+            ->with('Receta', ['class' => 'col-md-8', 'label' => 'Receta: ' . ($object->getReceta() ? $object->getReceta()->getPaciente() : null)])
+            ->add($this->FormReceta($formMapper))
             ->end();
     }
 
@@ -164,21 +113,20 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
 
         $listMapper
             ->remove('batch')
-            ->add('id', null, array(
+            ->add('numero', null, array(
                 'label' => 'No.'
             ))
-            ->add('created_at', null, ['label' => 'Fecha'])
-            ->add('numero')
             ->add('precio')
-            ->add('receta.paciente')
-            ->add('fecha_entrega')
-            /*->add('_action', null, array(
+            ->add('observaciones')
+            ->add('paciente')
+            ->add('fecha_entrega')/*->add('_action', null, array(
                 'actions' => array(
                     'show' => array(),
                     'edit' => array(),
                     'delete' => array(),
                 ),
-            ))*/;
+            ))*/
+        ;
     }
 
     /**
@@ -186,7 +134,104 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
      */
     public function prePersist($object)
     {
+        /** @var SecurityUser $user */
+        $user = $this->getConfigurationPool()->getContainer()->get('security.token_storage')->getToken()->getUser();
+
+        $object->setNumero($this->getNuevoNumeroFactura($object));
+        $object->setUsuarioCreador($user);
+        $object->setOffice($user->getOffice());
     }
+
+    private function FormReceta($formMapper)
+    {
+        /** @var FormBuilder $form */
+        $form = $formMapper->create('receta', FormType::class, array(
+            'label' => false, 'by_reference' => true, 'data_class' => AppReceta::class));
+
+//        if ($this->formPaciente) {
+//            $form
+//                ->add('paciente', ModelListType::class, [
+//                    'model_manager' => $this->modelManager,
+//
+//                ])
+//                ->add('paciente_lista', ButtonType::class, [
+//                    'label' => 'Lista',
+//                    'attr' => ['style' => 'margin-top:25px', 'class' => 'btn btn-info btn-sm sonata-ba-action'],
+//
+//                ])
+//                ->add('paciente_agregar', ButtonType::class, [
+//                    'label' => 'Nuevo',
+//                    'attr' => ['style' => 'margin-top:25px', 'class' => 'btn btn-success btn-sm sonata-ba-action'],
+//
+//                ]);
+//        }
+
+        # Datos general de la receta
+        $form->add('numero', null, [
+        ])
+            ->add('fecha_refraccion', DateTimePickerType::class, [
+                //'disabled' => true,
+                'required' => false,
+                'label' => 'Fecha de Refracción',
+                'format' => 'yyyy-MM-dd'
+            ])
+            ->add('dp', null, [
+                //'disabled' => true,
+                'label' => 'DP'
+            ])
+            ->add('add', null, []);
+
+
+        # Ojo derecho
+        $form = $form->add('cristal_od', null, array(
+            //'disabled' => true,
+            'label' => 'OD Cristal',
+            'choice_label' => 'getPorUnidad',
+            'required' => true,
+            'placeholder' => '--Seleccione el Cristal OD--',
+
+        ))
+            ->add('eje_od', null, array(
+                //'disabled' => true,
+                'label' => 'Eje'
+            ))
+            ->add('a_visual_od', null, array(
+                //'disabled' => true,
+                'label' => 'Agudeza Visual'
+            ))
+            # Ojo izquierdo
+            ->add('cristal_oi', null, array(
+                //'disabled' => true,
+                'label' => 'OI Cristal',
+                'choice_label' => 'getPorUnidad',
+                'required' => true,
+                'placeholder' => '--Seleccione el Cristal OI--',
+            ))
+            ->add('eje_oi', null, array(
+                //'disabled' => true,
+                'label' => 'Eje'
+            ))
+            ->add('a_visual_oi', null, array(
+                //'disabled' => true,
+                'label' => 'Agudeza Visual'
+            ))
+            ->add('lista_espejuelo', ChoiceType::class, [
+                'expanded' => true,
+                'label' => 'Tipo de espejuelo',
+                'multiple' => true,
+                'required' => true,
+                'choices' => [
+                    'Lejos' => 'lejos',
+                    'Cerca' => 'cerca',
+                    'Intermedia' => 'intermedia',
+                    'Bifocal' => 'bifocal',
+                    'Progresivos' => 'progresivos',
+                ]
+            ]);
+
+        return $form;
+    }
+
 
     private function getNuevoNumeroFactura(AppOrdenServicio $object)
     {

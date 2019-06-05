@@ -81,9 +81,13 @@
         $(document).ready(function () {
             {#$('.box-title')[0].append('para {{  }}');#}
 
-            $('[for="{{ admin.uniqid }}_receta_numero"]').parent().addClass('col-md-3');
+            $('[for="{{ admin.uniqid }}_receta_paciente"]').parent().addClass('col-md-9');
+            $('#{{ admin.uniqid }}_receta_paciente_lista').parent().addClass('col-md-1');
+            $('#{{ admin.uniqid }}_receta_paciente_agregar').parent().addClass('col-md-2');
+
+            $('[for="{{ admin.uniqid }}_receta_numero"]').parent().addClass('col-md-4');
             $('[for="{{ admin.uniqid }}_receta_fecha_refraccion"]').parent().addClass('col-md-3');
-            $('[for="{{ admin.uniqid }}_receta_dp"]').parent().addClass('col-md-3');
+            $('[for="{{ admin.uniqid }}_receta_dp"]').parent().addClass('col-md-2');
             $('[for="{{ admin.uniqid }}_receta_add"]').parent().addClass('col-md-3');
             $('#{{ admin.uniqid }}_receta_lista_espejuelo').parent().addClass('col-md-12');
 
@@ -204,11 +208,52 @@
                     // });
                 },
 
+                {#/**#}
+                {# * @return void#}
+                {# */#}
+                {#listaPacienteAjax: function () {#}
+                {#    let button = $('#{{ admin.uniqid }}_receta_paciente_lista');#}
+
+                {#    if (!button) {#}
+                {#        return;#}
+                {#    }#}
+
+                {#    button.on('click', getLista);#}
+
+                {#    let url = '../apppaciente/list';#}
+
+
+
+                {#    // initialize component#}
+                {#    if (!field_dialog_{{ admin.uniqid }}_armadura) {#}
+                {#        field_dialog_{{ admin.uniqid }}_armadura = jQuery("#field_dialog_{{ admin.uniqid }}_armadura");#}
+                {#        field_dialog_content_{{ admin.uniqid }}_armadura = jQuery(".modal-body", "#field_dialog_{{ admin.uniqid }}_armadura");#}
+                {#        field_dialog_title_{{ admin.uniqid }}_armadura = jQuery(".modal-title", "#field_dialog_{{ admin.uniqid }}_armadura");#}
+
+                {#        // move the dialog as a child of the root element, nested form breaks html ...#}
+                {#        jQuery(document.body).append(field_dialog_{{ admin.uniqid }}_armadura);#}
+
+                {#        Admin.log('[s92cebbddac_armadura|field_dialog] move dialog container as a document child');#}
+                {#    }#}
+
+                {#    function getLista() {#}
+                {#        jQuery.ajax({#}
+                {#            url: url,#}
+                {#            dataType: 'html',#}
+                {#            success: function (html) {#}
+
+                {#            }#}
+                {#        });#}
+                {#    }#}
+
+                {#},#}
+
                 init: function () {
                     this.setInputPrecio(this.precio_inicial);
                     this.evento();
                     this.calcularOden();
                     this.formValidate();
+                    // this.listaPacienteAjax();
                 }
             };
 

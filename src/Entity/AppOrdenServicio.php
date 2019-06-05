@@ -27,6 +27,11 @@ class AppOrdenServicio extends _BaseEntity_
     protected $office;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\AppPaciente")
+     */
+    protected $paciente;
+
+    /**
      * @ORM\OneToOne(targetEntity="App\Entity\AppReceta", cascade={"persist"}, inversedBy="orden_servicio")
      */
     protected $receta;
@@ -212,6 +217,18 @@ class AppOrdenServicio extends _BaseEntity_
         if ($this->accesorios->contains($accesorio)) {
             $this->accesorios->removeElement($accesorio);
         }
+
+        return $this;
+    }
+
+    public function getPaciente(): ?AppPaciente
+    {
+        return $this->paciente;
+    }
+
+    public function setPaciente(?AppPaciente $paciente): self
+    {
+        $this->paciente = $paciente;
 
         return $this;
     }
