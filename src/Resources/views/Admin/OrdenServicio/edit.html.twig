@@ -115,7 +115,7 @@
 
                     if ((!$('#{{ admin.uniqid }}_receta_cristal_od option:selected').length
                         && !$('#{{ admin.uniqid }}_receta_cristal_oi option:selected').length)
-                        && $('#{{ admin.uniqid }}_armadura option:selected').val() === "") {
+                        && $('#{{ admin.uniqid }}_armadura option:selected').val() !== "") {
                         importe_total += oferta.precio_inicial;
                     }
                     {#if ($('#{{ admin.uniqid }}_armadura option:selected').val() === ""#}
