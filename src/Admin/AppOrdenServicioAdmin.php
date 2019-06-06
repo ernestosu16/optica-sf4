@@ -25,6 +25,7 @@ use Symfony\Component\Form\FormBuilder;
 class AppOrdenServicioAdmin extends _BaseAdmin_
 {
     public $formPaciente = false;
+    public $formReceta = true;
 
 //    public function getTemplate($name)
 //    {
@@ -38,6 +39,7 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
     {
         $list['button__crear_receta']['template'] = '::Admin\OrdenServicio\button__crear_receta.html.twig';
         $list['button__lista_receta']['template'] = '::Admin\OrdenServicio\button__lista_receta.html.twig';
+        $list['button__cambio_armadura']['template'] = '::Admin\OrdenServicio\button__cambio_armadura.html.twig';
 
         return $list;
     }
@@ -52,7 +54,21 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
         # Ruta para comprobar la existencia de los productos
         $collection->add('comprobar_exitencia', 'comprobar_exitencia/{receta_id}');
 
+
+        $collection->add('cambio_armadura', 'cambio_armadura');
+
         return $collection;
+    }
+
+    public function getPersistentParameters()
+    {
+        if (!$this->getRequest()) {
+            return [];
+        }
+
+        return [
+            'context'  => $this->getRequest()->get('context', 'nueva_receta'),
+        ];
     }
 
     /**
@@ -60,6 +76,13 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
+        $context = $this->getRequest()->get('context');
+
+        if($context === 'cambio_armadura'){
+            $this->formReceta = false;
+            $this->formPaciente = true;
+        }
+
         /** @var AppOrdenServicio $object */
         $object = $this->getSubject();
 
@@ -85,14 +108,14 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
             'attr' => ['readonly' => true]
         ])
             ->add('armadura', ModelType::class, [
-                'disabled' => $object->getId(),
+//                'disabled' => $object->getId(),
                 'placeholder' => 'Propia',
                 'btn_add' => '',
                 'required' => false,
 //                'query_builder' => $query_armadura,
             ])
             ->add('accesorios', null, [
-                'disabled' => $object->getId(),
+//                'disabled' => $object->getId(),
                 'attr' => ['placeholder' => 'Ningún',],
             ])
             ->add('observaciones', TextareaType::class, [
@@ -100,11 +123,13 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
             ])
             ->end();
 
-        # Receta
-        $formMapper
-            ->with('Receta', ['class' => 'col-md-8', 'label' => 'Receta: ' . ($object->getReceta() ? $object->getReceta()->getPaciente() : null)])
-            ->add($this->FormReceta($formMapper))
-            ->end();
+        if ($this->formReceta) {
+            # Receta
+            $formMapper
+                ->with('Receta', ['class' => 'col-md-8', 'label' => 'Receta: ' . ($object->getReceta() ? $object->getReceta()->getPaciente() : null)])
+                ->add($this->FormReceta($formMapper))
+                ->end();
+        }
     }
 
     protected function configureListFields(ListMapper $listMapper)

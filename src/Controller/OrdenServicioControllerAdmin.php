@@ -131,47 +131,4 @@ class OrdenServicioControllerAdmin extends CRUDController
         ]);
     }
 
-    /**
-     * @return Response
-     */
-    public function ordenServicioSinRectaAction()
-    {
-        $class = $this->admin->getClass();
-        /** @var AppOrdenServicio $object */
-        $object = new $class();
-        /** @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
-
-        $this->admin->setSubject($object);
-
-        $this->admin->formPaciente = true;
-
-////        $field = new FieldDescription();
-////        $field->setName('paciente');
-////
-////        $this->admin->setParentFieldDescription($field);
-//        $this->admin->getFormBuilder()
-//            ->add('paciente');
-////        $FormBuilder->add('paciente');
-//        dump($FormBuilder->all());
-////
-//        $formField = $this->admin->getFormFieldDescriptions();
-//        dump($formField);
-//        exit;
-
-        /** @var Form $form */
-        $form = $this->admin->getForm();
-        $object->setReceta(new AppReceta());
-
-        return $this->render('::Admin\OrdenServicio\orden_servicio_sin_receta.html.twig ', array(
-            'object' => $object,
-            'form' => $form->createView(),
-            'action' => ''
-        ));
-        return $this->renderWithExtraParams('::Admin\OrdenServicio\orden_servicio_sin_receta.html.twig ', array(
-            'object' => $object,
-            'form' => $form->createView(),
-            'action' => ''
-        ));
-    }
 }
