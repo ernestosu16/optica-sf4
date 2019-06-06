@@ -112,8 +112,12 @@
                 calcularOden: function () {
                     var importe_total = 0;
 
+                    console.log($('#{{ admin.uniqid }}_armadura option:selected').val());
+                    console.log($('#{{ admin.uniqid }}_receta_cristal_od option:selected').val());
+                    console.log($('#{{ admin.uniqid }}_receta_cristal_oi option:selected').val());
                     if ($('#{{ admin.uniqid }}_armadura option:selected').val() === ""
-                        || $('#{{ admin.uniqid }}_accesorio option:selected').val() === "") {
+                        && $('#{{ admin.uniqid }}_receta_cristal_od option:selected').val() === ""
+                        && $('#{{ admin.uniqid }}_receta_cristal_oi option:selected').val() === "") {
                         importe_total += oferta.precio_inicial;
                     }
 
