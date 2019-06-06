@@ -112,14 +112,17 @@
                 calcularOden: function () {
                     var importe_total = 0;
 
-                    console.log($('#{{ admin.uniqid }}_armadura option:selected').val());
-                    console.log($('#{{ admin.uniqid }}_receta_cristal_od option:selected').val());
-                    console.log($('#{{ admin.uniqid }}_receta_cristal_oi option:selected').val());
-                    if ($('#{{ admin.uniqid }}_armadura option:selected').val() === ""
-                        && $('#{{ admin.uniqid }}_receta_cristal_od option:selected').val() === ""
-                        && $('#{{ admin.uniqid }}_receta_cristal_oi option:selected').val() === "") {
+
+                    if ((!$('#{{ admin.uniqid }}_receta_cristal_od option:selected').length
+                        && !$('#{{ admin.uniqid }}_receta_cristal_oi option:selected').length)
+                        && $('#{{ admin.uniqid }}_armadura option:selected').val() === "") {
                         importe_total += oferta.precio_inicial;
                     }
+                    {#if ($('#{{ admin.uniqid }}_armadura option:selected').val() === ""#}
+                    {#    || $('#{{ admin.uniqid }}_receta_cristal_od option:selected').val() === ""#}
+                    {#    && $('#{{ admin.uniqid }}_receta_cristal_oi option:selected').val() === "") {#}
+                    {#    #}
+                    {#}#}
 
                     $('select  option:selected').each(function (key, item) {
                         importe_total += oferta.getSelectPrecio(item.text);
@@ -196,7 +199,7 @@
 
             $('#{{ admin.uniqid }}_paciente').attr('required', 'required');
 
-            $('form').on('submit',function () {
+            $('form').on('submit', function () {
                 $('#{{ admin.uniqid }}_receta_cristal_od')
                     .closest('.sonata-ba-field').find('label[class="error"]').empty();
                 $('#{{ admin.uniqid }}_receta_cristal_oi')
