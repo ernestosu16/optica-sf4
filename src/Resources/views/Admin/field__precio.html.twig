@@ -1,6 +1,10 @@
 {% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
 {% block field %}
     <div>
-        $ {{ object.producto.precio|number_format(2, '.', ',') }}
+        {% if object.producto is defined %}
+            $ {{ object.producto.precio|money }}
+        {% elseif object.precio %}
+            $ {{ object.precio|money }}
+        {% endif %}
     </div>
 {% endblock %}

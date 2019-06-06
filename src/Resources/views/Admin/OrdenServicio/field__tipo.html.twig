@@ -1,0 +1,8 @@
+{% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
+{% block field %}
+    {% if object.receta is null %}
+        Reparación de Armadura
+    {% elseif object.receta is not null %}
+        {{ object.receta.listaEspejuelo|ArrayToList }}
+    {% endif %}
+{% endblock %}

@@ -139,11 +139,13 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
         $listMapper
             ->remove('batch')
             ->add('numero', null, array(
-                'label' => 'No.'
+                'label' => 'Número'
             ))
-            ->add('precio')
+            ->add('precio', null, ['label' => 'Importe', 'template' => '::Admin\field__precio.html.twig'])
             ->add('observaciones')
-            ->add('paciente')
+//            ->add('paciente')
+            ->add('tipo', null, ['label' => 'Tipo', 'template' => '::Admin\OrdenServicio\field__tipo.html.twig'])
+            ->add('estado', null, ['label' => 'Estado',/* 'template' => '::Admin\field__precio.html.twig'*/])
             ->add('fecha_entrega')/*->add('_action', null, array(
                 'actions' => array(
                     'show' => array(),
