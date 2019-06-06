@@ -112,8 +112,8 @@
                 calcularOden: function () {
                     var importe_total = 0;
 
-                    if ($('#{{ admin.uniqid }}_armadura option:selected').text() === ""
-                        || $('#{{ admin.uniqid }}_accesorio option:selected').text() === "") {
+                    if ($('#{{ admin.uniqid }}_armadura option:selected').val() === ""
+                        || $('#{{ admin.uniqid }}_accesorio option:selected').val() === "") {
                         importe_total += oferta.precio_inicial;
                     }
 

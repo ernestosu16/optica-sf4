@@ -67,7 +67,7 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
         }
 
         return [
-            'context'  => $this->getRequest()->get('context', 'nueva_receta'),
+            'context' => $this->getRequest()->get('context', 'nueva_receta'),
         ];
     }
 
@@ -78,7 +78,7 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
     {
         $context = $this->getRequest()->get('context');
 
-        if($context === 'cambio_armadura'){
+        if ($context === 'cambio_armadura') {
             $this->formReceta = false;
             $this->formPaciente = true;
         }
@@ -192,13 +192,13 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
 //        }
 
         # Datos general de la receta
-        $form->add('numero', null, [
-        ])
+        $form->add('numero', null, ['label' => 'Número'])
             ->add('fecha_refraccion', DateTimePickerType::class, [
                 //'disabled' => true,
                 'required' => false,
                 'label' => 'Fecha de Refracción',
-                'format' => 'yyyy-MM-dd'
+                'format' => 'yyyy-MM-dd',
+                'dp_default_date' => date('Y-m-d'),
             ])
             ->add('dp', null, [
                 //'disabled' => true,
@@ -210,7 +210,7 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
         # Ojo derecho
         $form = $form->add('cristal_od', null, array(
             //'disabled' => true,
-            'label' => 'OD Cristal',
+            'label' => 'Selecciona la graduación del OD',
             'choice_label' => 'getPorUnidad',
             'required' => true,
             'placeholder' => '--Seleccione el Cristal OD--',
@@ -227,7 +227,7 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
             # Ojo izquierdo
             ->add('cristal_oi', null, array(
                 //'disabled' => true,
-                'label' => 'OI Cristal',
+                'label' => 'Selecciona la graduación del OI',
                 'choice_label' => 'getPorUnidad',
                 'required' => true,
                 'placeholder' => '--Seleccione el Cristal OI--',

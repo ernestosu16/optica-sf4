@@ -109,6 +109,7 @@ class AppReceta extends _BaseEntity_
 
     public function __construct()
     {
+        $this->fecha_refraccion = new DateTime('now');
         $this->lista_espejuelo = array();
     }
 
