@@ -208,11 +208,84 @@
                     // });
                 },
 
+                SelectArmadura: function () {
+                    $('#{{ admin.uniqid }}_armadura').select2({
+                        matcher: function (term, text, option) {
+                            const select_dp = $('#{{ admin.uniqid }}_receta_dp option:selected');
+
+                            if (option.val() === "" || select_dp.val() === "") {
+                                return option;
+                            }
+
+                            if (text) {
+                                const dp = oferta.getDatoDp(select_dp.text());
+                                const armadura = oferta.getDatoArmadura(text);
+
+
+                                if (armadura && ((armadura.aro + armadura.puente) - dp.min) <= 10) {
+                                    return option;
+                                }
+                            }
+
+                        }
+                    });
+                },
+
+                /**
+                 * Obtener los datos de la Armadura en json
+                 *
+                 * @param text
+                 * @return {null|{puente:  number, altura:  number, aro:  number}}
+                 */
+                getDatoArmadura: function (text) {
+                    if (text === undefined) {
+                        return null;
+                    }
+
+                    text = text.match(/\[.*?\]/);
+                    if (!text) {
+                        return null;
+                    }
+                    text = text[0].match(/\d+/g);
+                    if (!text) {
+                        return null;
+                    }
+
+                    return {aro: parseInt(text[0]), puente: parseInt(text[1]), altura: parseInt(text[2])};
+                },
+
+
+                SelectDp: function () {
+                    $('#{{ admin.uniqid }}_receta_dp').on('change', function (e) {
+                        $('#{{ admin.uniqid }}_armadura').val("").trigger("change");
+                    });
+                },
+
+                /**
+                 * Obtener los datos del DP en json
+                 *
+                 * @param text
+                 * @return {null|{min:  number, max: number}}
+                 */
+                getDatoDp: function (text) {
+                    if (text === undefined) {
+                        return null;
+                    }
+
+                    text = text.match(/\d+/g);
+                    if (!text) {
+                        return null;
+                    }
+                    return {min: parseInt(text[0]), max: parseInt(text[1])};
+                },
+
                 init: function () {
                     this.setInputPrecio(this.precio_inicial);
                     this.evento();
                     this.calcularOden();
                     this.formValidate();
+                    this.SelectArmadura();
+                    this.SelectDp();
                 }
             };
 
@@ -220,4 +293,9 @@
 
         });
     </script>
+    <style>
+        .select2-container {
+            width: 100% !important;
+        }
+    </style>
 {% endblock %}

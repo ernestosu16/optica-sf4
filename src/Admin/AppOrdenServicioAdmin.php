@@ -98,6 +98,7 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
             ->innerJoin('p.accesorios', 'a')
             ->add('orderBy', 'p.descripcion ASC');
 
+//        dump($query_armadura);exit;
         $formMapper
             ->with('Datos de la Orden', ['class' => 'col-md-4']);
         if ($this->formPaciente) {
@@ -112,7 +113,8 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
                 'placeholder' => 'Propia',
                 'btn_add' => '',
                 'required' => false,
-//                'query_builder' => $query_armadura,
+//                'methodd' => 'getCodigo',
+//                'query' => $query_armadura,
             ])
             ->add('accesorios', null, [
 //                'disabled' => $object->getId(),

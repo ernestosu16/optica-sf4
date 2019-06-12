@@ -36,7 +36,9 @@ class AppArmadura extends _Entity_
     {
         $producto = $this->getProducto();
         if ($producto) {
-            return (string)$producto->getCodigo() . ' - ' . $producto->getDescripcion() .
+            return (string)$producto->getCodigo() .
+                ' - ' . $producto->getDescripcion() .
+                " [{$this->aro}, {$this->puente}, {$this->altura}]" .
                 ' - $' . number_format($this->getProducto()->getPrecio(), 2);
         } else {
             return '';
