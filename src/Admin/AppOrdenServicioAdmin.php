@@ -253,8 +253,8 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
                     'Lejos' => 'lejos',
                     'Cerca' => 'cerca',
                     'Intermedia' => 'intermedia',
-                    'Bifocal' => 'bifocal',
-                    'Progresivos' => 'progresivos',
+                    'Bifocal - $11.50' => 'bifocal',
+                    'Progresivos - $31.15' => 'progresivos',
                 ]
             ]);
 

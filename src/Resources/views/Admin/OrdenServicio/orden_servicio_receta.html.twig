@@ -88,7 +88,7 @@
             $('[for="{{ admin.uniqid }}_receta_add"]').parent().addClass('col-md-3');
             $('#{{ admin.uniqid }}_receta_lista_espejuelo').parent().addClass('col-md-12');
 
-            $('[class="form-check"]').addClass('row col-md-3');
+            $('[class="form-check"]').addClass('row col-md-4');
 
             $('#{{ admin.uniqid }}_precio').parent().parent().addClass('col-md-6 row');
             $('[for="{{ admin.uniqid }}_armadura"]').parent().addClass('col-md-12 row');
@@ -124,20 +124,25 @@
                     'armadura',
                     'accesorios'
                 ],
+                'precio_fijo': null,
                 /**
                  * @return {void}
                  */
                 evento: function () {
                     oferta.select_precio.forEach(function (item, index, array) {
                         $("#{{ admin.uniqid }}_" + item).on('change', function () {
-                            oferta.calcularOden();
+                            oferta.calcularOrden();
                         });
                     });
                 },
 
-                calcularOden: function () {
+                calcularOrden: function () {
                     var importe_total = 0;
 
+                    if (oferta.precio_fijo) {
+                        oferta.setInputPrecio(oferta.precio_fijo);
+                        return;
+                    }
                     {#if ($('#{{ admin.uniqid }}_armadura option:selected').text() === ""#}
                     {#    || $('#{{ admin.uniqid }}_accesorio option:selected').text() === "") {#}
                     {#    importe_total += oferta.precio_inicial;#}
@@ -293,13 +298,52 @@
                     return {min: parseInt(text[0]), max: parseInt(text[1])};
                 },
 
+                iCheckOnChange: function () {
+                    let checkbox = $("input:checkbox");
+
+                    $.each(checkbox.filter(':checked'), function (key, item) {
+                        if (item.value === 'bifocal' || item.value === 'progresivos') {
+                            $('#{{ admin.uniqid }}_receta_add').prop('required', true);
+                            oferta.precio_fijo = oferta.getSelectPrecio(
+                                $(item).parent().parent().find('label').text()
+                            );
+                        }
+
+                        oferta.calcularOrden();
+                    });
+
+                    checkbox.on('ifUnchecked', function (event) {
+                        oferta.precio_fijo = null;
+                        oferta.calcularOrden();
+                    });
+
+                    checkbox.on('ifChecked', function (event) {
+                        if (event.target.checked && event.target.value === 'bifocal' || event.target.value === 'progresivos') {
+                            $('#{{ admin.uniqid }}_receta_add').prop('required', true);
+                            oferta.precio_fijo = oferta.getSelectPrecio(
+                                $(event.target).parent().parent().find('span').text()
+                            );
+                        }
+
+                        if (event.target.value === 'progresivos') {
+                            $('#{{ admin.uniqid }}_armadura').val("").trigger("change");
+                        }
+
+                        oferta.calcularOrden();
+                    })
+                },
+
+                TipoEspejuelo: function () {
+                },
+
                 init: function () {
                     this.setInputPrecio(this.precio_inicial);
                     this.evento();
-                    this.calcularOden();
+                    this.calcularOrden();
                     this.formValidate();
                     this.SelectArmadura();
                     this.SelectDp();
+                    this.iCheckOnChange();
                 }
             };
 

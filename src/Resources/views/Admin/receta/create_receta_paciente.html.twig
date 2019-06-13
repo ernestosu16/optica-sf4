@@ -74,7 +74,7 @@
 
 
             function checkbox() {
-                let limit = 2; //change according to your need
+                let limit = 1; //change according to your need
                 let checkboxes = $("input:checkbox");//get all the checkbox
                 if (checkboxes.filter(":checked").length >= limit) {
                     //if limit is reached disbaled all except checked and #man7
@@ -84,6 +84,24 @@
                     //else enable it all
                     checkboxes.not(":checked").iCheck('enable');
                 }
+
+                $.each(checkboxes.filter(':checked'), function (key, item) {
+                    if (item.value === 'bifocal' || item.value === 'progresivos') {
+                        $('#{{ admin.uniqid }}_add').prop('required', true);
+                    }
+                });
+
+                checkboxes.on('ifUnchecked', function (event) {
+                    if (event.target.value === 'bifocal' || event.target.value === 'progresivos') {
+                        $('#{{ admin.uniqid }}_add').prop('required', false);
+                    }
+                });
+
+                checkboxes.on('ifChecked', function (event) {
+                    if (event.target.value === 'bifocal' || event.target.value === 'progresivos') {
+                        $('#{{ admin.uniqid }}_add').prop('required', true);
+                    }
+                })
             }
 
             $('input[name="{{ admin.uniqid }}[lista_espejuelo][]"]').on("ifChanged", function () {
@@ -91,6 +109,10 @@
             });
 
             checkbox();
+
+            $('form').on('submit', function () {
+                $('form').find('label[class="error"]').remove();
+            });
 
         });
     </script>

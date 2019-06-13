@@ -38,7 +38,7 @@
             $('[for="{{ admin.uniqid }}_receta_add"]').parent().addClass('col-md-3');
             $('#{{ admin.uniqid }}_receta_lista_espejuelo').parent().addClass('col-md-12');
 
-            $('[class="checkbox"]').addClass('row col-md-3');
+            $('[class="checkbox"]').addClass('row col-md-4');
 
             {#$('#{{ admin.uniqid }}_precio').parent().parent().addClass('col-md-6 row');#}
             $('[for="{{ admin.uniqid }}_armadura"]').parent().addClass('col-md-12 row');
@@ -71,7 +71,7 @@
             {% endif %}
 
             function checkbox() {
-                let limit = 2; //change according to your need
+                let limit = 1; //change according to your need
                 let checkboxes = $("input:checkbox");//get all the checkbox
                 if (checkboxes.filter(":checked").length >= limit) {
                     //if limit is reached disbaled all except checked and #man7
@@ -98,19 +98,25 @@
                     'armadura',
                     'accesorios'
                 ],
+                'precio_fijo': null,
                 /**
                  * @return {void}
                  */
                 evento: function () {
                     oferta.select_precio.forEach(function (item, index, array) {
                         $("#{{ admin.uniqid }}_" + item).on('change', function () {
-                            oferta.calcularOden();
+                            oferta.calcularOrden();
                         });
                     });
                 },
 
-                calcularOden: function () {
+                calcularOrden: function () {
                     var importe_total = 0;
+
+                    if (oferta.precio_fijo) {
+                        oferta.setInputPrecio(oferta.precio_fijo);
+                        return;
+                    }
 
 
                     if ((!$('#{{ admin.uniqid }}_receta_cristal_od option:selected').length
@@ -186,6 +192,9 @@
                     $('#{{ admin.uniqid }}_armadura').select2({
                         matcher: function (term, text, option) {
                             const select_dp = $('#{{ admin.uniqid }}_receta_dp option:selected');
+                            if (!select_dp) {
+                                return;
+                            }
 
                             if (option.val() === "" || select_dp.val() === "") {
                                 return option;
@@ -193,6 +202,9 @@
 
                             if (text) {
                                 const dp = oferta.getDatoDp(select_dp.text());
+                                if (!dp) {
+                                    return option;
+                                }
                                 const armadura = oferta.getDatoArmadura(text);
 
                                 let limit = 10;
@@ -268,17 +280,51 @@
                 },
 
                 iCheckOnChange: function () {
-                    $("input:checkbox").on('ifChecked', function (event) {
+                    let checkbox = $("input:checkbox");
+
+                    $.each(checkbox.filter(':checked'), function (key, item) {
+                        if (item.value === 'bifocal' || item.value === 'progresivos') {
+                            $('#{{ admin.uniqid }}_receta_add').prop('required', true);
+                            oferta.precio_fijo = oferta.getSelectPrecio(
+                                $(item).parent().parent().find('span').text()
+                            );
+                        }
+
+                        oferta.calcularOrden();
+                    });
+
+                    checkbox.on('ifUnchecked', function (event) {
+                        if (event.target.checked && event.target.value === 'bifocal' || event.target.value === 'progresivos') {
+                            $('#{{ admin.uniqid }}_receta_add').prop('required', false);
+                        }
+
+                        oferta.precio_fijo = null;
+                        oferta.calcularOrden();
+                    });
+
+                    checkbox.on('ifChecked', function (event) {
+                        if (event.target.checked && event.target.value === 'bifocal' || event.target.value === 'progresivos') {
+                            $('#{{ admin.uniqid }}_receta_add').prop('required', true);
+                            oferta.precio_fijo = oferta.getSelectPrecio(
+                                $(event.target).parent().parent().find('span').text()
+                            );
+                        }
+
                         if (event.target.value === 'progresivos') {
                             $('#{{ admin.uniqid }}_armadura').val("").trigger("change");
                         }
+
+                        oferta.calcularOrden();
                     })
+                },
+
+                TipoEspejuelo: function () {
                 },
 
                 init: function () {
                     this.setInputPrecio(this.precio_inicial);
                     this.evento();
-                    this.calcularOden();
+                    this.calcularOrden();
                     this.formValidate();
                     this.SelectArmadura();
                     this.SelectDp();
@@ -292,10 +338,9 @@
             $('#{{ admin.uniqid }}_paciente').attr('required', 'required');
 
             $('form').on('submit', function () {
-                $('#{{ admin.uniqid }}_receta_cristal_od')
-                    .closest('.sonata-ba-field').find('label[class="error"]').empty();
-                $('#{{ admin.uniqid }}_receta_cristal_oi')
-                    .closest('.sonata-ba-field').find('label[class="error"]').empty();
+                $('input').closest('.sonata-ba-field').find('label[class="error"]').empty();
+                {#$('#{{ admin.uniqid }}_receta_cristal_oi')#}
+                //     .closest('.sonata-ba-field').find('label[class="error"]').empty();
 
             });
         });
