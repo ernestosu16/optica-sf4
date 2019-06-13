@@ -196,21 +196,21 @@
                                 const armadura = oferta.getDatoArmadura(text);
 
                                 let limit = 10;
+                                let altura = null;
 
                                 let checkboxes = $("input:checkbox");//get all the checkbox
 
                                 $.each(checkboxes.filter(":checked"), function (key, item) {
                                     if (item.value === 'progresivos') {
-                                        limit = 33;
+                                        altura = 33;
                                     }
                                 });
 
+                                let calculo_optica = (armadura.aro + armadura.puente) - dp.min;
 
-                                if (armadura && limit === 10 && ((armadura.aro + armadura.puente) - dp.min) <= limit) {
+                                if (armadura && limit === 10 && altura === null && calculo_optica <= limit) {
                                     return option;
-                                }
-
-                                if (armadura && limit === 33 && ((armadura.aro + armadura.puente) - dp.min) >= limit) {
+                                } else if (armadura && limit === 10 && altura !== null && calculo_optica <= limit && altura <= armadura.altura) {
                                     return option;
                                 }
                             }
