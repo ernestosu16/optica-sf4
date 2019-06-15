@@ -43,7 +43,7 @@ class Alamacen extends _BaseEntity_
 
     /**
      * @var
-     * @ORM\ManyToOne(targetEntity="App\Entity\AppProducto")
+     * @ORM\ManyToOne(targetEntity="App\Entity\AppProducto", inversedBy="almacen")
      */
     protected $producto;
 
@@ -113,6 +113,33 @@ class Alamacen extends _BaseEntity_
         $this->cantidad_pendiente = $cantidad_pendiente;
 
         return $this;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getCantidad(): ?int
+    {
+
+        return (int)$this->cantidad_existencia - $this->cantidad_reservado;
+    }
+
+    /**
+     * @return string
+     */
+    public function getArmadura(): string
+    {
+        $cantidad = $this->getCantidad();
+        return (string)$this->getProducto()->getArmadura() . " ({$cantidad})";
+    }
+
+    /**
+     * @return string
+     */
+    public function getAccesorio(): string
+    {
+        $cantidad = $this->getCantidad();
+        return (string)$this->getProducto()->getAccesorio() . " ({$cantidad})";
     }
 
 

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\MovimientoAlmacen\Alamacen;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -104,11 +105,15 @@ class AppCristal extends _Entity_
      */
     public function getPorUnidad()
     {
+        /** @var Alamacen $almacen */
+        $almacen = $this->getProducto()->getAlmacen()->first();
+        $cantidad = ($almacen) ? $almacen->getCantidad() : 0;
         if ($producto = $this->getProducto()) {
             return (string)$producto->getCodigo() . ' - ' . $producto->getDescripcion() .
                 ' (' . ($this->esfera > 0 ? '+' : '') .
                 $this->esfera . ',' . ($this->cilindro > 0 ? '+' : '') .
-                $this->cilindro . ') - $' . number_format(($producto->getPrecio()/2), 3);
+                $this->cilindro . ') - $' . number_format(($producto->getPrecio() / 2), 3) .
+                " ({$cantidad})";
         }
 
         return '';

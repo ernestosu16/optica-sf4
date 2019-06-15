@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Application\Sonata\MediaBundle\Entity\Media;
+use App\Entity\MovimientoAlmacen\Alamacen;
+use Exception;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -86,16 +88,23 @@ class AppProducto extends _BaseEntity_
     protected $descriminator;
 
     /**
+     * @var Alamacen
+     * @ORM\OneToMany(targetEntity="App\Entity\MovimientoAlmacen\Alamacen", mappedBy="producto")
+     */
+    protected $almacen;
+
+    /**
      * Product constructor.
-     * @throws \Exception
+     * @throws Exception
      */
     public function __construct()
     {
+        $this->almacen = new ArrayCollection();
     }
 
     public function __toString()
     {
-        return (string) "{$this->codigo} - {$this->descripcion} ";
+        return (string)"{$this->codigo} - {$this->descripcion} ";
     }
 
 
@@ -169,6 +178,14 @@ class AppProducto extends _BaseEntity_
         $this->imagen = $imagen;
 
         return $this;
+    }
+
+    /**
+     * @return AppAccesorio
+     */
+    public function getAccesorio(): AppAccesorio
+    {
+        return $this->accesorios;
     }
 
     /**
@@ -272,6 +289,14 @@ class AppProducto extends _BaseEntity_
         return $this->armaduras;
     }
 
+    /**
+     * @return AppArmadura
+     */
+    public function getArmadura(): AppArmadura
+    {
+        return $this->armaduras;
+    }
+
     public function addArmadura(AppArmadura $armadura): self
     {
         if (!$this->armaduras->contains($armadura)) {
@@ -355,6 +380,37 @@ class AppProducto extends _BaseEntity_
     public function setPrecioCosto(float $precio_costo): self
     {
         $this->precio_costo = $precio_costo;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Alamacen[]
+     */
+    public function getAlmacen(): Collection
+    {
+        return $this->almacen;
+    }
+
+    public function addAlmacen(Alamacen $almacen): self
+    {
+        if (!$this->almacen->contains($almacen)) {
+            $this->almacen[] = $almacen;
+            $almacen->setProducto($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAlmacen(Alamacen $almacen): self
+    {
+        if ($this->almacen->contains($almacen)) {
+            $this->almacen->removeElement($almacen);
+            // set the owning side to null (unless already changed)
+            if ($almacen->getProducto() === $this) {
+                $almacen->setProducto(null);
+            }
+        }
 
         return $this;
     }

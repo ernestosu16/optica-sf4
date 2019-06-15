@@ -3,12 +3,17 @@
 namespace App\Admin;
 
 
+use App\Entity\AppArmadura;
+use App\Entity\AppCristal;
 use App\Entity\AppOrdenServicio;
 use App\Entity\AppProducto;
 use App\Entity\AppReceta;
 use App\Entity\AppRecetaLugar;
+use App\Entity\MovimientoAlmacen\Alamacen;
 use App\Entity\SecurityUser;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\QueryBuilder;
+use Exception;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelListType;
@@ -26,6 +31,10 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
 {
     public $formPaciente = false;
     public $formReceta = true;
+    /**
+     * @var SecurityUser
+     */
+    private $user;
 
 //    public function getTemplate($name)
 //    {
@@ -76,6 +85,7 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
+        $this->user = $this->getConfigurationPool()->getContainer()->get('security.token_storage')->getToken()->getUser();
         $context = $this->getRequest()->get('context');
 
         if ($context === 'cambio_armadura') {
@@ -90,15 +100,6 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
             $this->formPaciente = true;
         }
 
-        $query_armadura = $this->modelManager
-            ->getEntityManager(AppProducto::class)
-            ->createQueryBuilder()
-            ->add('select', 'p')
-            ->add('from', '\App\Entity\AppProducto p')
-            ->innerJoin('p.accesorios', 'a')
-            ->add('orderBy', 'p.descripcion ASC');
-
-//        dump($query_armadura);exit;
         $formMapper
             ->with('Datos de la Orden', ['class' => 'col-md-4']);
         if ($this->formPaciente) {
@@ -109,16 +110,18 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
             'attr' => ['readonly' => true]
         ])
             ->add('armadura', ModelType::class, [
-//                'disabled' => $object->getId(),
                 'placeholder' => 'Propia',
                 'btn_add' => '',
                 'required' => false,
-//                'methodd' => 'getCodigo',
-//                'query' => $query_armadura,
+                'query' => $this->QueryArmadura(),
+                'property' => 'getArmadura',
             ])
-            ->add('accesorios', null, [
+            ->add('accesorios', ModelType::class, [
+                'multiple' => true,
 //                'disabled' => $object->getId(),
                 'attr' => ['placeholder' => 'Ningún',],
+                'query' => $this->QueryAccesorio(),
+                'property' => 'getAccesorio',
             ])
             ->add('observaciones', TextareaType::class, [
                 'required' => false,
@@ -212,14 +215,18 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
 
 
         # Ojo derecho
-        $form = $form->add('cristal_od', null, array(
-            //'disabled' => true,
-            'label' => 'Selecciona la graduación del OD',
-            'choice_label' => 'getPorUnidad',
-            'required' => true,
-            'placeholder' => '--Seleccione el Cristal OD--',
+        $form = $form
+            ->add('cristal_od', ModelType::class, array(
+                'model_manager' => $this->modelManager,
+                'class' => AppCristal::class,
+                'query' => $this->QueryOjo('od'),
+                //'disabled' => true,
+                'label' => 'Selecciona la graduación del OD',
+                'property' => 'getPorUnidad',
+                'required' => true,
+                'placeholder' => '--Seleccione el Cristal OD--',
 
-        ))
+            ))
             ->add('eje_od', null, array(
                 //'disabled' => true,
                 'label' => 'Eje'
@@ -229,10 +236,12 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
                 'label' => 'Agudeza Visual'
             ))
             # Ojo izquierdo
-            ->add('cristal_oi', null, array(
+            ->add('cristal_oi', ModelType::class, array(
+                'model_manager' => $this->modelManager,
+                'class' => AppCristal::class,
                 //'disabled' => true,
                 'label' => 'Selecciona la graduación del OI',
-                'choice_label' => 'getPorUnidad',
+                'property' => 'getPorUnidad',
                 'required' => true,
                 'placeholder' => '--Seleccione el Cristal OI--',
             ))
@@ -244,6 +253,7 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
                 //'disabled' => true,
                 'label' => 'Agudeza Visual'
             ))
+            # Lista espejuelos
             ->add('lista_espejuelo', ChoiceType::class, [
                 'expanded' => true,
                 'label' => 'Tipo de espejuelo',
@@ -273,5 +283,69 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
         $lastRow = $em->getRepository(AppOrdenServicio::class)->getLastRow();
 
         return (!$lastRow) ? 1 : $lastRow->getNumero() + 1;
+    }
+
+    /**
+     * Lista las armadura de la unidad
+     *
+     * @return QueryBuilder
+     */
+    private function QueryArmadura()
+    {
+        if (!$this->user && !$this->user->getId()) {
+            new Exception("Error al encontrar el usuario");
+        }
+
+        $office = $this->user->getOffice()->getId();
+
+        /** @var QueryBuilder $query */
+        $query = $this->getModelManager()->createQuery(Alamacen::class, 'a');
+        $rootAlias = $query->getRootAliases()[0];
+        return $query
+            ->join($rootAlias . '.producto', 'p')
+            ->join('p.armaduras', 'armaduras')
+            ->where('(a.cantidad_existencia - a.cantidad_reservado) > 0')
+            ->andWhere("a.office = {$office}");
+    }
+
+    /**
+     * Lista los accesorios de la unidad
+     *
+     * @return QueryBuilder
+     */
+    private function QueryAccesorio()
+    {
+        if (!$this->user && !$this->user->getId()) {
+            new Exception("Error al encontrar el usuario");
+        }
+
+        $office = $this->user->getOffice()->getId();
+
+        /** @var QueryBuilder $query */
+        $query = $this->getModelManager()->createQuery(Alamacen::class, 'a');
+        $rootAlias = $query->getRootAliases()[0];
+        return $query
+            ->join($rootAlias . '.producto', 'p')
+            ->join('p.accesorios', 'accesorios')
+            ->where('(a.cantidad_existencia - a.cantidad_reservado) > 0')
+            ->andWhere("a.office = {$office}");
+    }
+
+    private function QueryOjo()
+    {
+        if (!$this->user && !$this->user->getId()) {
+            new Exception("Error al encontrar el usuario");
+        }
+
+        $office = $this->user->getOffice()->getId();
+
+        /** @var QueryBuilder $query */
+        $query = $this->getModelManager()->createQuery(AppCristal::class, 'c');
+        $rootAlias = $query->getRootAliases()[0];
+        return $query
+            ->select('c')
+            ->join($rootAlias . '.producto', 'p')
+            ->leftJoin('p.almacen','almacen')
+            ;
     }
 }
