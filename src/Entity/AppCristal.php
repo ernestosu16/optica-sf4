@@ -109,11 +109,14 @@ class AppCristal extends _Entity_
         $almacen = $this->getProducto()->getAlmacen()->first();
         $cantidad = ($almacen) ? $almacen->getCantidad() : 0;
         if ($producto = $this->getProducto()) {
-            return (string)$producto->getCodigo() . ' - ' . $producto->getDescripcion() .
-                ' (' . ($this->esfera > 0 ? '+' : '') .
-                $this->esfera . ',' . ($this->cilindro > 0 ? '+' : '') .
-                $this->cilindro . ') - $' . number_format(($producto->getPrecio() / 2), 3) .
-                " ({$cantidad})";
+            $dato_cristal = " ["
+                . ($this->esfera > 0 ? '+' : '')
+                . number_format($this->esfera, 2) . ", "
+                . "] ";
+
+            return (string)$producto->getDescripcion()
+                . ', $' . number_format(($producto->getPrecio() / 2), 3)
+                . " ({$cantidad})";
         }
 
         return '';

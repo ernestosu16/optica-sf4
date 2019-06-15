@@ -1,4 +1,10 @@
 {% extends "SonataAdminBundle:CRUD:edit.html.twig" %}
+{% block sonata_form_actions %}
+    {{ parent() }}
+    <a id="btn-solicitud-tallado" class="btn btn-warning" href="">
+        <i class="fa fa-tag" aria-hidden="true"></i> Solicitar Tallado
+    </a>
+{% endblock %}
 {% block stylesheets %}
     {{ parent() }}
     <style>

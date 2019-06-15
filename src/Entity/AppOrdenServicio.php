@@ -76,6 +76,11 @@ class AppOrdenServicio extends _BaseEntity_
      */
     protected $fecha_recogida;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\AppSolicitudTallado", cascade={"persist"}, mappedBy="orden_servicio")
+     */
+    protected $solicitud_tallado;
+
     public function __construct()
     {
         $this->accesorios = new ArrayCollection();

@@ -85,6 +85,10 @@ sonata_admin:
 #                    - sonata.admin.app.receta
 #                    - sonata.admin.app.orden_corte_montaje
                     - sonata.admin.app.orden_servicio
+            taller_tallado:
+                label: Taller de Tallado
+                items:
+                    - sonata.admin.app.solicitud_tallado
     options:
         html5_validate:  true     # enable or disable html5 form validation
         confirm_exit:    true     # enable or disable a confirmation before navigating away

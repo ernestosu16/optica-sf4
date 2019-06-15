@@ -52,3 +52,9 @@ services:
         calls:
             - [setTranslationDomain,['app']]
             - [setTemplate, ['edit', '::Admin/receta/edit.html.twig']]
+
+    sonata.admin.app.solicitud_tallado:
+        class: App\Admin\AppSolicitudTalladoAdmin
+        arguments: [~, App\Entity\AppSolicitudTallado, ~ ]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Solicitudes }
