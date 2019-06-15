@@ -1,4 +1,6 @@
 {% extends "SonataAdminBundle:CRUD:edit.html.twig" %}
+{% block navbar_title %}{% endblock %}
+{% block actions %}{% endblock %}
 {% block sonata_form_actions %}
     {{ parent() }}
     <button id="btn-solicitud-tallado" name="solicitud-tallado" type="submit" class="btn btn-warning">
@@ -435,7 +437,7 @@
             $('#{{ admin.uniqid }}_paciente').attr('required', 'required');
 
             $('form').on('submit', function () {
-                $('input').closest('.sonata-ba-field').find('label[class="error"]').empty();
+                $('input').closest('.sonata-ba-field').find('label[class="error"]').remove();
                 {#$('#{{ admin.uniqid }}_receta_cristal_oi')#}
                 //     .closest('.sonata-ba-field').find('label[class="error"]').empty();
 

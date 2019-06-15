@@ -213,7 +213,7 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
 //        }
 
         # Datos general de la receta
-        $form->add('numero', null, ['label' => 'Número'])
+        $form->add('numero', null, ['label' => 'Número', 'required' => true])
             ->add('fecha_refraccion', DateTimePickerType::class, [
                 //'disabled' => true,
                 'required' => false,
