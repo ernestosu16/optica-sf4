@@ -294,6 +294,9 @@
                             oferta.precio_fijo = oferta.getSelectPrecio(
                                 $(item).parent().parent().find('span').text()
                             );
+                            oferta.ButtonSave()[0].hide();
+                            oferta.ButtonSave()[1].hide();
+                            oferta.ButtonTallado().show();
                         }
 
                         oferta.calcularOrden();
@@ -302,8 +305,12 @@
                     checkbox.on('ifUnchecked', function (event) {
                         if (event.target.checked && event.target.value === 'bifocal' || event.target.value === 'progresivos') {
                             $('#{{ admin.uniqid }}_receta_add').prop('required', false);
-                        }
 
+                        }
+                        oferta.ButtonSave()[0].show();
+                        oferta.ButtonSave()[1].show();
+                        oferta.ButtonTallado().hide();
+                        oferta.checkAlmacen();
                         oferta.precio_fijo = null;
                         oferta.calcularOrden();
                     });
@@ -314,6 +321,9 @@
                             oferta.precio_fijo = oferta.getSelectPrecio(
                                 $(event.target).parent().parent().find('span').text()
                             );
+                            oferta.ButtonSave()[0].hide();
+                            oferta.ButtonSave()[1].hide();
+                            oferta.ButtonTallado().show();
                         }
 
                         if (event.target.value === 'progresivos') {
@@ -326,8 +336,69 @@
 
                 TipoEspejuelo: function () {
                 },
+                ButtonSave: function () {
+                    return [
+                        $('button[name="btn_create_and_list"]'),
+                        $('button[name="btn_create_and_create"]')
+                    ]
+                },
+                ButtonTallado: function () {
+                    return $('#btn-solicitud-tallado');
+                },
+                ButtonActionsEvent: function () {
+                    oferta.ButtonTallado().hide();
+                },
+
+                SelectCristalEvents: function () {
+                    const cristal = ["od", "oi"];
+                    oferta.checkAlmacen();
+                    oferta.iCheckOnChange();
+
+                    for (let i = 0; i < cristal.length; i++) {
+                        $('#{{ admin.uniqid }}_receta_cristal_' + cristal[i]).on('change', function () {
+                            oferta.checkAlmacen();
+                            oferta.iCheckOnChange();
+                        });
+                    }
+                },
+                checkAlmacen: function () {
+                    const cristal = ["od", "oi"];
+                    for (let i = 0; i < cristal.length; i++) {
+                        if (oferta.ObtenerCantidadCrital(cristal[i]) === 0) {
+                            oferta.ButtonSave()[0].hide();
+                            oferta.ButtonSave()[1].hide();
+                            oferta.ButtonTallado().show();
+                            return;
+                        }
+                    }
+
+                    oferta.ButtonSave()[0].show();
+                    oferta.ButtonSave()[1].show();
+                    oferta.ButtonTallado().hide();
+                },
+                /**
+                 *
+                 * @param cristal string {od, oi}
+                 * @return {number, null}
+                 * @constructor
+                 */
+                ObtenerCantidadCrital: function (cristal) {
+                    let text = $('#{{ admin.uniqid }}_receta_cristal_' + cristal + ' :selected')[0].text;
+
+                    text = text.match(/\(\d+\)/);
+                    if (!text) {
+                        return null;
+                    }
+                    text = text.pop().match(/\d+/);
+                    if (!text) {
+                        return null;
+                    }
+
+                    return parseFloat(text.pop())
+                },
 
                 init: function () {
+                    this.ButtonActionsEvent();
                     this.setInputPrecio(this.precio_inicial);
                     this.evento();
                     this.calcularOrden();
@@ -335,6 +406,7 @@
                     this.SelectArmadura();
                     this.SelectDp();
                     this.iCheckOnChange();
+                    this.SelectCristalEvents('od');
                 }
             };
 
