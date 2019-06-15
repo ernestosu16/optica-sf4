@@ -3,6 +3,7 @@
 namespace App\Admin;
 
 
+use App\Entity\AppAccesorio;
 use App\Entity\AppArmadura;
 use App\Entity\AppCristal;
 use App\Entity\AppOrdenServicio;
@@ -185,6 +186,8 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
             $solicitud->setNumero($this->getNuevoNumeroSolicitud($object));
 
             $object->setSolicitudTallado($solicitud);
+        } else {
+            $this->ReservarProducto($object);
         }
     }
 
@@ -378,5 +381,50 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
         $lastRow = $em->getRepository(AppSolicitudTallado::class)->getLastRowForOffice($object->getOffice());
 
         return (!$lastRow) ? 1 : $lastRow->getNumero() + 1;
+    }
+
+    private function ReservarProducto(AppOrdenServicio $object)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getConfigurationPool()->getContainer()->get('doctrine');
+        /** @var SecurityUser $user */
+        $user = $this->getConfigurationPool()->getContainer()->get('security.token_storage')->getToken()->getUser();
+
+        if ($object->getArmadura()) {
+            # Reserva de las armaduras
+            $armadura = $em->getRepository(Alamacen::class)->getProductoOficina(
+                $object->getArmadura()->getProducto(),
+                $user->getOffice()
+            );
+            $armadura->setCantidadReservado($armadura->getCantidadReservado() + 1);
+        }
+
+        if ($object->getAccesorios()) {
+            # Reserva de los accesorios
+            /** @var AppAccesorio $accesorio */
+            foreach ($object->getAccesorios() as $accesorio) {
+                $accesorioEntity = $em->getRepository(Alamacen::class)->getProductoOficina(
+                    $accesorio->getProducto(),
+                    $user->getOffice()
+                );
+                $accesorioEntity->setCantidadReservado($accesorioEntity->getCantidadReservado() + 1);
+            }
+        }
+
+        if ($object->getReceta()) {
+            # Reserva del Cristal OD
+            $cristalOD = $em->getRepository(Alamacen::class)->getProductoOficina(
+                $object->getReceta()->getCristalOd()->getProducto(),
+                $user->getOffice()
+            );
+            $cristalOD->setCantidadReservado($cristalOD->getCantidadReservado() + 0.5);
+
+            # Reserva del Cristal OI
+            $cristalOI = $em->getRepository(Alamacen::class)->getProductoOficina(
+                $object->getReceta()->getCristalOi()->getProducto(),
+                $user->getOffice()
+            );
+            $cristalOI->setCantidadReservado($cristalOI->getCantidadReservado() + 0.5);
+        }
     }
 }

@@ -24,20 +24,20 @@ class Alamacen extends _BaseEntity_
     protected $office;
 
     /**
-     * @var int
-     * @ORM\Column(type="integer")
+     * @var float
+     * @ORM\Column(type="float")
      */
     protected $cantidad_existencia;
 
     /**
-     * @var int
-     * @ORM\Column(type="integer")
+     * @var float
+     * @ORM\Column(type="float")
      */
     protected $cantidad_pendiente;
 
     /**
-     * @var int
-     * @ORM\Column(type="integer")
+     * @var float
+     * @ORM\Column(type="float")
      */
     protected $cantidad_reservado;
 
@@ -55,24 +55,24 @@ class Alamacen extends _BaseEntity_
     }
 
 
-    public function getCantidadExistencia(): ?int
+    public function getCantidadExistencia(): ?float
     {
         return $this->cantidad_existencia;
     }
 
-    public function setCantidadExistencia(int $cantidad_existencia): self
+    public function setCantidadExistencia(float $cantidad_existencia): self
     {
         $this->cantidad_existencia = $cantidad_existencia;
 
         return $this;
     }
 
-    public function getCantidadReservado(): ?int
+    public function getCantidadReservado(): ?float
     {
         return $this->cantidad_reservado;
     }
 
-    public function setCantidadReservado(int $cantidad_reservado): self
+    public function setCantidadReservado(float $cantidad_reservado): self
     {
         $this->cantidad_reservado = $cantidad_reservado;
 
@@ -103,12 +103,12 @@ class Alamacen extends _BaseEntity_
         return $this;
     }
 
-    public function getCantidadPendiente(): ?int
+    public function getCantidadPendiente(): ?float
     {
         return $this->cantidad_pendiente;
     }
 
-    public function setCantidadPendiente(int $cantidad_pendiente): self
+    public function setCantidadPendiente(float $cantidad_pendiente): self
     {
         $this->cantidad_pendiente = $cantidad_pendiente;
 
@@ -116,9 +116,9 @@ class Alamacen extends _BaseEntity_
     }
 
     /**
-     * @return int|null
+     * @return float|null
      */
-    public function getCantidad(): ?int
+    public function getCantidad(): ?float
     {
 
         return (int)$this->cantidad_existencia - $this->cantidad_reservado;
