@@ -6,7 +6,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\SolicitudTalladoRepository")
  */
 class AppSolicitudTallado extends _BaseEntity_
 {
@@ -17,13 +17,38 @@ class AppSolicitudTallado extends _BaseEntity_
     protected $numero;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\SecurityOffice")
-     */
-    protected $office;
-
-    /**
      * @var
      * @ORM\OneToOne(targetEntity="App\Entity\AppOrdenServicio", inversedBy="solicitud_tallado")
      */
     protected $orden_servicio;
+
+    public function __construct()
+    {
+        $this->created_at = new \DateTime();
+    }
+
+
+    public function getNumero(): ?string
+    {
+        return $this->numero;
+    }
+
+    public function setNumero(?string $numero): self
+    {
+        $this->numero = $numero;
+
+        return $this;
+    }
+
+    public function getOrdenServicio(): ?AppOrdenServicio
+    {
+        return $this->orden_servicio;
+    }
+
+    public function setOrdenServicio(?AppOrdenServicio $orden_servicio): self
+    {
+        $this->orden_servicio = $orden_servicio;
+
+        return $this;
+    }
 }

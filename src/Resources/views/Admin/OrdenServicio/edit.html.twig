@@ -1,9 +1,12 @@
 {% extends "SonataAdminBundle:CRUD:edit.html.twig" %}
 {% block sonata_form_actions %}
     {{ parent() }}
-    <a id="btn-solicitud-tallado" class="btn btn-warning" href="">
+    <button id="btn-solicitud-tallado" name="solicitud-tallado" type="submit" class="btn btn-warning">
         <i class="fa fa-tag" aria-hidden="true"></i> Solicitar Tallado
-    </a>
+    </button>
+    {#    <a id="btn-solicitud-tallado" class="btn btn-warning" href="">#}
+    {#        <i class="fa fa-tag" aria-hidden="true"></i> Solicitar Tallado#}
+    {#    </a>#}
 {% endblock %}
 {% block stylesheets %}
     {{ parent() }}
@@ -188,6 +191,18 @@
                 },
 
                 formValidate: function () {
+                    $('form').on('change', function () {
+                        if (oferta.ButtonTallado().is(':visible')) {
+                            oferta.ButtonTallado().prop('disabled', false);
+                        }
+
+                        if (oferta.ButtonSave()[0].is(':visible')) {
+                            oferta.ButtonSave()[0].prop('disabled', false);
+                        }
+                        if (oferta.ButtonSave()[1].is(':visible')) {
+                            oferta.ButtonSave()[1].prop('disabled', false);
+                        }
+                    })
                     // $('form').submit(function (event) {
                     //
                     //     event.preventDefault();
@@ -297,19 +312,19 @@
                             oferta.ButtonSave()[0].hide();
                             oferta.ButtonSave()[1].hide();
                             oferta.ButtonTallado().show();
+                            oferta.ButtonTallado().prop('disabled', false);
                         }
 
                         oferta.calcularOrden();
                     });
 
                     checkbox.on('ifUnchecked', function (event) {
-                        if (event.target.checked && event.target.value === 'bifocal' || event.target.value === 'progresivos') {
-                            $('#{{ admin.uniqid }}_receta_add').prop('required', false);
-
-                        }
+                        $('#{{ admin.uniqid }}_receta_add').prop('required', false);
+                        $('#sonata-ba-field-container-{{ admin.uniqid }}_receta_add').removeClass('has-error')
                         oferta.ButtonSave()[0].show();
                         oferta.ButtonSave()[1].show();
                         oferta.ButtonTallado().hide();
+                        oferta.ButtonTallado().prop('disabled', true);
                         oferta.checkAlmacen();
                         oferta.precio_fijo = null;
                         oferta.calcularOrden();
@@ -324,6 +339,7 @@
                             oferta.ButtonSave()[0].hide();
                             oferta.ButtonSave()[1].hide();
                             oferta.ButtonTallado().show();
+                            oferta.ButtonTallado().prop('disabled', false);
                         }
 
                         if (event.target.value === 'progresivos') {
@@ -347,6 +363,7 @@
                 },
                 ButtonActionsEvent: function () {
                     oferta.ButtonTallado().hide();
+                    oferta.ButtonTallado().prop('disabled', true);
                 },
 
                 SelectCristalEvents: function () {
@@ -368,6 +385,7 @@
                             oferta.ButtonSave()[0].hide();
                             oferta.ButtonSave()[1].hide();
                             oferta.ButtonTallado().show();
+                            oferta.ButtonTallado().prop('disabled', false);
                             return;
                         }
                     }
@@ -375,6 +393,7 @@
                     oferta.ButtonSave()[0].show();
                     oferta.ButtonSave()[1].show();
                     oferta.ButtonTallado().hide();
+                    oferta.ButtonTallado().prop('disabled', true);
                 },
                 /**
                  *

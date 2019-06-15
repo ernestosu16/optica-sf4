@@ -238,4 +238,22 @@ class AppOrdenServicio extends _BaseEntity_
         return $this;
     }
 
+    public function getSolicitudTallado(): ?AppSolicitudTallado
+    {
+        return $this->solicitud_tallado;
+    }
+
+    public function setSolicitudTallado(?AppSolicitudTallado $solicitud_tallado): self
+    {
+        $this->solicitud_tallado = $solicitud_tallado;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newOrden_servicio = $solicitud_tallado === null ? null : $this;
+        if ($newOrden_servicio !== $solicitud_tallado->getOrdenServicio()) {
+            $solicitud_tallado->setOrdenServicio($newOrden_servicio);
+        }
+
+        return $this;
+    }
+
 }

@@ -17,8 +17,12 @@ class AppSolicitudTalladoAdmin extends _BaseAdmin_
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('created_at')
-            ->add('office')
+            ->add('created_at', null, [
+                'label' => 'Creado',
+            ])
+            ->add('orden_servicio.office', null, [
+                'label' => 'Oficina',
+            ])
             ->add('numero');
     }
 }

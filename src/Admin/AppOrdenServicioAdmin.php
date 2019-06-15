@@ -9,9 +9,11 @@ use App\Entity\AppOrdenServicio;
 use App\Entity\AppProducto;
 use App\Entity\AppReceta;
 use App\Entity\AppRecetaLugar;
+use App\Entity\AppSolicitudTallado;
 use App\Entity\MovimientoAlmacen\Alamacen;
 use App\Entity\SecurityUser;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\QueryBuilder;
 use Exception;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -26,6 +28,7 @@ use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\HttpFoundation\Request;
 
 class AppOrdenServicioAdmin extends _BaseAdmin_
 {
@@ -163,6 +166,7 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
 
     /**
      * @param $object AppOrdenServicio
+     * @throws NonUniqueResultException
      */
     public function prePersist($object)
     {
@@ -172,6 +176,16 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
         $object->setNumero($this->getNuevoNumeroFactura($object));
         $object->setUsuarioCreador($user);
         $object->setOffice($user->getOffice());
+
+
+        $request = $this->getRequest();
+
+        if ($request->request->has('solicitud-tallado')) {
+            $solicitud = new AppSolicitudTallado();
+            $solicitud->setNumero($this->getNuevoNumeroSolicitud($object));
+
+            $object->setSolicitudTallado($solicitud);
+        }
     }
 
     private function FormReceta($formMapper)
@@ -345,7 +359,24 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
         return $query
             ->select('c')
             ->join($rootAlias . '.producto', 'p')
-            ->leftJoin('p.almacen','almacen')
-            ;
+            ->leftJoin('p.almacen', 'almacen');
+    }
+
+    /**
+     * @param AppOrdenServicio $object
+     * @return int|string|null
+     * @throws NonUniqueResultException
+     */
+    private function getNuevoNumeroSolicitud(AppOrdenServicio $object)
+    {
+        if ($object->getId()) {
+            return $object->getNumero();
+        }
+
+        /** @var EntityManager $em */
+        $em = $this->getConfigurationPool()->getContainer()->get('doctrine');
+        $lastRow = $em->getRepository(AppSolicitudTallado::class)->getLastRowForOffice($object->getOffice());
+
+        return (!$lastRow) ? 1 : $lastRow->getNumero() + 1;
     }
 }
