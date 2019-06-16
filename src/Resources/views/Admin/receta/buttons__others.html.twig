@@ -1,6 +1,6 @@
 {# @var object \App\Entity\AppReceta #}
 {% if object.ordenServicio is null %}
-    <a href="{{ path('admin_app_appordenservicio_orden_servicio_receta',{"receta_id":object.id}) }}"
+    <a href="{{ path('admin_app_appordenservicio_create',{"receta":object.id}) }}"
        class="btn btn-sm btn-success view_link" title="Crear receta">
         <i class="fa fa-shopping-cart" aria-hidden="true"></i>
         Crear Orden

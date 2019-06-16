@@ -27,8 +27,11 @@ use Sonata\Form\Type\DateTimePickerType;
 use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -93,6 +96,11 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
         $this->user = $this->getConfigurationPool()->getContainer()->get('security.token_storage')->getToken()->getUser();
         $context = $this->getRequest()->get('context');
 
+        if ($recetaId = $this->getRequest()->get('receta')) {
+            $this->OrdenServicioReceta($formMapper, $recetaId);
+            return;
+        }
+
         if ($context === 'cambio_armadura') {
             $this->formReceta = false;
             $this->formPaciente = true;
@@ -110,10 +118,11 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
         if ($this->formPaciente) {
             $formMapper->add('paciente', ModelListType::class);
         }
-        $formMapper->add('precio', MoneyType::class, [
-            'currency' => 'CUP',
-            'attr' => ['readonly' => true]
-        ])
+        $formMapper
+            ->add('precio', MoneyType::class, [
+                'currency' => 'CUP',
+                'attr' => ['readonly' => true]
+            ])
             ->add('armadura', ModelType::class, [
                 'placeholder' => 'Propia',
                 'btn_add' => '',
@@ -173,8 +182,7 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
     {
         $filter
             ->add('numero')
-            ->add('paciente')
-        ;
+            ->add('paciente');
     }
 
     /**
@@ -183,6 +191,9 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
      */
     public function prePersist($object)
     {
+        /** @var EntityManager $em */
+        $em = $this->getConfigurationPool()->getContainer()->get('doctrine');
+
         /** @var SecurityUser $user */
         $user = $this->getConfigurationPool()->getContainer()->get('security.token_storage')->getToken()->getUser();
 
@@ -190,6 +201,14 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
         $object->setUsuarioCreador($user);
         $object->setOffice($user->getOffice());
 
+        $recetaEntity = $em->getRepository(AppReceta::class)->findOneBy([
+            'numero' => $object->getReceta()->getNumero(),
+            'cristal_od' => $object->getReceta()->getCristalOd(),
+            'cristal_oi' => $object->getReceta()->getCristalOi(),
+        ]);
+
+        $object->setReceta($recetaEntity);
+        $object->setPaciente($recetaEntity->getPaciente());
 
         $request = $this->getRequest();
 
@@ -203,44 +222,52 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
         }
     }
 
-    private function FormReceta($formMapper)
+    private function FormReceta($formMapper, array $optionParameters = [])
     {
-        /** @var FormBuilder $form */
-        $form = $formMapper->create('receta', FormType::class, array(
-            'label' => false, 'by_reference' => true, 'data_class' => AppReceta::class));
+        $option = [
+            'disabled' => false,
+        ];
 
-//        if ($this->formPaciente) {
+        $option = array_merge($option, $optionParameters);
+
+        /** @var FormBuilder $formMapper */
+        $form = $formMapper->create('receta', FormType::class, [
+            'label' => false,
+            'by_reference' => true,
+            'data_class' => AppReceta::class,
+        ]);
+
+//        if (isset($option['receta']) && $option['receta'] instanceof AppReceta) {
+//            /** @var AppReceta $receta */
+//            $receta = $option['receta'];
 //            $form
-//                ->add('paciente', ModelListType::class, [
-//                    'model_manager' => $this->modelManager,
-//
-//                ])
-//                ->add('paciente_lista', ButtonType::class, [
-//                    'label' => 'Lista',
-//                    'attr' => ['style' => 'margin-top:25px', 'class' => 'btn btn-info btn-sm sonata-ba-action'],
-//
-//                ])
-//                ->add('paciente_agregar', ButtonType::class, [
-//                    'label' => 'Nuevo',
-//                    'attr' => ['style' => 'margin-top:25px', 'class' => 'btn btn-success btn-sm sonata-ba-action'],
-//
+//                ->add('id_receta', HiddenType::class, [
+//                    'mapped' => false,
+//                    'data' => $receta->getId(),
 //                ]);
 //        }
 
         # Datos general de la receta
-        $form->add('numero', null, ['label' => 'Número', 'required' => true])
+        $form
+            ->add('numero', null, [
+                'label' => 'Número',
+                'required' => true,
+                'disabled' => $option['disabled'],
+            ])
             ->add('fecha_refraccion', DateTimePickerType::class, [
-                //'disabled' => true,
+                'disabled' => $option['disabled'],
                 'required' => false,
                 'label' => 'Fecha de Refracción',
                 'format' => 'yyyy-MM-dd',
                 'dp_default_date' => date('Y-m-d'),
             ])
             ->add('dp', null, [
-                //'disabled' => true,
+                'disabled' => $option['disabled'],
                 'label' => 'DP'
             ])
-            ->add('add', null, []);
+            ->add('add', null, [
+                'disabled' => $option['disabled'],
+            ]);
 
 
         # Ojo derecho
@@ -248,8 +275,8 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
             ->add('cristal_od', ModelType::class, array(
                 'model_manager' => $this->modelManager,
                 'class' => AppCristal::class,
-                'query' => $this->QueryOjo('od'),
-                //'disabled' => true,
+                'query' => $this->QueryOjo(),
+                'disabled' => $option['disabled'],
                 'label' => 'Selecciona la graduación del OD',
                 'property' => 'getPorUnidad',
                 'required' => true,
@@ -257,33 +284,35 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
 
             ))
             ->add('eje_od', null, array(
-                //'disabled' => true,
+                'disabled' => $option['disabled'],
                 'label' => 'Eje'
             ))
             ->add('a_visual_od', null, array(
-                //'disabled' => true,
+                'disabled' => $option['disabled'],
                 'label' => 'Agudeza Visual'
             ))
             # Ojo izquierdo
             ->add('cristal_oi', ModelType::class, array(
                 'model_manager' => $this->modelManager,
                 'class' => AppCristal::class,
-                //'disabled' => true,
+                'query' => $this->QueryOjo(),
+                'disabled' => $option['disabled'],
                 'label' => 'Selecciona la graduación del OI',
                 'property' => 'getPorUnidad',
                 'required' => true,
                 'placeholder' => '--Seleccione el Cristal OI--',
             ))
             ->add('eje_oi', null, array(
-                //'disabled' => true,
+                'disabled' => $option['disabled'],
                 'label' => 'Eje'
             ))
             ->add('a_visual_oi', null, array(
-                //'disabled' => true,
+                'disabled' => $option['disabled'],
                 'label' => 'Agudeza Visual'
             ))
             # Lista espejuelos
             ->add('lista_espejuelo', ChoiceType::class, [
+                'disabled' => $option['disabled'],
                 'expanded' => true,
                 'label' => 'Tipo de espejuelo',
                 'multiple' => true,
@@ -296,6 +325,7 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
                     'Progresivos - $31.15' => 'progresivos',
                 ]
             ]);
+
 
         return $form;
     }
@@ -438,5 +468,57 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
             );
             $cristalOI->setCantidadReservado($cristalOI->getCantidadReservado() + 0.5);
         }
+    }
+
+    private function OrdenServicioReceta(FormMapper $formMapper, $recetaId)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getConfigurationPool()->getContainer()->get('doctrine');
+
+        $recetaEntity = $em->getRepository(AppReceta::class)->find($recetaId);
+
+        /** @var AppOrdenServicio $object */
+        $object = $this->getSubject();
+
+        $object->setReceta($recetaEntity);
+
+        $formMapper
+            ->with('Datos de la Orden', ['class' => 'col-md-4']);
+        $formMapper
+            ->add('precio', MoneyType::class, [
+                'currency' => 'CUP',
+                'attr' => ['readonly' => true]
+            ])
+            ->add('armadura', ModelType::class, [
+                'placeholder' => 'Propia',
+                'btn_add' => '',
+                'required' => false,
+                'query' => $this->QueryArmadura(),
+                'property' => 'getArmadura',
+            ])
+            ->add('accesorios', ModelType::class, [
+                'multiple' => true,
+                'attr' => ['placeholder' => 'Ningún',],
+                'query' => $this->QueryAccesorio(),
+                'property' => 'getAccesorio',
+            ])
+            ->add('observaciones', TextareaType::class, [
+                'required' => false,
+            ])
+            ->end();
+
+        if ($this->formReceta) {
+            # Receta
+            $formMapper
+                ->with('Receta', ['class' => 'col-md-8', 'label' => 'Receta: ' . ($object->getReceta() ? $object->getReceta()->getPaciente() : null)])
+                ->add($this->FormReceta($formMapper, [
+//                    'disabled' => true,
+//                    'readonly' => true,
+                    'receta' => $recetaEntity,
+                ]))
+                ->end();
+        }
+
+        return $formMapper;
     }
 }
