@@ -136,6 +136,7 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
                 'attr' => ['placeholder' => 'Ningún',],
                 'query' => $this->QueryAccesorio(),
                 'property' => 'getAccesorio',
+                'required' => false,
             ])
             ->add('observaciones', TextareaType::class, [
                 'required' => false,
