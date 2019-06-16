@@ -17,6 +17,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\QueryBuilder;
 use Exception;
+use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelListType;
@@ -150,11 +151,14 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
             ->add('numero', null, array(
                 'label' => 'Número'
             ))
+            ->add('paciente', null, array(
+                'label' => 'Paciente'
+            ))
             ->add('precio', null, ['label' => 'Importe', 'template' => '::Admin\field__precio.html.twig'])
             ->add('observaciones')
 //            ->add('paciente')
             ->add('tipo', null, ['label' => 'Tipo', 'template' => '::Admin\OrdenServicio\field__tipo.html.twig'])
-            ->add('estado', null, ['label' => 'Estado',/* 'template' => '::Admin\field__precio.html.twig'*/])
+            ->add('estado', null, ['label' => 'Estado', 'template' => '::Admin\OrdenServicio\field__estado.html.twig'])
             ->add('fecha_entrega')/*->add('_action', null, array(
                 'actions' => array(
                     'show' => array(),
@@ -162,6 +166,14 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
                     'delete' => array(),
                 ),
             ))*/
+        ;
+    }
+
+    protected function configureDatagridFilters(DatagridMapper $filter)
+    {
+        $filter
+            ->add('numero')
+            ->add('paciente')
         ;
     }
 

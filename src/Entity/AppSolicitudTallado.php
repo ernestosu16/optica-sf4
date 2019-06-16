@@ -27,6 +27,11 @@ class AppSolicitudTallado extends _BaseEntity_
         $this->created_at = new \DateTime();
     }
 
+    public function __toString()
+    {
+        return $this->getNumero();
+    }
+
 
     public function getNumero(): ?string
     {
