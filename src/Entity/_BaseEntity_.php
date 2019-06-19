@@ -32,7 +32,7 @@ abstract class _BaseEntity_ extends _Entity_
     /**
      * @return DateTime
      */
-    public function getCreatedAt(): DateTime
+    public function getCreatedAt(): ?DateTime
     {
         return $this->created_at;
     }

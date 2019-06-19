@@ -2,13 +2,19 @@
 {% block navbar_title %}{% endblock %}
 {% block actions %}{% endblock %}
 {% block sonata_form_actions %}
-    {{ parent() }}
+{#    {{ parent() }}#}
+    {% if object.id is null or object.createdAt|date('Y-m-d') == "now"|date('Y-m-d') %}
+    <button type="submit" class="btn btn-success" name="btn_create_and_list">
+        <i class="fa fa-save"></i>
+        Guardar y Listar
+    </button>
     <button id="btn-solicitud-tallado" name="solicitud-tallado" type="submit" class="btn btn-warning">
         <i class="fa fa-tag" aria-hidden="true"></i> Solicitar Tallado
     </button>
     {#    <a id="btn-solicitud-tallado" class="btn btn-warning" href="">#}
     {#        <i class="fa fa-tag" aria-hidden="true"></i> Solicitar Tallado#}
     {#    </a>#}
+    {% endif %}
 {% endblock %}
 {% block stylesheets %}
     {{ parent() }}
@@ -72,7 +78,7 @@
 
             }
 
-            {% if(object.receta) %}
+            {% if(object.receta and object.receta.createdAt|date('Y-m-d') != "now"|date('Y-m-d')) %}
 
             $('#{{ admin.uniqid }}_receta').find('input').attr('readonly', 'readonly');
             $('#{{ admin.uniqid }}_receta').find('select').select2("readonly", true);

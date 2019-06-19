@@ -7,6 +7,7 @@ use App\Entity\AppAccesorio;
 use App\Entity\AppArmadura;
 use App\Entity\AppCristal;
 use App\Entity\AppOrdenServicio;
+use App\Entity\AppPaciente;
 use App\Entity\AppProducto;
 use App\Entity\AppReceta;
 use App\Entity\AppRecetaLugar;
@@ -43,6 +44,10 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
      * @var SecurityUser
      */
     private $user;
+    /**
+     * @var bool
+     */
+    private $formDisabled = false;
 
 //    public function getTemplate($name)
 //    {
@@ -63,7 +68,7 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
 
     protected function configureRoutes(RouteCollection $collection)
     {
-        $collection->clearExcept(array('list', 'create'));
+        $collection->clearExcept(array('list', 'create', 'edit'));
 
         $collection->add('orden_servicio_sin_recta', 'orden_servicio_sin_receta');
         $collection->add('orden_servicio_receta', 'orden_servicio_receta/{receta_id}');
@@ -113,18 +118,30 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
             $this->formPaciente = true;
         }
 
+        if ($this->isCurrentRoute('edit') && $object->getCreatedAt()->format('Y-m-d') !== date('Y-m-d')) {
+            $this->formDisabled = true;
+        }
+        if ($this->isCurrentRoute('edit') && $object->getReceta() === null) {
+            $this->formReceta = false;
+            $this->formPaciente = true;
+        }
+
         $formMapper
             ->with('Datos de la Orden', ['class' => 'col-md-4']);
         if ($this->formPaciente) {
-            $formMapper->add('paciente', ModelListType::class);
+            $formMapper->add('paciente', $this->formDisabled ? TextType::class : ModelListType::class, [
+                'disabled' => $this->formDisabled,
+            ]);
         }
         $formMapper
             ->add('precio', MoneyType::class, [
                 'currency' => 'CUP',
+                'disabled' => $this->formDisabled,
                 'attr' => ['readonly' => true]
             ])
             ->add('armadura', ModelType::class, [
                 'placeholder' => 'Propia',
+                'disabled' => $this->formDisabled,
                 'btn_add' => '',
                 'required' => false,
                 'query' => $this->QueryArmadura(),
@@ -132,7 +149,8 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
             ])
             ->add('accesorios', ModelType::class, [
                 'multiple' => true,
-//                'disabled' => $object->getId(),
+                'disabled' => $this->formDisabled,
+                'btn_add' => '',
                 'attr' => ['placeholder' => 'Ningún',],
                 'query' => $this->QueryAccesorio(),
                 'property' => 'getAccesorio',
@@ -140,6 +158,7 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
             ])
             ->add('observaciones', TextareaType::class, [
                 'required' => false,
+                'disabled' => $this->formDisabled,
             ])
             ->end();
 
@@ -147,7 +166,7 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
             # Receta
             $formMapper
                 ->with('Receta', ['class' => 'col-md-8', 'label' => 'Receta: ' . ($object->getReceta() ? $object->getReceta()->getPaciente() : null)])
-                ->add($this->FormReceta($formMapper))
+                ->add($this->FormReceta($formMapper, ['disabled' => $this->formDisabled,]))
                 ->end();
         }
     }
@@ -169,14 +188,17 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
 //            ->add('paciente')
             ->add('tipo', null, ['label' => 'Tipo', 'template' => '::Admin\OrdenServicio\field__tipo.html.twig'])
             ->add('estado', null, ['label' => 'Estado', 'template' => '::Admin\OrdenServicio\field__estado.html.twig'])
-            ->add('fecha_entrega')/*->add('_action', null, array(
+            ->add('fecha_entrega')
+            ->add('_action', null, array(
+                'label' => '',
                 'actions' => array(
-                    'show' => array(),
-                    'edit' => array(),
-                    'delete' => array(),
+//                    'show' => array(),
+                    'edit' => array(
+                        'template' => '::Admin\OrdenServicio\buttons__edit.html.twig',
+                    ),
+//                    'delete' => array(),
                 ),
-            ))*/
-        ;
+            ));
     }
 
     protected function configureDatagridFilters(DatagridMapper $filter)
@@ -202,14 +224,18 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
         $object->setUsuarioCreador($user);
         $object->setOffice($user->getOffice());
 
-        $recetaEntity = $em->getRepository(AppReceta::class)->findOneBy([
-            'numero' => $object->getReceta()->getNumero(),
-            'cristal_od' => $object->getReceta()->getCristalOd(),
-            'cristal_oi' => $object->getReceta()->getCristalOi(),
-        ]);
+        $recetaEntity = null;
+        if ($object->getReceta()) {
+            $recetaEntity = $em->getRepository(AppReceta::class)->findOneBy([
+                'numero' => $object->getReceta()->getNumero(),
+                'cristal_od' => $object->getReceta()->getCristalOd(),
+                'cristal_oi' => $object->getReceta()->getCristalOi(),
+            ]);
+        }
 
-        $object->setReceta($recetaEntity);
-        $object->setPaciente($recetaEntity->getPaciente());
+        if ($recetaEntity) {
+            $object->setPaciente($recetaEntity->getPaciente());
+        }
 
         $request = $this->getRequest();
 

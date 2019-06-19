@@ -1,0 +1,9 @@
+{# @var object \App\Entity\AppOrdenServicio #}
+{% if object.createdAt|date('Y-m-d') == "now"|date('Y-m-d') %}
+    <div class="btn-group">
+        <a href="{{ admin.generateUrl('edit',{'id':object.id}) }}" class="btn btn-sm btn-default edit_link"
+           title="Editar">
+            <i class="fa fa-pencil" aria-hidden="true"></i>
+        </a>
+    </div>
+{% endif %}
