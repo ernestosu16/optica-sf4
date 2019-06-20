@@ -1,9 +1,15 @@
 {# @var object \App\Entity\AppOrdenServicio #}
-{% if object.createdAt|date('Y-m-d') == "now"|date('Y-m-d') %}
-    <div class="btn-group">
+<div class="btn-group">
+    {% if object.createdAt|date('Y-m-d') == "now"|date('Y-m-d') %}
         <a href="{{ admin.generateUrl('edit',{'id':object.id}) }}" class="btn btn-sm btn-default edit_link"
            title="Editar">
             <i class="fa fa-pencil" aria-hidden="true"></i>
+            Editar
         </a>
-    </div>
-{% endif %}
+    {% endif %}
+    <a target="_blank" href="{{ admin.generateUrl('comprobante',{'id':object.id}) }}" class="btn btn-sm btn-default edit_link"
+       title="Editar">
+        <i class="fa fa-list" aria-hidden="true"></i>
+        Comprobante
+    </a>
+</div>

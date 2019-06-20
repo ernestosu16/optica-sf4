@@ -131,4 +131,13 @@ class OrdenServicioControllerAdmin extends CRUDController
         ]);
     }
 
+    public function comprobanteAction($id)
+    {
+        $object = $this->admin->getSubject();
+
+        return $this->renderWithExtraParams('::Admin\OrdenServicio\comprobante.html.twig', [
+            'object' => $object
+        ]);
+    }
+
 }

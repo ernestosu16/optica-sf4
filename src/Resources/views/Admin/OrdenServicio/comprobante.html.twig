@@ -1,0 +1,131 @@
+{% extends 'base-print-layout.html.twig' %}
+{% block title %}Comprobante de pago{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <style type="text/css">
+        /*td {*/
+        /*    padding-left: 5px;*/
+        /*}*/
+
+        .producto {
+            border: 1px solid white;
+            border-bottom: 1px solid grey;
+            border-right: 1px solid grey;
+        }
+    </style>
+{% endblock %}
+{% block body %}
+    {# @var object \App\Entity\AppOrdenServicio #}
+    <table cellpadding="0" cellspacing="0" style="width: 50%">
+        <tr>
+            <td style="width: 80%">Comprobante de pago</td>
+            <th>D</th>
+            <th>M</th>
+            <th>A</th>
+        </tr>
+        <tr>
+            <td>Óptica</td>
+            <td align="center">{{ "now"|date('d') }}</td>
+            <td align="center">{{ "now"|date('m') }}</td>
+            <td align="center">{{ "now"|date('Y') }}</td>
+        </tr>
+        <tr>
+            <td colspan="4">
+                <table border="0">
+                    <tr>
+                        <td rowspan="2" style="width: 10%;height: 50px" class="producto">Cliente</td>
+                        <td class="producto">{{ object.paciente.nombre }}</td>
+                    </tr>
+                    <tr>
+                        <td class="producto">{{ object.paciente.direccion }}</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="4" style="text-align: center">
+                <strong>DEPENDIENTE</strong><br/>
+                {{ object.usuarioCreador.nombreApellidos }}
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4">
+                <table class="producto" cellpadding="2">
+                    <tr>
+                        <th class="producto">PRODUCTOS</th>
+                        <th class="producto">IMPORTE</th>
+                    </tr>
+                    <tr>
+                        <td class="producto">ARMADURA</td>
+                        <td class="producto">$
+                            {% if  object.armadura %}
+                                {{ object.armadura.producto.precio|money }}
+                            {% else %}
+                                0.00
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="producto">ACCESORIOS</td>
+                        <td class="producto">$
+                            {% if  object.accesorios %}
+                                {% set precio_accesorios = 0 %}
+                                {# @var accesorio \App\Entity\AppAccesorio #}
+                                {% for accesorio in object.accesorios %}
+                                    {% set precio_accesorios = precio_accesorios+accesorio.producto.precio %}
+                                {% endfor %}
+                                {{ precio_accesorios|money }}
+                            {% else %}
+                                0.00
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="producto">CRISTALES</td>
+                        <td class="producto">$
+                            {% if  object.receta %}
+                                {% set precio_cristal = object.receta.cristalOd.producto.precio/2 + object.receta.cristalOi.producto.precio/2 %}
+                                {{ precio_cristal|money }}
+                            {% else %}
+                                0.00
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="producto">TINTE CRISTAL</td>
+                        <td class="producto">$
+                            {% if  object.tinteCristal %}
+                                {% set precio_tinte_cristal = object.tinteCristal.producto.precio %}
+                                {{ precio_tinte_cristal|money }}
+                            {% else %}
+                                0.00
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="producto">CORTE Y MONTAJE</td>
+                        <td class="producto">$
+                            {% if object.armadura is not null or object.receta.cristalOi is null  and object.receta.cristalOd is null %}
+                                0.00
+                            {% else %}
+                                2.00
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="producto">&nbsp;</td>
+                        <td class="producto"></td>
+                    </tr>
+                    <tr>
+                        <td class="producto">Importe Total Pagado</td>
+                        <td class="producto">$ {{ object.precio|money }}</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    <script>
+        print();
+    </script>
+{% endblock %}

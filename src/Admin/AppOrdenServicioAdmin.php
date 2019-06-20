@@ -76,6 +76,8 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
         # Ruta para comprobar la existencia de los productos
         $collection->add('comprobar_exitencia', 'comprobar_exitencia/{receta_id}');
 
+        $collection->add('comprobante', 'comprobante/{id}');
+
 
         $collection->add('cambio_armadura', 'cambio_armadura');
 
@@ -255,7 +257,26 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
         } else {
             $this->ReservarProducto($object);
         }
-        $this->getRequest()->getSession()->getFlashBag()->add("success", "My To-Do custom success message");
+
+//        $this->getRequest()->getSession()->getFlashBag()->add("success", "<a href='./comprobante/{$object->getId()}'>Imprimir el comprobante</a><br/>");
+    }
+
+    public function postPersist($object)
+    {
+        $this->flashComprobante($object);
+    }
+
+    public function postUpdate($object)
+    {
+        $this->flashComprobante($object);
+    }
+
+    private function flashComprobante($object)
+    {
+        $this->getRequest()
+            ->getSession()
+            ->getFlashBag()
+            ->add("success", "<a href='./comprobante/{$object->getId()}' target='_blank'>Imprimir el comprobante</a><br/>");
     }
 
     private function FormReceta($formMapper, array $optionParameters = [])
@@ -393,15 +414,24 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
 
         $office = $this->user->getOffice()->getId();
 
+//        /** @var QueryBuilder $query */
+//        $query = $this->getModelManager()->createQuery(Alamacen::class, 'a');
+//        $rootAlias = $query->getRootAliases()[0];
+//        return $query
+//            ->join($rootAlias . '.producto', 'p')
+//            ->join('p.armaduras', 'armaduras')
+//            ->where('(a.cantidad_existencia - a.cantidad_reservado) > 0')
+//            ->andWhere("a.office = {$office}");
         /** @var QueryBuilder $query */
-        $query = $this->getModelManager()->createQuery(Alamacen::class, 'a');
+        $query = $this->getModelManager()->createQuery(AppArmadura::class, 'ar');
         $rootAlias = $query->getRootAliases()[0];
         return $query
             ->join($rootAlias . '.producto', 'p')
-            ->join('p.armaduras', 'armaduras')
+            ->join('p.almacen', 'a')
             ->where('(a.cantidad_existencia - a.cantidad_reservado) > 0')
             ->andWhere("a.office = {$office}");
     }
+
     /**
      * Lista tinte cristal de la unidad
      *

@@ -100,4 +100,10 @@ class AppArmadura extends _Entity_
 
         return $this;
     }
+
+    public function getArmadura()
+    {
+        $cantidad = $this->getProducto()->getAlmacen()->first()->getCantidad();
+        return (string)$this->__toString() . " ({$cantidad})";
+    }
 }
