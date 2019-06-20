@@ -89,7 +89,7 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
         }
 
         return [
-            'context' => $this->getRequest()->get('context', 'nueva_receta'),
+//            'context' => $this->getRequest()->get('context', ''),
         ];
     }
 
@@ -255,6 +255,7 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
         } else {
             $this->ReservarProducto($object);
         }
+        $this->getRequest()->getSession()->getFlashBag()->add("success", "My To-Do custom success message");
     }
 
     private function FormReceta($formMapper, array $optionParameters = [])
@@ -548,6 +549,7 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
             ])
             ->add('armadura', ModelType::class, [
                 'placeholder' => 'Propia',
+                'disabled' => $this->formDisabled,
                 'btn_add' => '',
                 'required' => false,
                 'query' => $this->QueryArmadura(),
@@ -555,9 +557,20 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
             ])
             ->add('accesorios', ModelType::class, [
                 'multiple' => true,
+                'disabled' => $this->formDisabled,
+                'btn_add' => '',
                 'attr' => ['placeholder' => 'Ningún',],
                 'query' => $this->QueryAccesorio(),
                 'property' => 'getAccesorio',
+                'required' => false,
+            ])
+            ->add('tinte_cristal', ModelType::class, [
+                'placeholder' => 'Ningún',
+                'disabled' => $this->formDisabled,
+                'btn_add' => '',
+                'required' => false,
+                'query' => $this->QueryTinteCristal(),
+                'property' => 'getTinteCristal',
             ])
             ->add('observaciones', TextareaType::class, [
                 'required' => false,
