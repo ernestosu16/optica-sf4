@@ -220,6 +220,14 @@ class AppProducto extends _BaseEntity_
     }
 
     /**
+     * @return AppTinteCristal
+     */
+    public function getTinteCristal(): AppTinteCristal
+    {
+        return $this->tinte_cristales;
+    }
+
+    /**
      * @return Collection|AppTinteCristal[]
      */
     public function getTinteCristales(): Collection

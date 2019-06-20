@@ -156,6 +156,14 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
                 'property' => 'getAccesorio',
                 'required' => false,
             ])
+            ->add('tinte_cristal', ModelType::class, [
+                'placeholder' => 'Ningún',
+                'disabled' => $this->formDisabled,
+                'btn_add' => '',
+                'required' => false,
+                'query' => $this->QueryTinteCristal(),
+                'property' => 'getTinteCristal',
+            ])
             ->add('observaciones', TextareaType::class, [
                 'required' => false,
                 'disabled' => $this->formDisabled,
@@ -390,6 +398,28 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
         return $query
             ->join($rootAlias . '.producto', 'p')
             ->join('p.armaduras', 'armaduras')
+            ->where('(a.cantidad_existencia - a.cantidad_reservado) > 0')
+            ->andWhere("a.office = {$office}");
+    }
+    /**
+     * Lista tinte cristal de la unidad
+     *
+     * @return QueryBuilder
+     */
+    private function QueryTinteCristal()
+    {
+        if (!$this->user && !$this->user->getId()) {
+            new Exception("Error al encontrar el usuario");
+        }
+
+        $office = $this->user->getOffice()->getId();
+
+        /** @var QueryBuilder $query */
+        $query = $this->getModelManager()->createQuery(Alamacen::class, 'a');
+        $rootAlias = $query->getRootAliases()[0];
+        return $query
+            ->join($rootAlias . '.producto', 'p')
+            ->join('p.tinte_cristales', 'tinte_cristales')
             ->where('(a.cantidad_existencia - a.cantidad_reservado) > 0')
             ->andWhere("a.office = {$office}");
     }

@@ -47,6 +47,11 @@ class AppOrdenServicio extends _BaseEntity_
     protected $accesorios;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\AppTinteCristal")
+     */
+    protected $tinte_cristal;
+
+    /**
      * @var string
      * @ORM\Column(type="string", length=15, nullable=true)
      */
@@ -252,6 +257,18 @@ class AppOrdenServicio extends _BaseEntity_
         if ($newOrden_servicio !== $solicitud_tallado->getOrdenServicio()) {
             $solicitud_tallado->setOrdenServicio($newOrden_servicio);
         }
+
+        return $this;
+    }
+
+    public function getTinteCristal(): ?AppTinteCristal
+    {
+        return $this->tinte_cristal;
+    }
+
+    public function setTinteCristal(?AppTinteCristal $tinte_cristal): self
+    {
+        $this->tinte_cristal = $tinte_cristal;
 
         return $this;
     }

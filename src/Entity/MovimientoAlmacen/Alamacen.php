@@ -127,7 +127,7 @@ class Alamacen extends _BaseEntity_
     /**
      * @return string
      */
-    public function getArmadura(): string
+    public function getArmadura(): ?string
     {
         $cantidad = $this->getCantidad();
         return (string)$this->getProducto()->getArmadura() . " ({$cantidad})";
@@ -136,10 +136,19 @@ class Alamacen extends _BaseEntity_
     /**
      * @return string
      */
-    public function getAccesorio(): string
+    public function getAccesorio(): ?string
     {
         $cantidad = $this->getCantidad();
         return (string)$this->getProducto()->getAccesorio() . " ({$cantidad})";
+    }
+
+    /**
+     * @return string
+     */
+    public function getTinteCristal(): ?string
+    {
+        $cantidad = $this->getCantidad();
+        return (string)$this->getProducto()->getTinteCristal() . " ({$cantidad})";
     }
 
 

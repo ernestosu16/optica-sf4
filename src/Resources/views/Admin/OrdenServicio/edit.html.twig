@@ -59,6 +59,7 @@
 
             {#$('#{{ admin.uniqid }}_precio').parent().parent().addClass('col-md-6 row');#}
             $('[for="{{ admin.uniqid }}_armadura"]').parent().addClass('col-md-12 row');
+            $('[for="{{ admin.uniqid }}_tinte_cristal"]').parent().addClass('col-md-12 row');
             $('[for="{{ admin.uniqid }}_accesorios"]').parent().addClass('col-md-12 row');
             $('[for="{{ admin.uniqid }}_observaciones"]').parent().addClass('col-md-12 row');
 
@@ -113,7 +114,8 @@
                     'receta_cristal_od',
                     'receta_cristal_oi',
                     'armadura',
-                    'accesorios'
+                    'accesorios',
+                    'tinte_cristal'
                 ],
                 'precio_fijo': null,
                 /**
