@@ -12,6 +12,7 @@ use App\Entity\AppProducto;
 use App\Entity\AppReceta;
 use App\Entity\AppRecetaLugar;
 use App\Entity\AppSolicitudTallado;
+use App\Entity\AppTinteCristal;
 use App\Entity\MovimientoAlmacen\Alamacen;
 use App\Entity\SecurityUser;
 use Doctrine\ORM\EntityManager;
@@ -414,14 +415,6 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
 
         $office = $this->user->getOffice()->getId();
 
-//        /** @var QueryBuilder $query */
-//        $query = $this->getModelManager()->createQuery(Alamacen::class, 'a');
-//        $rootAlias = $query->getRootAliases()[0];
-//        return $query
-//            ->join($rootAlias . '.producto', 'p')
-//            ->join('p.armaduras', 'armaduras')
-//            ->where('(a.cantidad_existencia - a.cantidad_reservado) > 0')
-//            ->andWhere("a.office = {$office}");
         /** @var QueryBuilder $query */
         $query = $this->getModelManager()->createQuery(AppArmadura::class, 'ar');
         $rootAlias = $query->getRootAliases()[0];
@@ -446,11 +439,11 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
         $office = $this->user->getOffice()->getId();
 
         /** @var QueryBuilder $query */
-        $query = $this->getModelManager()->createQuery(Alamacen::class, 'a');
+        $query = $this->getModelManager()->createQuery(AppTinteCristal::class, 'tc');
         $rootAlias = $query->getRootAliases()[0];
         return $query
             ->join($rootAlias . '.producto', 'p')
-            ->join('p.tinte_cristales', 'tinte_cristales')
+            ->join('p.almacen', 'a')
             ->where('(a.cantidad_existencia - a.cantidad_reservado) > 0')
             ->andWhere("a.office = {$office}");
     }
@@ -539,6 +532,15 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
                 );
                 $accesorioEntity->setCantidadReservado($accesorioEntity->getCantidadReservado() + 1);
             }
+        }
+
+        if ($object->getTinteCristal()) {
+            # Reserva de las tinte del cristal
+            $tinte_cristal = $em->getRepository(Alamacen::class)->getProductoOficina(
+                $object->getTinteCristal()->getProducto(),
+                $user->getOffice()
+            );
+            $tinte_cristal->setCantidadReservado($tinte_cristal->getCantidadReservado() + 1);
         }
 
         if ($object->getReceta()) {

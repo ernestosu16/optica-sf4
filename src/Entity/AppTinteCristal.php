@@ -66,4 +66,10 @@ class AppTinteCristal extends _BaseEntity_
 
         return $this;
     }
+
+    public function getTinteCristal()
+    {
+        $cantidad = $this->getProducto()->getAlmacen()->first()->getCantidad();
+        return (string)$this->__toString() . " ({$cantidad})";
+    }
 }
