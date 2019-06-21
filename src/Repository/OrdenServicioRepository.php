@@ -26,4 +26,16 @@ class OrdenServicioRepository extends _ServiceEntityRepository_
     {
         return $this->findOneBy(['office' => $office], ['id' => 'desc']);
     }
+
+    public function listaOrdenServicioNoDespacho(SecurityOffice $office)
+    {
+        return $this
+            ->createQueryBuilder('i')
+            ->leftJoin('i.despacho_almacen', 'despacho_almacen')
+            ->where('despacho_almacen.id is null')
+            ->andWhere('i.office = :office')
+            ->setParameter('office', $office->getId())
+            ->getQuery()->getResult();
+
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\DespachoAlmacen\AppDespachoAlmacenOrdenServicio;
 use DateTime;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -86,7 +87,12 @@ class AppOrdenServicio extends _BaseEntity_
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\AppSolicitudTallado", cascade={"persist"}, mappedBy="orden_servicio")
      */
+
     protected $solicitud_tallado;
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\DespachoAlmacen\AppDespachoAlmacenOrdenServicio", cascade={"persist"}, mappedBy="orden_servicio")
+     */
+    protected $despacho_almacen;
 
     public function __construct()
     {
@@ -271,6 +277,24 @@ class AppOrdenServicio extends _BaseEntity_
     public function setTinteCristal(?AppTinteCristal $tinte_cristal): self
     {
         $this->tinte_cristal = $tinte_cristal;
+
+        return $this;
+    }
+
+    public function getDespachoAlmacen(): ?AppDespachoAlmacenOrdenServicio
+    {
+        return $this->despacho_almacen;
+    }
+
+    public function setDespachoAlmacen(?AppDespachoAlmacenOrdenServicio $despacho_almacen): self
+    {
+        $this->despacho_almacen = $despacho_almacen;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newOrden_servicio = $despacho_almacen === null ? null : $this;
+        if ($newOrden_servicio !== $despacho_almacen->getOrdenServicio()) {
+            $despacho_almacen->setOrdenServicio($newOrden_servicio);
+        }
 
         return $this;
     }

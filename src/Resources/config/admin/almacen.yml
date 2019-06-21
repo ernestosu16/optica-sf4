@@ -7,3 +7,14 @@ services:
             - App\Controller\AlmacenController
         tags:
             - { name: sonata.admin, manager_type: orm, label: 'Recepción' }
+
+    app.despacho_almacen:
+        class: App\Admin\AppDespachoAlmacenAdmin
+        arguments:
+            - ~
+            - App\Entity\DespachoAlmacen\AppDespachoAlmacen
+            - App\Controller\DespachoAlmacenController
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: 'Despacho del Almacén' }
+        calls:
+            - [setTemplate, ['edit', '::Admin/DespachoAlmacen/edit.html.twig']]
