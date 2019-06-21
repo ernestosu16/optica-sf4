@@ -276,7 +276,7 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
         $this->getRequest()
             ->getSession()
             ->getFlashBag()
-            ->add("success", "<a href='./comprobante/{$object->getId()}' target='_blank'>Imprimir el comprobante</a><br/>");
+            ->add("success", "<a href='{$this->generateUrl('comprobante',['id' => $object->getId()])}' target='_blank'>Imprimir el comprobante</a><br/>");
     }
 
     private function FormReceta($formMapper, array $optionParameters = [])

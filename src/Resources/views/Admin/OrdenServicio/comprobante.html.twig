@@ -84,12 +84,21 @@
                     <tr>
                         <td class="producto">CRISTALES</td>
                         <td class="producto">$
-                            {% if  object.receta %}
-                                {% set precio_cristal = object.receta.cristalOd.producto.precio/2 + object.receta.cristalOi.producto.precio/2 %}
-                                {{ precio_cristal|money }}
-                            {% else %}
-                                0.00
+                            {% set precio_cristal = 0.00 %}
+                            {% if  object.receta is not null and object.receta.listaEspejuelo|length > 0 %}
+                                {% for tipo in object.receta.listaEspejuelo %}
+                                    {% if tipo == 'progresivos' %}
+                                        {% set precio_cristal = 31.15 %}
+                                    {% endif %}
+                                    {% if tipo == 'bifocal' %}
+                                        {% set precio_cristal = 11.50 %}
+                                    {% endif %}
+                                {% endfor %}
                             {% endif %}
+                            {% if  object.receta and precio_cristal == 0.00 %}
+                                {% set precio_cristal = object.receta.cristalOd.producto.precio/2 + object.receta.cristalOi.producto.precio/2 %}
+                            {% endif %}
+                            {{ precio_cristal|money }}
                         </td>
                     </tr>
                     <tr>

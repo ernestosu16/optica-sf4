@@ -2,18 +2,18 @@
 {% block navbar_title %}{% endblock %}
 {% block actions %}{% endblock %}
 {% block sonata_form_actions %}
-{#    {{ parent() }}#}
+    {#    {{ parent() }}#}
     {% if object.id is null or object.createdAt|date('Y-m-d') == "now"|date('Y-m-d') %}
-    <button type="submit" class="btn btn-success" name="btn_create_and_list">
-        <i class="fa fa-save"></i>
-        Guardar y Listar
-    </button>
-    <button id="btn-solicitud-tallado" name="solicitud-tallado" type="submit" class="btn btn-warning">
-        <i class="fa fa-tag" aria-hidden="true"></i> Solicitar Tallado
-    </button>
-    {#    <a id="btn-solicitud-tallado" class="btn btn-warning" href="">#}
-    {#        <i class="fa fa-tag" aria-hidden="true"></i> Solicitar Tallado#}
-    {#    </a>#}
+        <button type="submit" class="btn btn-success" name="btn_create_and_list">
+            <i class="fa fa-save"></i>
+            Guardar y Listar
+        </button>
+        <button id="btn-solicitud-tallado" name="solicitud-tallado" type="submit" class="btn btn-warning">
+            <i class="fa fa-tag" aria-hidden="true"></i> Solicitar Tallado
+        </button>
+        {#    <a id="btn-solicitud-tallado" class="btn btn-warning" href="">#}
+        {#        <i class="fa fa-tag" aria-hidden="true"></i> Solicitar Tallado#}
+        {#    </a>#}
     {% endif %}
 {% endblock %}
 {% block stylesheets %}
@@ -133,8 +133,7 @@
                     var importe_total = 0;
 
                     if (oferta.precio_fijo) {
-                        oferta.setInputPrecio(oferta.precio_fijo);
-                        return;
+                        importe_total += oferta.precio_fijo;
                     }
 
 
@@ -146,7 +145,15 @@
                     }
 
                     $('select  option:selected').each(function (key, item) {
-                        importe_total += oferta.getSelectPrecio(item.text);
+                        let select = $(item).parent();
+                        if (select.attr('id') === '{{ admin.uniqid }}_receta_cristal_od'
+                            || select.attr('id') === '{{ admin.uniqid }}_receta_cristal_oi') {
+                            if (!oferta.precio_fijo) {
+                                importe_total += oferta.getSelectPrecio(item.text);
+                            }
+                        } else {
+                            importe_total += oferta.getSelectPrecio(item.text);
+                        }
                     });
 
 
