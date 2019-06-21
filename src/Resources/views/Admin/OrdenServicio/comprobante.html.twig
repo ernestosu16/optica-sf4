@@ -95,7 +95,7 @@
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
-                            {% if  object.receta and precio_cristal == 0.00 %}
+                            {% if  object.receta and precio_cristal == 0.00 and object.receta.cristalOd and object.receta.cristalOi %}
                                 {% set precio_cristal = object.receta.cristalOd.producto.precio/2 + object.receta.cristalOi.producto.precio/2 %}
                             {% endif %}
                             {{ precio_cristal|money }}

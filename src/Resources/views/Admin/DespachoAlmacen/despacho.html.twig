@@ -16,45 +16,71 @@
                                 <th>Accesorios</th>
                                 <th>Armadura</th>
                                 <th>Cristal</th>
-                                <th>Lupas</th>
+                                {#                                <th>Lupas</th>#}
                                 <th>Acción</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td>
-                                    <input type="checkbox">
-                                </td>
-                                <td>1</td>
-                                <td>
-                                    <input type="checkbox"> A<br>
-                                    <input type="checkbox"> B<br>
-                                    <input type="checkbox"> C
-                                </td>
-                                <td>
-                                    <input type="checkbox"> A
-                                </td>
-                                <td>
-                                    <input type="checkbox"> A<br>
-                                    <input type="checkbox"> B
-                                </td>
-                                <td>
-                                    <input type="checkbox"> A<br>
-                                    <input type="checkbox"> B<br>
-                                    <input type="checkbox"> C
-                                </td>
-                                <td>
-                                    <div class="btn-group">
+                            {# @var orden_servicio \App\Entity\AppOrdenServicio #}
+                            {% for orden_servicio in list_orden_servicio %}
+                                <tr id="row_{{ orden_servicio.id }}">
+                                    <td>
+                                        <input type="checkbox" value="{{ orden_servicio.id }}">
+                                    </td>
+                                    <td>{{ orden_servicio.numero }}</td>
+                                    <td>
+                                        {# @var accoserio \App\Entity\AppAccesorio #}
+                                        {% for accoserio in orden_servicio.accesorios %}
+                                            <input type="checkbox">
+                                            {{ accoserio }}
+                                            <br>
+                                        {% endfor %}
+                                        {% if orden_servicio.accesorios|length == 0 %}
+                                            No tiene Accesorio(s)
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if orden_servicio.armadura %}
+                                            <input type="checkbox">
+                                            {{ orden_servicio.armadura }}
+                                        {% else %}
+                                            No tiene Armadura
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if orden_servicio.receta.cristalOd %}
+                                            <input type="checkbox">
+                                            OD - {{ orden_servicio.receta.cristalOd }}
+                                            <br>
+                                        {% endif %}
+
+                                        {% if orden_servicio.receta.cristalOi %}
+                                            <input type="checkbox">
+                                            OI - {{ orden_servicio.receta.cristalOi }}
+                                        {% endif %}
+
+                                        {% if orden_servicio.receta.cristalOd is null and orden_servicio.receta.cristalOi is null %}
+                                            No tiene cristales
+                                        {% endif %}
+                                    </td>
+                                    {#                                    <td>#}
+                                    {#                                        <input type="checkbox"> A<br>#}
+                                    {#                                        <input type="checkbox"> B<br>#}
+                                    {#                                        <input type="checkbox"> C#}
+                                    {#                                    </td>#}
+                                    <td>
                                         <div class="btn-group">
-                                            <a href="/admin/app/appordenservicio/49/edit"
-                                               class="btn btn-sm btn-success edit_link" title="Editar">
-                                                <i class="fa fa-save" aria-hidden="true"></i>
-                                                Guardar
-                                            </a>
+                                            <div class="btn-group">
+                                                <a href="/admin/app/appordenservicio/49/edit"
+                                                   class="btn btn-sm btn-success edit_link" title="Editar">
+                                                    <i class="fa fa-save" aria-hidden="true"></i>
+                                                    Guardar
+                                                </a>
+                                            </div>
                                         </div>
-                                    </div>
-                                </td>
-                            </tr>
+                                    </td>
+                                </tr>
+                            {% endfor %}
                             </tbody>
                         </table>
                     </div>

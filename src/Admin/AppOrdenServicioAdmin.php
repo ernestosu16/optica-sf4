@@ -543,7 +543,7 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
             $tinte_cristal->setCantidadReservado($tinte_cristal->getCantidadReservado() + 1);
         }
 
-        if ($object->getReceta()) {
+        if ($object->getReceta() && $object->getReceta()->getCristalOd() && $object->getReceta()->getCristalOi()) {
             # Reserva del Cristal OD
             $cristalOD = $em->getRepository(Alamacen::class)->getProductoOficina(
                 $object->getReceta()->getCristalOd()->getProducto(),

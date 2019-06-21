@@ -6,6 +6,8 @@ namespace App\Entity\DespachoAlmacen;
 use App\Entity\AppOrdenServicio;
 use App\Entity\_Entity_;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\NamedQuery;
+use Doctrine\ORM\Mapping\NamedQueries;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AppDespachoAlmacenOrdenServicioRepository")

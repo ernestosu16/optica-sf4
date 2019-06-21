@@ -5,6 +5,7 @@ namespace App\Controller;
 
 
 use App\Admin\AppDespachoAlmacenAdmin;
+use App\Entity\AppOrdenServicio;
 use App\Entity\DespachoAlmacen\AppDespachoAlmacen;
 use App\Entity\DespachoAlmacen\AppDespachoAlmacenOrdenServicio;
 use DateTime;
@@ -33,6 +34,7 @@ class DespachoAlmacenController extends CRUDController
         $fecha = new DateTime($fecha);
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
+        $this->admin->user = $this->getUser();
 
         /** @var AppDespachoAlmacen $object */
         $object = $em->getRepository(AppDespachoAlmacen::class)->findOneBy(['fecha' => $fecha]);
@@ -52,7 +54,9 @@ class DespachoAlmacenController extends CRUDController
         /** @var $list_orden_servicio AppDespachoAlmacenOrdenServicio[] */
         $list_orden_servicio = null;
 
-        $list_orden_servicio = $em->getRepository(AppDespachoAlmacenOrdenServicio::class);
+        $list_orden_servicio = $em
+            ->getRepository(AppOrdenServicio::class)
+            ->listaOrdenServicioPorFecha($fecha, $this->admin->user->getOffice());
 
         return $this->renderWithExtraParams('::Admin\DespachoAlmacen\despacho.html.twig', [
             'object' => $object,

@@ -6,6 +6,7 @@ namespace App\Repository;
 
 use App\Entity\AppOrdenServicio;
 use App\Entity\SecurityOffice;
+use DateTime;
 
 class OrdenServicioRepository extends _ServiceEntityRepository_
 {
@@ -37,5 +38,21 @@ class OrdenServicioRepository extends _ServiceEntityRepository_
             ->setParameter('office', $office->getId())
             ->getQuery()->getResult();
 
+    }
+
+    public function listaOrdenServicioPorFecha(DateTime $fecha, SecurityOffice $office)
+    {
+        return $this
+            ->createQueryBuilder('i')
+            ->leftJoin('i.despacho_almacen_orden_servicio', 'o')
+            ->andWhere('i.created_at BETWEEN :fecha_i AND :fecha_f')
+            ->setParameters([
+                'fecha_i' => $fecha->format('Y-m-d') . " 00:00:00",
+                'fecha_f' => $fecha->format('Y-m-d') . " 23:59:59"
+            ])
+            ->andWhere('i.office = :office')
+            ->setParameter('office', $office)
+            ->orderBy('i.numero', 'ASC')
+            ->getQuery()->getResult();
     }
 }
