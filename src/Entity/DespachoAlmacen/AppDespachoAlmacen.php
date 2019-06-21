@@ -25,12 +25,6 @@ class AppDespachoAlmacen extends _BaseEntity_
     protected $fecha;
 
     /**
-     * @var string
-     * @ORM\Column(type="string", length=15, nullable=false)
-     */
-    protected $numero;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\SecurityUser")
      */
     protected $usuario_creador;
@@ -47,21 +41,10 @@ class AppDespachoAlmacen extends _BaseEntity_
 
     public function __toString()
     {
-        return (string)$this->numero;
+        return (string)$this->fecha;
     }
 
 
-    public function getNumero(): ?string
-    {
-        return $this->numero;
-    }
-
-    public function setNumero(?string $numero): self
-    {
-        $this->numero = $numero;
-
-        return $this;
-    }
 
     public function getFecha(): ?\DateTimeInterface
     {

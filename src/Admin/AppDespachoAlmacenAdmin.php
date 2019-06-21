@@ -62,7 +62,6 @@ class AppDespachoAlmacenAdmin extends _BaseAdmin_
         $this->lista_pendiente = $this->obtenerListaPendienteDespacho();
         $listMapper
             ->add('fecha')
-            ->add('numero')
             ->add('Asociado');
     }
 
