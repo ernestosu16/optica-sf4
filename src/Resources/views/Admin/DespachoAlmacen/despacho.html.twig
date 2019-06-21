@@ -11,7 +11,7 @@
                         <table class="table table-bordered table-striped table-hover sonata-ba-list">
                             <thead>
                             <tr class="sonata-ba-list-field-header">
-                                <th></th>
+                                <th style="width: 10px"></th>
                                 <th>Número</th>
                                 <th>Accesorios</th>
                                 <th>Armadura</th>
@@ -46,7 +46,8 @@
                                 <td>
                                     <div class="btn-group">
                                         <div class="btn-group">
-                                            <a href="/admin/app/appordenservicio/49/edit" class="btn btn-sm btn-success edit_link" title="Editar">
+                                            <a href="/admin/app/appordenservicio/49/edit"
+                                               class="btn btn-sm btn-success edit_link" title="Editar">
                                                 <i class="fa fa-save" aria-hidden="true"></i>
                                                 Guardar
                                             </a>
@@ -59,6 +60,11 @@
                     </div>
                     <div class="box-footer">
                         <a href="{{ admin.generateUrl('list') }}"
+                           class="btn btn-sm btn-default" title="Cancelar">
+                            <i class="fa fa-backward" aria-hidden="true"></i>
+                            Regresar
+                        </a>
+                        <a href="javascript:alert('desarrollo')"
                            class="btn btn-sm btn-success" title="Cancelar">
                             <i class="fa fa-save" aria-hidden="true"></i>
                             Guardar
