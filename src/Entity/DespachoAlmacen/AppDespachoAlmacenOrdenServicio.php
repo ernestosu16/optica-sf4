@@ -8,7 +8,7 @@ use App\Entity\_Entity_;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="App\Repository\AppDespachoAlmacenOrdenServicioRepository")
  */
 class AppDespachoAlmacenOrdenServicio extends _Entity_
 {

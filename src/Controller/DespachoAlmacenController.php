@@ -52,6 +52,8 @@ class DespachoAlmacenController extends CRUDController
         /** @var $list_orden_servicio AppDespachoAlmacenOrdenServicio[] */
         $list_orden_servicio = null;
 
+        $list_orden_servicio = $em->getRepository(AppDespachoAlmacenOrdenServicio::class);
+
         return $this->renderWithExtraParams('::Admin\DespachoAlmacen\despacho.html.twig', [
             'object' => $object,
             'list_orden_servicio' => $list_orden_servicio,
