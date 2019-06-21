@@ -63,6 +63,7 @@ class AppTrabajadorAdmin extends _BaseAdmin_
      */
     protected function configureListFields(ListMapper $listMapper)
     {
+        unset($this->listModes['mosaic']);
         $listMapper
             ->add('ci', TextType::class, [
                 'label' => 'app.ci',

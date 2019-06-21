@@ -34,7 +34,7 @@ class AppArmaduraAdmin extends _BaseAdmin_
      */
     protected function configureListFields(ListMapper $listMapper)
     {
-
+        unset($this->listModes['mosaic']);
         $listMapper
             ->remove('batch')
             ->add('producto.imagen', 'media_thumbnail', array(

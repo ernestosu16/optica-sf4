@@ -67,6 +67,7 @@ class AlamacenAdmin extends _BaseAdmin_
 
     protected function configureListFields(ListMapper $listMapper)
     {
+        unset($this->listModes['mosaic']);
         $listMapper
             ->add('producto.codigo', null, ['label' => 'Código'])
             ->add('producto.descripcion', null, ['label' => 'Descripción'])

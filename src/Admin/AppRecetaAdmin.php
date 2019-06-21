@@ -125,6 +125,7 @@ class AppRecetaAdmin extends _BaseAdmin_
 
     protected function configureListFields(ListMapper $list)
     {
+        unset($this->listModes['mosaic']);
         $list
             ->add('fecha_refraccion', null, [
                 'label' => 'Fecha Refracción',

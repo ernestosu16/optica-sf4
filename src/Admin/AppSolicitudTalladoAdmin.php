@@ -24,6 +24,7 @@ class AppSolicitudTalladoAdmin extends _BaseAdmin_
 
     protected function configureListFields(ListMapper $listMapper)
     {
+        unset($this->listModes['mosaic']);
         $listMapper
             ->add('created_at', null, [
                 'label' => 'Creado',

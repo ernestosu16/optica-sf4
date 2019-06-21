@@ -56,6 +56,8 @@ class AppDespachoAlmacenAdmin extends _BaseAdmin_
 
     protected function configureListFields(ListMapper $listMapper)
     {
+        unset($this->listModes['mosaic']);
+
         /** @var SecurityUser $user */
         $this->user = $this->getConfigurationPool()->getContainer()->get('security.token_storage')->getToken()->getUser();
 

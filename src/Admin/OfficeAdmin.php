@@ -59,6 +59,7 @@ class OfficeAdmin extends AbstractAdmin
      */
     protected function configureListFields(ListMapper $listMapper)
     {
+        unset($this->listModes['mosaic']);
         $listMapper
             ->addIdentifier('name', null, ['label' => 'office.name'])
             ->add('number', null, ['label' => 'office.number'])

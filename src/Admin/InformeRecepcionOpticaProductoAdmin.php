@@ -22,6 +22,6 @@ class InformeRecepcionOpticaProductoAdmin extends _BaseAdmin_
 
     protected function configureListFields(ListMapper $list)
     {
-        // TODO: Implement configureListFields() method.
+        unset($this->listModes['mosaic']);
     }
 }

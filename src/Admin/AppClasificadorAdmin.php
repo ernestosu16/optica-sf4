@@ -34,6 +34,7 @@ class AppClasificadorAdmin extends AbstractAdmin
      */
     protected function configureListFields(ListMapper $listMapper)
     {
+        unset($this->listModes['mosaic']);
         $listMapper
             ->addIdentifier('type', TextType::class, [
                 'label' => 'app.type',
