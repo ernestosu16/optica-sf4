@@ -1,0 +1,18 @@
+{% extends "SonataAdminBundle:CRUD:base_list.html.twig" %}
+{% block list_table %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.sonata-action-element .fa-th-list').mousedown(function (event) {
+                switch (event.which) {
+                    case 1:
+                        window.location.href = this.dataset.href;
+                        break;
+                    case 2:
+                        window.open(this.dataset.href, '_blank');
+                        break;
+                }
+            });
+        });
+    </script>
+{% endblock %}

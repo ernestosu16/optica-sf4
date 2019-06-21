@@ -1,11 +1,14 @@
 <li>
-    <a class="sonata-action-element" href="{#{{ admin.generateUrl('confirmar_factura') }}#}" style="color: red;">
+    <a class="sonata-action-element" href="#" style="color: red;cursor:default">
         {% set lastElement = admin.lista_pendiente|keys|last %}
         {% for key, count in admin.lista_pendiente %}
-            <i class="fa fa-th-list"></i> {{ key }} ({{ count }})
+
+            <i class="fa fa-th-list" style="cursor:pointer"
+               data-href="{{ admin.generateUrl('despacho',{'fecha':key}) }}"> {{ key }} ({{ count }})</i>
             {% if lastElement !=  key %}
                 , &nbsp;
             {% endif %}
+
         {% endfor %}
     </a>
 </li>

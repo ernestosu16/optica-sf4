@@ -27,6 +27,9 @@ class AppDespachoAlmacenAdmin extends _BaseAdmin_
     {
         $collection->clearExcept(['list', 'edit']);
 
+        # Creación y edición del despacho
+        $collection->add('despacho', 'despacho/{fecha}');
+
     }
 
     public function configureActionButtons($action, $object = null)
@@ -57,6 +60,9 @@ class AppDespachoAlmacenAdmin extends _BaseAdmin_
     }
 
     /**
+     * Obtener la lista de los despacho pendiente ejemplo
+     * [fecha=>cantidad]
+     * ['2019-05-01'=>5,'2019-05-02'=>15]
      * @return array
      */
     private function obtenerListaPendienteDespacho()
