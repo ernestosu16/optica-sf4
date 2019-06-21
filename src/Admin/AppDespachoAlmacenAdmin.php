@@ -65,10 +65,10 @@ class AppDespachoAlmacenAdmin extends _BaseAdmin_
             ->add('Asociado');
     }
 
-    protected function configureDatagridFilters(DatagridMapper $filter)
-    {
-        $filter->add('numero');
-    }
+//    protected function configureDatagridFilters(DatagridMapper $filter)
+//    {
+//        $filter->add('numero');
+//    }
 
     /**
      * Obtener la lista de los despacho pendiente ejemplo

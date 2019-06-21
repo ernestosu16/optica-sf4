@@ -43,7 +43,6 @@ class DespachoAlmacenController extends CRUDController
             # Creando el nuevo despacho automáticamente
             $object = new AppDespachoAlmacen();
             $object->setFecha($fecha);
-            $object->setNumero($this->admin->getNuevoNumeroSolicitud($object));
             $object->setUsuarioCreador($this->admin->user);
             $object->setOffice($this->admin->user->getOffice());
             $em->persist($object);
