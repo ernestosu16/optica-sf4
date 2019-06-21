@@ -92,7 +92,7 @@ class AppOrdenServicio extends _BaseEntity_
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\DespachoAlmacen\AppDespachoAlmacenOrdenServicio", cascade={"persist"}, mappedBy="orden_servicio")
      */
-    protected $despacho_almacen;
+    protected $despacho_almacen_orden_servicio;
 
     public function __construct()
     {
@@ -281,19 +281,19 @@ class AppOrdenServicio extends _BaseEntity_
         return $this;
     }
 
-    public function getDespachoAlmacen(): ?AppDespachoAlmacenOrdenServicio
+    public function getDespachoAlmacenOrdenServicio(): ?AppDespachoAlmacenOrdenServicio
     {
-        return $this->despacho_almacen;
+        return $this->despacho_almacen_orden_servicio;
     }
 
-    public function setDespachoAlmacen(?AppDespachoAlmacenOrdenServicio $despacho_almacen): self
+    public function setDespachoAlmacenOrdenServicio(?AppDespachoAlmacenOrdenServicio $despacho_almacen_orden_servicio): self
     {
-        $this->despacho_almacen = $despacho_almacen;
+        $this->despacho_almacen_orden_servicio = $despacho_almacen_orden_servicio;
 
         // set (or unset) the owning side of the relation if necessary
-        $newOrden_servicio = $despacho_almacen === null ? null : $this;
-        if ($newOrden_servicio !== $despacho_almacen->getOrdenServicio()) {
-            $despacho_almacen->setOrdenServicio($newOrden_servicio);
+        $newOrden_servicio = $despacho_almacen_orden_servicio === null ? null : $this;
+        if ($newOrden_servicio !== $despacho_almacen_orden_servicio->getOrdenServicio()) {
+            $despacho_almacen_orden_servicio->setOrdenServicio($newOrden_servicio);
         }
 
         return $this;

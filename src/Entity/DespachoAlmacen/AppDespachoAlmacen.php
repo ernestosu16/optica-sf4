@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table()
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="App\Repository\AppDespachoAlmacenRepository")
  */
 class AppDespachoAlmacen extends _BaseEntity_
 {

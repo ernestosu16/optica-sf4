@@ -5,8 +5,10 @@ namespace App\Admin;
 
 
 use App\Entity\AppOrdenServicio;
+use App\Entity\DespachoAlmacen\AppDespachoAlmacen;
 use App\Entity\SecurityUser;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\NonUniqueResultException;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
@@ -21,7 +23,11 @@ class AppDespachoAlmacenAdmin extends _BaseAdmin_
     /**
      * @var SecurityUser|string
      */
-    private $user;
+    public $user;
+    /**
+     * @var EntityManager
+     */
+    public $em;
 
     protected function configureRoutes(RouteCollection $collection)
     {
@@ -70,7 +76,7 @@ class AppDespachoAlmacenAdmin extends _BaseAdmin_
         $list = [];
 
         /** @var EntityManager $em */
-        $em = $this->getConfigurationPool()->getContainer()->get('doctrine');
+        $em = $this->em = $this->getConfigurationPool()->getContainer()->get('doctrine');
 
         $lista = $em
             ->getRepository(AppOrdenServicio::class)
@@ -86,5 +92,25 @@ class AppDespachoAlmacenAdmin extends _BaseAdmin_
         }
 
         return $list;
+    }
+
+    /**
+     * @param AppDespachoAlmacen $object
+     * @return int|string|null
+     * @throws NonUniqueResultException
+     */
+    public function getNuevoNumeroSolicitud(AppDespachoAlmacen $object)
+    {
+        if ($object->getId()) {
+            return $object->getNumero();
+        }
+        /** @var SecurityUser $user */
+        $this->user = $this->getConfigurationPool()->getContainer()->get('security.token_storage')->getToken()->getUser();
+
+        /** @var EntityManager $em */
+        $em = $this->em = $this->getConfigurationPool()->getContainer()->get('doctrine');
+        $lastRow = $em->getRepository(AppDespachoAlmacen::class)->getOfficeLastRow($this->user->getOffice());
+
+        return (!$lastRow) ? 1 : $lastRow->getNumero() + 1;
     }
 }

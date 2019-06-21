@@ -31,8 +31,8 @@ class OrdenServicioRepository extends _ServiceEntityRepository_
     {
         return $this
             ->createQueryBuilder('i')
-            ->leftJoin('i.despacho_almacen', 'despacho_almacen')
-            ->where('despacho_almacen.id is null')
+            ->leftJoin('i.despacho_almacen_orden_servicio', 'despacho_almacen_orden_servicio')
+            ->where('despacho_almacen_orden_servicio.id is null')
             ->andWhere('i.office = :office')
             ->setParameter('office', $office->getId())
             ->getQuery()->getResult();
