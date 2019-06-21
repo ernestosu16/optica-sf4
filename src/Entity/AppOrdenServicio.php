@@ -8,11 +8,13 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use App\Auditoria\Annotation as Auditar;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\OrdenServicioRepository")
  * @ORM\HasLifecycleCallbacks()
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=false)
+ * @Auditar\Auditar()
  */
 class AppOrdenServicio extends _BaseEntity_
 {
