@@ -36,7 +36,7 @@
                                             <br>
                                         {% endfor %}
                                         {% if orden_servicio.accesorios|length == 0 %}
-                                            No tiene Accesorio(s)
+                                            <em>No tiene Accesorio(s)</em>
                                         {% endif %}
                                     </td>
                                     <td>
@@ -44,7 +44,7 @@
                                             <input type="checkbox">
                                             {{ orden_servicio.armadura }}
                                         {% else %}
-                                            No tiene Armadura
+                                            <em>No tiene Armadura</em>
                                         {% endif %}
                                     </td>
                                     <td>
@@ -60,7 +60,7 @@
                                         {% endif %}
 
                                         {% if orden_servicio.receta.cristalOd is null and orden_servicio.receta.cristalOi is null %}
-                                            No tiene cristales
+                                            <em>No tiene cristales</em>
                                         {% endif %}
                                     </td>
                                     {#                                    <td>#}
