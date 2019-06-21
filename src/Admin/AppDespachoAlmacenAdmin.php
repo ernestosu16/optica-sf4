@@ -48,7 +48,10 @@ class AppDespachoAlmacenAdmin extends _BaseAdmin_
 
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper->add('numero');
+//        $formMapper
+//            ->add('fecha')
+//            ->add('numero')
+//        ;
     }
 
     protected function configureListFields(ListMapper $listMapper)
@@ -57,7 +60,10 @@ class AppDespachoAlmacenAdmin extends _BaseAdmin_
         $this->user = $this->getConfigurationPool()->getContainer()->get('security.token_storage')->getToken()->getUser();
 
         $this->lista_pendiente = $this->obtenerListaPendienteDespacho();
-        $listMapper->add('numero');
+        $listMapper
+            ->add('fecha')
+            ->add('numero')
+            ->add('Asociado');
     }
 
     protected function configureDatagridFilters(DatagridMapper $filter)

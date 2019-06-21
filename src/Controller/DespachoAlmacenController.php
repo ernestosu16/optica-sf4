@@ -48,9 +48,9 @@ class DespachoAlmacenController extends CRUDController
             $em->flush();
         }
 
-        dump($object);
-
-        return $this->renderWithExtraParams('::Admin\DespachoAlmacen\despacho.html.twig', []);
+        return $this->renderWithExtraParams('::Admin\DespachoAlmacen\despacho.html.twig', [
+            'object' => $object,
+        ]);
     }
 
 }
