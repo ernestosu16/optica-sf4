@@ -250,7 +250,7 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
 
         $request = $this->getRequest();
 
-        if ($request->request->has('solicitud-tallado')) {
+        if ($request->request->has('btn_create_and_list') && $request->request->get('btn_create_and_list') === 'solicitud-tallado') {
             $solicitud = new AppSolicitudTallado();
             $solicitud->setNumero($this->getNuevoNumeroSolicitud($object));
 
