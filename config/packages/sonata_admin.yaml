@@ -87,7 +87,7 @@ sonata_admin:
                     - sonata.admin.app.solicitud_tallado
 
             sonata.admin.corte_montaje:
-                label: "Taller de Corte Montaje"
+                label: "Taller de Corte y Montaje"
                 icon:  '<i class="fa fa-folder"></i>'
                 items:
                     - app.corte_montaje
