@@ -1,0 +1,151 @@
+{% extends '@SonataAdmin/standard_layout.html.twig' %}
+{% block sonata_admin_content %}
+    {# @var object \App\Entity\DespachoAlmacen\AppDespachoAlmacen #}
+    {% include '::Admin/DespachoAlmacen/content-header.html.twig' with {'title': "Corte y Montaje del Despacho del Almacén: ", 'subtitle': object.fecha|date('Y-m-d')} only %}
+
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12 col-md-12">
+                <form method="post">
+                    <input type="hidden" name="despacho_almacen" value="{{ object.id }}">
+                    <div class="box box-primary" style="margin-bottom: 100px;">
+                        <div class="box-body table-responsive no-padding">
+                            <table class="table table-bordered table-striped table-hover sonata-ba-list">
+                                <thead>
+                                <tr class="sonata-ba-list-field-header">
+                                    <th>Número</th>
+                                    <th>Armadura</th>
+                                    <th>Cristal</th>
+                                    <th>Acción</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {# @var orden_servicio \App\Entity\AppOrdenServicio #}
+                                {% for orden_servicio in list_orden_servicio %}
+                                    {% set solicitud = false %}
+                                    {% if orden_servicio.solicitudTallado %}
+                                        {% set solicitud = true %}
+                                    {% endif %}
+                                    <tr id="row_{{ orden_servicio.id }}" data-value="{{ orden_servicio.id }}">
+                                        <td>{{ orden_servicio.numero }}</td>
+                                        <td>
+                                            {% if orden_servicio.armadura %}
+                                                {% if orden_servicio.despachoAlmacenOrdenServicio is null %}
+                                                    <input id="armadura_{{ orden_servicio.armadura }}" type="checkbox">
+                                                {% endif %}
+                                                {{ orden_servicio.armadura }}
+                                            {% else %}
+                                                <em>No tiene Armadura</em>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if orden_servicio.receta.cristalOd %}
+                                                {% if orden_servicio.despachoAlmacenOrdenServicio is null %}
+                                                    <input id="cristal_od_{{ orden_servicio.receta.cristalOd.id }}"
+                                                           type="checkbox" {% if solicitud %}disabled{% endif %}>
+                                                {% endif %}
+                                                OD - {{ orden_servicio.receta.cristalOd }}
+                                                <br>
+                                            {% endif %}
+
+                                            {% if orden_servicio.receta.cristalOi %}
+                                                {% if orden_servicio.despachoAlmacenOrdenServicio is null %}
+                                                    <input id="cristal_oi_{{ orden_servicio.receta.cristalOd.id }}"
+                                                           type="checkbox" {% if solicitud %}disabled{% endif %}>
+                                                {% endif %}
+                                                OI - {{ orden_servicio.receta.cristalOi }}
+                                            {% endif %}
+
+                                            {% if orden_servicio.receta.cristalOd is null and orden_servicio.receta.cristalOi is null %}
+                                                <em>No tiene cristales</em>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if orden_servicio.despachoAlmacenOrdenServicio.montaje %}
+                                                <span class="label label-success">Terminado</span>
+                                            {% else %}
+                                                <a class="btn btn-sm btn-info" onclick="return confirm('Esta seguro que desea confirmar la terminacion del corte y monstaje.')"
+                                                   href="{{ admin.generateUrl('confirmar_corte_montaje',{"id": orden_servicio.despachoAlmacenOrdenServicio.id}) }}">
+                                                    <i class="fa fa-close" aria-hidden="true"></i>
+                                                    Confirmar
+                                                </a>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="box-footer">
+                            <a href="{{ admin.generateUrl('list') }}"
+                               class="btn btn-sm btn-default" title="Cancelar">
+                                <i class="fa fa-backward" aria-hidden="true"></i>
+                                Regresar
+                            </a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            let checkbox = $('[name="orden_servicio[]"]');
+
+            checkbox.on("ifChecked", function (event) {
+                cambiarEstadoBotton(event.target.value, false);
+                $('#row_' + event.target.value + ' .icheckbox_square-blue:not(.disabled):not(checked)').iCheck('check');
+            });
+
+            checkbox.on("ifUnchecked", function (event) {
+                cambiarEstadoBotton(event.target.value, true);
+                let tr = $(event.target).closest('tr');
+
+                let checkbox = $(tr).find('.icheckbox_square-blue:not(.disabled)');
+
+                if ($(tr).find("input:checkbox:checked:not([name=\"orden_servicio[]\"])").length === (checkbox.length - 1)) {
+                    $('#row_' + event.target.value + ' .icheckbox_square-blue:not(.disabled):not(checked)').iCheck('uncheck');
+                }
+            });
+
+            function cambiarEstadoBotton(id, disabled) {
+                let btn = $('.btn-guardar-' + id);
+                if (disabled) {
+                    btn.prop('disabled', true);
+                } else {
+                    btn.prop('disabled', false);
+                }
+            }
+
+            let checkboxArray = $('.icheckbox_square-blue:not(.disabled)');
+
+            $.each(checkboxArray, function (key, item) {
+                if (!parseInt(item.firstChild.value)) {
+                    $(item.firstChild).on("ifChecked", function (item) {
+                        comprobarRowCheckedAll(this);
+                    });
+                    $(item.firstChild).on("ifUnchecked", function (item) {
+                        comprobarRowCheckedAll(this);
+                    });
+                }
+            });
+
+            function comprobarRowCheckedAll(item) {
+                let tr = item.closest('tr');
+
+                let checkbox = $(tr).find('.icheckbox_square-blue:not(.disabled)');
+
+                if ($(tr).find("input:checkbox:checked:not([name=\"orden_servicio[]\"])").length === (checkbox.length - 1)) {
+                    $('#orden_servicio_' + tr.dataset.value).iCheck('check');
+                } else {
+                    $('#orden_servicio_' + tr.dataset.value).iCheck('uncheck');
+                }
+
+
+            }
+        });
+    </script>
+{% endblock %}

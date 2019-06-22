@@ -65,8 +65,6 @@ sonata_admin:
                 label_catalogue: app
                 icon:  '<i class="fa fa-folder"></i>'
                 items:
-#                    - sonata.admin.mv.factura
-#                    - sonata.admin.app.movimiento_almacen
                     - app.almacen
                     - app.despacho_almacen
 
@@ -75,7 +73,6 @@ sonata_admin:
                 icon:  '<i class="fa fa-folder"></i>'
                 items:
                     - sonata.admin.app.paciente
-#                    - sonata.admin.app.receta
 
             servicios_ordenes:
                 label: Ventas
@@ -83,13 +80,17 @@ sonata_admin:
                 icon: '<i class="fa fa-money"></i>'
                 roles: [ ROLE_USER ]
                 items:
-#                    - sonata.admin.app.receta
-#                    - sonata.admin.app.orden_corte_montaje
                     - sonata.admin.app.orden_servicio
             taller_tallado:
                 label: Taller de Tallado
                 items:
                     - sonata.admin.app.solicitud_tallado
+
+            sonata.admin.corte_montaje:
+                label: "Taller de Corte Montaje"
+                icon:  '<i class="fa fa-folder"></i>'
+                items:
+                    - app.corte_montaje
     options:
         html5_validate:  true     # enable or disable html5 form validation
         confirm_exit:    true     # enable or disable a confirmation before navigating away

@@ -24,6 +24,12 @@ class AppDespachoAlmacenOrdenServicio extends _Entity_
      */
     protected $orden_servicio;
 
+    /**
+     * @var boolean
+     * @ORM\Column(type="boolean")
+     */
+    protected $montaje;
+
     public function getOrdenServicio(): ?AppOrdenServicio
     {
         return $this->orden_servicio;
@@ -44,6 +50,18 @@ class AppDespachoAlmacenOrdenServicio extends _Entity_
     public function setDespachoAlmacen(?AppDespachoAlmacen $despacho_almacen): self
     {
         $this->despacho_almacen = $despacho_almacen;
+
+        return $this;
+    }
+
+    public function getMontaje(): ?bool
+    {
+        return $this->montaje;
+    }
+
+    public function setMontaje(bool $montaje): self
+    {
+        $this->montaje = $montaje;
 
         return $this;
     }

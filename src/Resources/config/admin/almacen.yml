@@ -19,3 +19,12 @@ services:
         calls:
             - [setTemplate, ['list', '::Admin/DespachoAlmacen/list.html.twig']]
             - [setTemplate, ['edit', '::Admin/DespachoAlmacen/edit.html.twig']]
+
+    app.corte_montaje:
+        class: App\Admin\AppCorteMontajeAdmin
+        arguments:
+            - ~
+            - App\Entity\DespachoAlmacen\AppDespachoAlmacen
+            - App\Controller\AppCorteMontajeController
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: 'Corte y Montaje' }
