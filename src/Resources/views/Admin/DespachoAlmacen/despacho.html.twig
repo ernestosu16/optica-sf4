@@ -6,107 +6,126 @@
     <section class="content">
         <div class="row">
             <div class="col-xs-12 col-md-12">
-                <div class="box box-primary" style="margin-bottom: 100px;">
-                    <div class="box-body table-responsive no-padding">
-                        <table class="table table-bordered table-striped table-hover sonata-ba-list">
-                            <thead>
-                            <tr class="sonata-ba-list-field-header">
-                                <th style="width: 10px"></th>
-                                <th>Número</th>
-                                <th>Accesorios</th>
-                                <th>Armadura</th>
-                                <th>Cristal</th>
-                                <th>Tipo</th>
-                                {#                                <th>Lupas</th>#}
-                                <th>Acción</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {# @var orden_servicio \App\Entity\AppOrdenServicio #}
-                            {% for orden_servicio in list_orden_servicio %}
-                                {% set solicitud = false %}
-                                {% if orden_servicio.solicitudTallado %}
-                                    {% set solicitud = true %}
-                                {% endif %}
-                                <tr id="row_{{ orden_servicio.id }}">
-                                    <td>
-                                        <input type="checkbox" value="{{ orden_servicio.id }}">
-                                    </td>
-                                    <td>{{ orden_servicio.numero }}</td>
-                                    <td>
-                                        {# @var accoserio \App\Entity\AppAccesorio #}
-                                        {% for accoserio in orden_servicio.accesorios %}
-                                            <input type="checkbox">
-                                            {{ accoserio }}
-                                            <br>
-                                        {% endfor %}
-                                        {% if orden_servicio.accesorios|length == 0 %}
-                                            <em>No tiene Accesorio(s)</em>
-                                        {% endif %}
-                                    </td>
-                                    <td>
-                                        {% if orden_servicio.armadura %}
-                                            <input type="checkbox">
-                                            {{ orden_servicio.armadura }}
-                                        {% else %}
-                                            <em>No tiene Armadura</em>
-                                        {% endif %}
-                                    </td>
-                                    <td>
-                                        {% if orden_servicio.receta.cristalOd %}
-                                            <input type="checkbox" {% if solicitud %}disabled{% endif %}>
-                                            OD - {{ orden_servicio.receta.cristalOd }}
-                                            <br>
-                                        {% endif %}
-
-                                        {% if orden_servicio.receta.cristalOi %}
-                                            <input type="checkbox" {% if solicitud %}disabled{% endif %}>
-                                            OI - {{ orden_servicio.receta.cristalOi }}
-                                        {% endif %}
-
-                                        {% if orden_servicio.receta.cristalOd is null and orden_servicio.receta.cristalOi is null %}
-                                            <em>No tiene cristales</em>
-                                        {% endif %}
-                                    </td>
-                                    {#                                    <td>#}
-                                    {#                                        <input type="checkbox"> A<br>#}
-                                    {#                                        <input type="checkbox"> B<br>#}
-                                    {#                                        <input type="checkbox"> C#}
-                                    {#                                    </td>#}
-                                    <td>
-                                        {% if orden_servicio.solicitudTallado %}
-                                            <span class="label label-warning">Solicitud de Tallado</span>
-                                        {% else %}
-                                            <span class="label label-default">Orden de stock</span>
-                                        {% endif %}
-                                    </td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <div class="btn-group">
-                                                <a href="#" class="btn btn-sm btn-success edit_link" title="Editar">
-                                                    <i class="fa fa-save" aria-hidden="true"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </td>
+                <form method="post">
+                    <input type="hidden" name="despacho_almacen" value="{{ object.id }}">
+                    <div class="box box-primary" style="margin-bottom: 100px;">
+                        <div class="box-body table-responsive no-padding">
+                            <table class="table table-bordered table-striped table-hover sonata-ba-list">
+                                <thead>
+                                <tr class="sonata-ba-list-field-header">
+                                    <th style="width: 10px"></th>
+                                    <th>Número</th>
+                                    <th>Accesorios</th>
+                                    <th>Armadura</th>
+                                    <th>Cristal</th>
+                                    <th>Tipo</th>
+                                    {#                                <th>Lupas</th>#}
+                                    <th>Acción</th>
                                 </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                {# @var orden_servicio \App\Entity\AppOrdenServicio #}
+                                {% for orden_servicio in list_orden_servicio %}
+                                    {% set solicitud = false %}
+                                    {% if orden_servicio.solicitudTallado %}
+                                        {% set solicitud = true %}
+                                    {% endif %}
+                                    <tr id="row_{{ orden_servicio.id }}" data-value="{{ orden_servicio.id }}">
+                                        <td>
+                                            {% if orden_servicio.despachoAlmacenOrdenServicio is null %}
+                                                <input id="orden_servicio_{{ orden_servicio.id }}"
+                                                       name="orden_servicio[]"
+                                                       type="checkbox" value="{{ orden_servicio.id }}">
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ orden_servicio.numero }}</td>
+                                        <td>
+                                            {% if orden_servicio.despachoAlmacenOrdenServicio is null %}
+                                                {# @var accoserio \App\Entity\AppAccesorio #}
+                                                {% for accesorio in orden_servicio.accesorios %}
+                                                    <input id="accesorio_{{ accesorio.id }}" type="checkbox">
+                                                    {{ accesorio }}
+                                                    <br>
+                                                {% endfor %}
+                                            {% endif %}
+                                            {% if orden_servicio.accesorios|length == 0 %}
+                                                <em>No tiene Accesorio(s)</em>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if orden_servicio.armadura %}
+                                                {% if orden_servicio.despachoAlmacenOrdenServicio is null %}
+                                                    <input id="armadura_{{ orden_servicio.armadura }}" type="checkbox">
+                                                {% endif %}
+                                                {{ orden_servicio.armadura }}
+                                            {% else %}
+                                                <em>No tiene Armadura</em>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if orden_servicio.receta.cristalOd %}
+                                                {% if orden_servicio.despachoAlmacenOrdenServicio is null %}
+                                                    <input id="cristal_od_{{ orden_servicio.receta.cristalOd.id }}"
+                                                           type="checkbox" {% if solicitud %}disabled{% endif %}>
+                                                {% endif %}
+                                                OD - {{ orden_servicio.receta.cristalOd }}
+                                                <br>
+                                            {% endif %}
+
+                                            {% if orden_servicio.receta.cristalOi %}
+                                                {% if orden_servicio.despachoAlmacenOrdenServicio is null %}
+                                                    <input id="cristal_oi_{{ orden_servicio.receta.cristalOd.id }}"
+                                                           type="checkbox" {% if solicitud %}disabled{% endif %}>
+                                                {% endif %}
+                                                OI - {{ orden_servicio.receta.cristalOi }}
+                                            {% endif %}
+
+                                            {% if orden_servicio.receta.cristalOd is null and orden_servicio.receta.cristalOi is null %}
+                                                <em>No tiene cristales</em>
+                                            {% endif %}
+                                        </td>
+                                        {#                                    <td>#}
+                                        {#                                        <input type="checkbox"> A<br>#}
+                                        {#                                        <input type="checkbox"> B<br>#}
+                                        {#                                        <input type="checkbox"> C#}
+                                        {#                                    </td>#}
+                                        <td>
+                                            {% if orden_servicio.solicitudTallado %}
+                                                <span class="label label-warning">Solicitud de Tallado</span>
+                                            {% else %}
+                                                <span class="label label-default">Orden de stock</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if orden_servicio.despachoAlmacenOrdenServicio is null %}
+                                                <div class="btn-group">
+                                                    <div class="btn-group">
+                                                        <button class="btn btn-sm btn-success btn-guardar-{{ orden_servicio.id }}"
+                                                                title="Guardar" disabled type="submit">
+                                                            <i class="fa fa-save" aria-hidden="true"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="box-footer">
+                            <a href="{{ admin.generateUrl('list') }}"
+                               class="btn btn-sm btn-default" title="Cancelar">
+                                <i class="fa fa-backward" aria-hidden="true"></i>
+                                Regresar
+                            </a>
+                            <button type="submit" class="btn btn-sm btn-success" title="Guardar">
+                                <i class="fa fa-save" aria-hidden="true"></i>
+                                Guardar
+                            </button>
+                        </div>
                     </div>
-                    <div class="box-footer">
-                        <a href="{{ admin.generateUrl('list') }}"
-                           class="btn btn-sm btn-default" title="Cancelar">
-                            <i class="fa fa-backward" aria-hidden="true"></i>
-                            Regresar
-                        </a>
-                        <a href="javascript:alert('desarrollo')"
-                           class="btn btn-sm btn-success" title="Cancelar">
-                            <i class="fa fa-save" aria-hidden="true"></i>
-                            Guardar
-                        </a>
-                    </div>
-                </div>
+                </form>
             </div>
         </div>
     </section>
@@ -115,7 +134,59 @@
     {{ parent() }}
     <script type="text/javascript">
         $(document).ready(function () {
+            let checkbox = $('[name="orden_servicio[]"]');
 
+            checkbox.on("ifChecked", function (event) {
+                cambiarEstadoBotton(event.target.value, false);
+                $('#row_' + event.target.value + ' .icheckbox_square-blue:not(.disabled):not(checked)').iCheck('check');
+            });
+
+            checkbox.on("ifUnchecked", function (event) {
+                cambiarEstadoBotton(event.target.value, true);
+                let tr = $(event.target).closest('tr');
+
+                let checkbox = $(tr).find('.icheckbox_square-blue:not(.disabled)');
+
+                if ($(tr).find("input:checkbox:checked:not([name=\"orden_servicio[]\"])").length === (checkbox.length - 1)) {
+                    $('#row_' + event.target.value + ' .icheckbox_square-blue:not(.disabled):not(checked)').iCheck('uncheck');
+                }
+            });
+
+            function cambiarEstadoBotton(id, disabled) {
+                let btn = $('.btn-guardar-' + id);
+                if (disabled) {
+                    btn.prop('disabled', true);
+                } else {
+                    btn.prop('disabled', false);
+                }
+            }
+
+            let checkboxArray = $('.icheckbox_square-blue:not(.disabled)');
+
+            $.each(checkboxArray, function (key, item) {
+                if (!parseInt(item.firstChild.value)) {
+                    $(item.firstChild).on("ifChecked", function (item) {
+                        comprobarRowCheckedAll(this);
+                    });
+                    $(item.firstChild).on("ifUnchecked", function (item) {
+                        comprobarRowCheckedAll(this);
+                    });
+                }
+            });
+
+            function comprobarRowCheckedAll(item) {
+                let tr = item.closest('tr');
+
+                let checkbox = $(tr).find('.icheckbox_square-blue:not(.disabled)');
+
+                if ($(tr).find("input:checkbox:checked:not([name=\"orden_servicio[]\"])").length === (checkbox.length - 1)) {
+                    $('#orden_servicio_' + tr.dataset.value).iCheck('check');
+                } else {
+                    $('#orden_servicio_' + tr.dataset.value).iCheck('uncheck');
+                }
+
+
+            }
         });
     </script>
 {% endblock %}

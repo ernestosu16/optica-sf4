@@ -101,7 +101,7 @@ class AppOrdenServicio extends _BaseEntity_
 
     public function __toString()
     {
-        return (string) $this->numero;
+        return (string)$this->numero;
     }
 
 

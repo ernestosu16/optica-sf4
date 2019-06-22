@@ -6,8 +6,6 @@ namespace App\Entity\DespachoAlmacen;
 use App\Entity\AppOrdenServicio;
 use App\Entity\_Entity_;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\NamedQuery;
-use Doctrine\ORM\Mapping\NamedQueries;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AppDespachoAlmacenOrdenServicioRepository")
@@ -16,7 +14,7 @@ class AppDespachoAlmacenOrdenServicio extends _Entity_
 {
     /**
      * @var
-     * @ORM\ManyToOne(targetEntity="App\Entity\DespachoAlmacen\AppDespachoAlmacen")
+     * @ORM\ManyToOne(targetEntity="App\Entity\DespachoAlmacen\AppDespachoAlmacen", inversedBy="despacho_almacen_orden_servicio")
      */
     protected $despacho_almacen;
 

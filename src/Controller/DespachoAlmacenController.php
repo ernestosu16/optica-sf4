@@ -51,9 +51,25 @@ class DespachoAlmacenController extends CRUDController
             $em->flush();
         }
 
-        /** @var $list_orden_servicio AppDespachoAlmacenOrdenServicio[] */
-        $list_orden_servicio = null;
+        if ($this->getRequest()->getMethod() === Request::METHOD_POST) {
+            $data = $this->getRequest()->request->all();
 
+            /** @var AppDespachoAlmacen $despachoAlmacen */
+            $despachoAlmacen = $em->getReference(AppDespachoAlmacen::class, $data['despacho_almacen']);
+
+            foreach ($data['orden_servicio'] as $datum) {
+                /** @var AppOrdenServicio $orden_servicio */
+                $orden_servicio = $em->getReference(AppOrdenServicio::class, $datum);
+
+                $new = new AppDespachoAlmacenOrdenServicio();
+                $new->setOrdenServicio($orden_servicio);
+                $despachoAlmacen->addDespachoAlmacenOrdenServicio($new);
+            }
+            $em->persist($despachoAlmacen);
+            $em->flush();
+        }
+
+        /** @var $list_orden_servicio AppDespachoAlmacenOrdenServicio[] */
         $list_orden_servicio = $em
             ->getRepository(AppOrdenServicio::class)
             ->listaOrdenServicioPorFecha($fecha, $this->admin->user->getOffice());
