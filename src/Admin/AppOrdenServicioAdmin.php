@@ -82,6 +82,8 @@ class AppOrdenServicioAdmin extends _BaseAdmin_
 
         $collection->add('cambio_armadura', 'cambio_armadura');
 
+        $collection->add('confirmar_entrega', 'confirmar_entrega/{id}');
+
         return $collection;
     }
 

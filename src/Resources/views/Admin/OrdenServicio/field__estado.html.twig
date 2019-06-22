@@ -2,7 +2,9 @@
 {% block field %}
     {# @var object \App\Entity\AppOrdenServicio #}
     {% if object.despachoAlmacenOrdenServicio %}
-        {% if object.despachoAlmacenOrdenServicio.montaje %}
+        {% if object.fechaEntrega is not null %}
+            <span class="label label-success">Entregado</span>
+        {% elseif object.despachoAlmacenOrdenServicio.montaje %}
             <span class="label label-warning">Pendiente a Entregar</span>
         {% else %}
             <span class="label label-info">Despachado</span>

@@ -140,4 +140,23 @@ class OrdenServicioControllerAdmin extends CRUDController
         ]);
     }
 
+    /**
+     * @param $id
+     * @return RedirectResponse
+     * @throws ORMException
+     */
+    public function confirmarEntregaAction($id)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        /** @var AppOrdenServicio $orden_servicio */
+        $orden_servicio = $em->getReference(AppOrdenServicio::class, $id);
+
+        $orden_servicio->setFechaEntrega(new \DateTime('now'));
+
+        $em->flush();
+
+        return $this->redirectToList();
+    }
 }
