@@ -63,8 +63,19 @@ class AppDespachoAlmacenAdmin extends _BaseAdmin_
 
         $this->lista_pendiente = $this->obtenerListaPendienteDespacho();
         $listMapper
-            ->add('fecha')
-            ->add('Asociado');
+            ->add('fecha', null, ['format' => 'Y-m-d'])
+            ->add('Asociado', null, [
+                'template' => '::Admin\DespachoAlmacen\fields\asociado.html.twig'
+            ])
+            ->add('_action', null, array(
+                'label' => 'Acción',
+                'actions' => array(
+//                    'show' => array(),
+                    'others' => array(
+                        'template' => '::Admin\DespachoAlmacen\button\button__others.html.twig',
+                    ),
+//                    'delete' => array(),
+                )));
     }
 
 //    protected function configureDatagridFilters(DatagridMapper $filter)

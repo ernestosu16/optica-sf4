@@ -57,6 +57,10 @@ class DespachoAlmacenController extends CRUDController
             /** @var AppDespachoAlmacen $despachoAlmacen */
             $despachoAlmacen = $em->getReference(AppDespachoAlmacen::class, $data['despacho_almacen']);
 
+            if(!isset($data['orden_servicio'])){
+                return $this->redirectToList();
+            }
+
             foreach ($data['orden_servicio'] as $datum) {
                 /** @var AppOrdenServicio $orden_servicio */
                 $orden_servicio = $em->getReference(AppOrdenServicio::class, $datum);

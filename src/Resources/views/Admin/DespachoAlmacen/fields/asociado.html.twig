@@ -1,0 +1,5 @@
+{% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
+{% block field %}
+    {# @var object \App\Entity\DespachoAlmacen\AppDespachoAlmacen #}
+    {{ object.despachoAlmacenOrdenServicio|length }}
+{% endblock %}
