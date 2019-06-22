@@ -12,4 +12,11 @@
         <i class="fa fa-list" aria-hidden="true"></i>
         Comprobante
     </a>
+    {% if object.despachoAlmacenOrdenServicio is not null and object.despachoAlmacenOrdenServicio.montaje %}
+        <a target="_blank" href="" class="btn btn-sm btn-success edit_link"
+           title="Editar">
+            <i class="fa fa-save" aria-hidden="true"></i>
+            Entregar
+        </a>
+    {% endif %}
 </div>
