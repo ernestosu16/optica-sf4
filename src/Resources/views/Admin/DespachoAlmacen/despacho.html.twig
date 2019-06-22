@@ -91,13 +91,17 @@
                                         {#                                    </td>#}
                                         <td>
                                             {% if orden_servicio.despachoAlmacenOrdenServicio %}
-                                                <span class="label label-info">Despachadas</span>
+                                                {% if orden_servicio.solicitudTallado %}
+                                                    <span class="label label-warning">Pendiente talla</span>
+                                                {% else %}
+                                                    <span class="label label-info">Despachado</span>
+                                                {% endif %}
                                             {% else %}
-                                            {% if orden_servicio.solicitudTallado %}
-                                                <span class="label label-warning">Solicitud de Tallado</span>
-                                            {% else %}
-                                                <span class="label label-default">Orden de stock</span>
-                                            {% endif %}
+                                                {% if orden_servicio.solicitudTallado %}
+                                                    <span class="label label-warning">Solicitud de Tallado</span>
+                                                {% else %}
+                                                    <span class="label label-default">Orden de stock</span>
+                                                {% endif %}
                                             {% endif %}
                                         </td>
                                         <td>

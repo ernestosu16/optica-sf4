@@ -51,9 +51,9 @@
                                         </td>
                                         <td>
                                             {% if orden_servicio.despachoAlmacenOrdenServicio is not null and orden_servicio.despachoAlmacenOrdenServicio.montaje %}
-                                                <span class="label label-success">Terminado</span>
+                                                <span class="label label-success">En producción</span>
                                             {% elseif orden_servicio.despachoAlmacenOrdenServicio is not null %}
-                                                <a class="btn btn-sm btn-info" onclick="return confirm('Esta seguro que desea confirmar la terminacion del corte y monstaje.')"
+                                                <a class="btn btn-sm btn-info" onclick="return confirm('Esta seguro que desea confirmar la terminación del corte y montaje.')"
                                                    href="{{ admin.generateUrl('confirmar_corte_montaje',{"id": orden_servicio.despachoAlmacenOrdenServicio.id}) }}">
                                                     <i class="fa fa-close" aria-hidden="true"></i>
                                                     Confirmar

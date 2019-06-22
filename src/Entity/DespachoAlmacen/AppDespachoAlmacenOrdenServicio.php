@@ -28,7 +28,7 @@ class AppDespachoAlmacenOrdenServicio extends _Entity_
      * @var boolean
      * @ORM\Column(type="boolean")
      */
-    protected $montaje;
+    protected $montaje = 0;
 
     public function getOrdenServicio(): ?AppOrdenServicio
     {
