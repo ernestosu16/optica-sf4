@@ -16,6 +16,7 @@
                                 <th>Accesorios</th>
                                 <th>Armadura</th>
                                 <th>Cristal</th>
+                                <th>Tipo</th>
                                 {#                                <th>Lupas</th>#}
                                 <th>Acción</th>
                             </tr>
@@ -23,6 +24,10 @@
                             <tbody>
                             {# @var orden_servicio \App\Entity\AppOrdenServicio #}
                             {% for orden_servicio in list_orden_servicio %}
+                                {% set solicitud = false %}
+                                {% if orden_servicio.solicitudTallado %}
+                                    {% set solicitud = true %}
+                                {% endif %}
                                 <tr id="row_{{ orden_servicio.id }}">
                                     <td>
                                         <input type="checkbox" value="{{ orden_servicio.id }}">
@@ -49,13 +54,13 @@
                                     </td>
                                     <td>
                                         {% if orden_servicio.receta.cristalOd %}
-                                            <input type="checkbox">
+                                            <input type="checkbox" {% if solicitud %}disabled{% endif %}>
                                             OD - {{ orden_servicio.receta.cristalOd }}
                                             <br>
                                         {% endif %}
 
                                         {% if orden_servicio.receta.cristalOi %}
-                                            <input type="checkbox">
+                                            <input type="checkbox" {% if solicitud %}disabled{% endif %}>
                                             OI - {{ orden_servicio.receta.cristalOi }}
                                         {% endif %}
 
@@ -69,12 +74,17 @@
                                     {#                                        <input type="checkbox"> C#}
                                     {#                                    </td>#}
                                     <td>
+                                        {% if orden_servicio.solicitudTallado %}
+                                            <span class="label label-warning">Solicitud de Tallado</span>
+                                        {% else %}
+                                            <span class="label label-default">Orden de stock</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
                                         <div class="btn-group">
                                             <div class="btn-group">
-                                                <a href="/admin/app/appordenservicio/49/edit"
-                                                   class="btn btn-sm btn-success edit_link" title="Editar">
+                                                <a href="#" class="btn btn-sm btn-success edit_link" title="Editar">
                                                     <i class="fa fa-save" aria-hidden="true"></i>
-                                                    Guardar
                                                 </a>
                                             </div>
                                         </div>
@@ -100,4 +110,12 @@
             </div>
         </div>
     </section>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+        });
+    </script>
 {% endblock %}
