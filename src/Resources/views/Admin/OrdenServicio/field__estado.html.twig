@@ -2,7 +2,11 @@
 {% block field %}
     {# @var object \App\Entity\AppOrdenServicio #}
     {% if object.despachoAlmacenOrdenServicio %}
-        <span class="label label-info">Despachadas</span>
+        {% if object.despachoAlmacenOrdenServicio.montaje %}
+            <span class="label label-warning">Pendiente a Entregar</span>
+        {% else %}
+            <span class="label label-info">Despachadas</span>
+        {% endif %}
     {% else %}
         {% if object.solicitudTallado %}
             <span class="label label-warning">Solicitud de Tallado</span>
