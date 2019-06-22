@@ -12,6 +12,12 @@ sonata_admin:
                     - sonata.user.admin.user
                     - sonata.user.admin.group
                     - app_auditoria.admin.auditoria_log
+                    -   route: fos_user_security_logout
+                        label: Cerrar Sección
+                        roles: ['ROLE_USER']
+                    -   route: fos_user_profile_edit
+                        label: Perfil
+                        roles: ['ROLE_USER']
 #            sonata.admin.group.content:
 #                label:           sonata_media
 #                label_catalogue: SonataMediaBundle
