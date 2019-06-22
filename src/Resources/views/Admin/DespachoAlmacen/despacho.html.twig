@@ -90,10 +90,14 @@
                                         {#                                        <input type="checkbox"> C#}
                                         {#                                    </td>#}
                                         <td>
+                                            {% if orden_servicio.despachoAlmacenOrdenServicio %}
+                                                <span class="label label-info">Despachadas</span>
+                                            {% else %}
                                             {% if orden_servicio.solicitudTallado %}
                                                 <span class="label label-warning">Solicitud de Tallado</span>
                                             {% else %}
                                                 <span class="label label-default">Orden de stock</span>
+                                            {% endif %}
                                             {% endif %}
                                         </td>
                                         <td>

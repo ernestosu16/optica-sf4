@@ -1,9 +1,13 @@
 {% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
 {% block field %}
     {# @var object \App\Entity\AppOrdenServicio #}
-    {% if object.solicitudTallado %}
-        <span class="label label-warning">Solicitud de Tallado</span>
+    {% if object.despachoAlmacenOrdenServicio %}
+        <span class="label label-info">Despachadas</span>
     {% else %}
-        <span class="label label-default">Orden de stock</span>
+        {% if object.solicitudTallado %}
+            <span class="label label-warning">Solicitud de Tallado</span>
+        {% else %}
+            <span class="label label-default">Orden de stock</span>
+        {% endif %}
     {% endif %}
 {% endblock %}
