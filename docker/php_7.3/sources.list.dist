@@ -1,0 +1,3 @@
+deb http://download.jovenclub.cu/repos/debian/buster/ buster main
+deb http://download.jovenclub.cu/repos/debian/buster-security/ buster/updates main
+deb http://download.jovenclub.cu/repos/debian/buster-updates/ buster-updates main

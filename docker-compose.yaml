@@ -1,0 +1,22 @@
+version: '2'
+
+networks:
+  database-net:
+    external:
+      name: database-net
+
+services:
+  ###############################################
+  # PHP 7.3.12
+  ###############################################
+  app:
+    build: docker/php_7.3
+    command: "symfony server:start --no-tls"
+    mem_limit: "1G"
+    volumes:
+      - "./:/app"
+    networks:
+      - database-net
+    ports:
+      - "8001:8000"
+
